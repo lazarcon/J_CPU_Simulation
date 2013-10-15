@@ -1,5 +1,5 @@
 /*
- * File: 		App.java
+ * File: 		InvalidArgumentException.java
  * Date: 		Oct 15, 2013
  *
  * Copyright 2013 Constantin Lazari. All rights reserved.
@@ -8,13 +8,16 @@
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.
  */
-package ch.zhaw.lazari.cpu;
+package ch.zhaw.lazari.cpu.impl;
 
 /**
- * Simulates a CPU
+ * Responsibility:
  */
-public class App {
-    public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
-    }
+public class InvalidArgumentException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
+	public InvalidArgumentException(final String message) {
+		super(message);
+	}
 }

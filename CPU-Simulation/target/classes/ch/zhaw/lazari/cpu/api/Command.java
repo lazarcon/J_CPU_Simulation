@@ -1,5 +1,5 @@
 /*
- * File: 		App.java
+ * File: 		Command.java
  * Date: 		Oct 15, 2013
  *
  * Copyright 2013 Constantin Lazari. All rights reserved.
@@ -8,13 +8,13 @@
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.
  */
-package ch.zhaw.lazari.cpu;
+package ch.zhaw.lazari.cpu.api;
 
 /**
- * Simulates a CPU
+ * Represents a single command
  */
-public class App {
-    public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
-    }
+public interface Command {
+
+	/** Executes the command */
+	void execute();
 }
