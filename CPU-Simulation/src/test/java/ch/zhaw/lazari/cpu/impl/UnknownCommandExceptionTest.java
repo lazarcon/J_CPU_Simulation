@@ -10,7 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -21,9 +21,9 @@ public class UnknownCommandExceptionTest {
 
 	@Test
 	public void test() {
-		final UnknownCommandException exception = new UnknownCommandException(new byte[]{7, 42});
-		assertFalse(exception.getMessage().contains("7"));
-		assertFalse(exception.getMessage().contains("42"));
+		final String word = "UNKNOWN";
+		final UnknownCommandException exception = new UnknownCommandException(word);
+		assertTrue(exception.getMessage().contains(word));
 	}
 
 }
