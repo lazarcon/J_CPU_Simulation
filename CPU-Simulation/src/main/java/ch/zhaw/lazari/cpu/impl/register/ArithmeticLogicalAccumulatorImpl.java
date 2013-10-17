@@ -23,14 +23,21 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 
 	private static final Logger LOG = LoggerFactory.getLogger(ArithmeticLogicalAccumulator.class);
 	
+	private final int min;
+	
+	private final int max;
+	
 	private int carryFlag = 0;
 	
 	public ArithmeticLogicalAccumulatorImpl() {
-		super();
+		this(DEFAULT_WORD_LENGTH);
 	}
 	
 	public ArithmeticLogicalAccumulatorImpl(final int wordLength) {
 		super(wordLength);
+		final int value = pow(ByteArrayUtils.RADIX_BINARY, (ByteArrayUtils.BITS_PER_BYTE * get().length) - 1);
+		min = -value;
+		max = value - 1;
 	}
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#getCarryFlag()
@@ -45,10 +52,11 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void add(byte[] bytes) {
-		LOG.trace("Adding word");
+		LOG.info("Adding word");
 		final int stored = ByteArrayUtils.toInt(get());
 		final int toAdd = ByteArrayUtils.toInt(bytes);
 		final int result = stored + toAdd;
+		LOG.info(String.format("%d + %d = %d", stored, toAdd, result));
 		if(isOverflow(result)) {
 			carryFlag = 1;
 		} else {
@@ -62,7 +70,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void increment() {
-		LOG.trace("Incrementing");
+		LOG.info("Incrementing");
 		add(new byte[]{0, 1});
 	}
 
@@ -71,7 +79,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void decrement() {
-		LOG.trace("Decrementing");
+		LOG.info("Decrementing");
 		add(new byte[]{0, -1});
 	}
 
@@ -80,7 +88,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightArithmetic() {
-		LOG.trace("Executing arithmetic right shift");
+		LOG.info("Executing arithmetic right shift");
 		set(ByteArrayUtils.toInt(get()) >> 1);
 		carryFlag = 0;
 	}
@@ -90,7 +98,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftArithmetic() {
-		LOG.trace("Executing arithmetic left shift");
+		LOG.info("Executing arithmetic left shift");
 		final int value = ByteArrayUtils.toInt(get());
 		final int newValue = value << 1;
 		if(isOverflow(newValue)) {
@@ -106,7 +114,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightLogical() {
-		LOG.trace("Executing logical right shift");
+		LOG.info("Executing logical right shift");
 		set(ByteArrayUtils.toInt(get()) >>> 1); 
 		carryFlag = 0;
 	}
@@ -116,7 +124,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftLogical() {
-		LOG.trace("Executing logical left shift");
+		LOG.info("Executing logical left shift");
 		// TODO Implement ShiftLeftLogical
 	}
 
@@ -125,6 +133,15 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	}
 	
 	private boolean isOverflow(final int value) {
-		return (value > Math.pow(2, get().length - 1)) || (value < - Math.pow(2, get().length - 1));
+		return (value > max) || (value < min);
+	}
+	
+	private int pow(final int base, final int exponent) {
+		if(exponent == 0) return 0;
+		int result = base;
+		for(int index = 0; index < exponent; ++index) {
+			result *= base;
+		}
+		return result;
 	}
 }
