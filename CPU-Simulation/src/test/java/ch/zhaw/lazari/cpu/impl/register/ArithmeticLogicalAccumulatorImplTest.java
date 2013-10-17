@@ -10,30 +10,63 @@
  */
 package ch.zhaw.lazari.cpu.impl.register;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
+
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
  */
 public class ArithmeticLogicalAccumulatorImplTest {
 
+	private static final int LENGTH = 2;
+	
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl#getCarryFlag()}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl#add(byte[])}.
 	 */
 	@Test
-	public void testGetCarryFlag() {
-		fail("Not yet implemented");
+	public void testAddPositiveNoOverflow() {
+		System.out.println("add + no overflow");
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		accu.set(ByteArrayUtils.fromInt(300, LENGTH));
+		accu.add(ByteArrayUtils.fromInt(200, LENGTH));
+		final byte[] result = accu.get();
+		assertEquals(500, ByteArrayUtils.toInt(result));
+		assertEquals(0, accu.getCarryFlag());
 	}
 
 	/**
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl#add(byte[])}.
 	 */
 	@Test
-	public void testAdd() {
-		fail("Not yet implemented");
+	public void testAddPositiveOverflow() {
+		System.out.println("add + overflow");
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		accu.set(ByteArrayUtils.fromInt(65_535, LENGTH));
+		accu.add(ByteArrayUtils.fromInt(1, LENGTH));
+		assertEquals(1, accu.getCarryFlag());
+		final byte[] result = accu.get();
+		assertEquals(0, ByteArrayUtils.toInt(result));
 	}
+
+	/**
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl#add(byte[])}.
+	 */
+	@Test
+	public void testAddNegativNoOverflow() {
+		System.out.println("add - no overflow");
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		accu.set(ByteArrayUtils.fromInt(300, LENGTH));
+		accu.add(ByteArrayUtils.fromInt(-200, LENGTH));
+		final byte[] result = accu.get();
+		assertEquals(100, ByteArrayUtils.toInt(result));
+		assertEquals(0, accu.getCarryFlag());
+	}
+
 
 	/**
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl#increment()}.
