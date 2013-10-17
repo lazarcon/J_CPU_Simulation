@@ -10,7 +10,6 @@
  */
 package ch.zhaw.lazari.cpu.impl.utils;
 
-import ch.zhaw.lazari.cpu.impl.InvalidArgumentException;
 
 /**
  * Provides all necessary byte operations
