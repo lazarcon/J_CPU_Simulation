@@ -26,7 +26,7 @@ public class DEC extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Decrementing accumulator");
+		log("Telling accu to decrement");
 		getAccu().decrement();
 	}
 
