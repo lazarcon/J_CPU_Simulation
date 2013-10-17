@@ -17,9 +17,13 @@ import ch.zhaw.lazari.cpu.api.Memory;
  */
 public abstract class AbstractMemoryCommand extends AbstractCommand {
 
-	protected final Memory memory;
+	private final Memory memory;
 	
 	public AbstractMemoryCommand(final Memory memory) {
 		this.memory = memory;
+	}
+	
+	protected Memory getMemory() {
+		return memory;
 	}
 }

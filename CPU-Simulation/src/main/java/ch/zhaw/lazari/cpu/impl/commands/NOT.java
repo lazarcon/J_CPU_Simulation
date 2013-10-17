@@ -10,7 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 
 /**
  * Responsibility:
@@ -20,7 +20,7 @@ public class NOT extends AbstractAccumulatorCommand {
 	/**
 	 * @param accu
 	 */
-	public NOT(final Accumulator accu) {
+	public NOT(final ArithmeticLogicalAccumulator accu) {
 		super(accu);
 	}
 
@@ -30,7 +30,7 @@ public class NOT extends AbstractAccumulatorCommand {
 	@Override
 	public void execute() {
 		log.trace("Executing not operation on accumulator");
-		accu.not();
+		getAccu().not();
 	}
 
 }

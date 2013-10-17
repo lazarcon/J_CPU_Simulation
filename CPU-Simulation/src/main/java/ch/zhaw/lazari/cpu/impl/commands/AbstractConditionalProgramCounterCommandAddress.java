@@ -10,7 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.ProgramCounter;
 
 /**
@@ -18,14 +18,14 @@ import ch.zhaw.lazari.cpu.api.ProgramCounter;
  */
 public abstract class AbstractConditionalProgramCounterCommandAddress extends AbstractConditionalProgramCounterCommand {
 
-	private final byte[] address;
+	private final int address;
 	
 	/**
 	 * @param programCounter
 	 * @param accu
 	 */
 	public AbstractConditionalProgramCounterCommandAddress(
-			final ProgramCounter programCounter, final Accumulator accu, final byte[] address) {
+			final ProgramCounter programCounter, final ArithmeticLogicalAccumulator accu, final int address) {
 		super(programCounter, accu);
 		this.address = address;
 	}
@@ -34,7 +34,7 @@ public abstract class AbstractConditionalProgramCounterCommandAddress extends Ab
 	 * @see ch.zhaw.lazari.cpu.impl.commands.AbstractConditionalProgramCounterCommand#getAddress()
 	 */
 	@Override
-	protected final byte[] getAddress() {
+	protected final int getAddress() {
 		return address;
 	}
 

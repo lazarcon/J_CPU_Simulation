@@ -10,20 +10,22 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.Register;
 
 /**
- * Responsibility:
+ * Represents the AND Operation
  */
 public class AND extends AbstractAccumulatorCommand {
 
 	private final Register register;
 	
 	/**
-	 * @param accu
+	 * Creates a new AND Operation using Accumulator and Register
+	 * @param accu Accumulator to use
+	 * @param register Register to use
 	 */
-	public AND(final Accumulator accu, final Register register) {
+	public AND(final ArithmeticLogicalAccumulator accu, final Register register) {
 		super(accu);
 		this.register = register;
 	}
@@ -34,7 +36,7 @@ public class AND extends AbstractAccumulatorCommand {
 	@Override
 	public void execute() {
 		log.trace("Executing AND operation on accu");
-		accu.and(register.get());
+		getAccu().and(register.get());
 	}
 
 }

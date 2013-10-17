@@ -22,7 +22,7 @@ public class BZ extends AbstractConditionalProgramCounterCommandRegister{
 	 * @param programCounter
 	 * @param accu
 	 */
-	public BZ(final ProgramCounter programCounter, final Accumulator accu, final Register register) {
+	public BZ(final ProgramCounter programCounter, final ArithmeticLogicalAccumulator accu, final Register register) {
 		super(programCounter, accu, register);
 	}
 
@@ -31,6 +31,6 @@ public class BZ extends AbstractConditionalProgramCounterCommandRegister{
 	 */
 	@Override
 	protected boolean shouldJump() {
-		return ByteArrayUtils.toInt(accu.get()) == 0;
+		return ByteArrayUtils.toInt(getAccu().get()) == 0;
 	}
 }

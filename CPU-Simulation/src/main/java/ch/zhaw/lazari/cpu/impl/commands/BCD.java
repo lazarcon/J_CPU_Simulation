@@ -10,7 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.ProgramCounter;
 
 /**
@@ -23,7 +23,7 @@ public class BCD extends AbstractConditionalProgramCounterCommandAddress {
 	 * @param accu
 	 * @param address
 	 */
-	public BCD(ProgramCounter programCounter, Accumulator accu, byte[] address) {
+	public BCD(ProgramCounter programCounter, ArithmeticLogicalAccumulator accu, int address) {
 		super(programCounter, accu, address);
 	}
 
@@ -32,7 +32,7 @@ public class BCD extends AbstractConditionalProgramCounterCommandAddress {
 	 */
 	@Override
 	protected boolean shouldJump() {
-		return accu.getCarryFlag() == 1;
+		return getAccu().getCarryFlag() == 1;
 	}
 
 }

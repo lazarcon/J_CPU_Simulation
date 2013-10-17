@@ -10,7 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.Register;
 
 /**
@@ -23,7 +23,7 @@ public class OR extends AbstractAccumulatorCommand {
 	/**
 	 * @param accu
 	 */
-	public OR(Accumulator accu, final Register register) {
+	public OR(final ArithmeticLogicalAccumulator accu, final Register register) {
 		super(accu);
 		this.register = register;
 	}
@@ -34,7 +34,7 @@ public class OR extends AbstractAccumulatorCommand {
 	@Override
 	public void execute() {
 		log.trace("Exeuting OR Operation");
-		accu.or(register.get());
+		getAccu().or(register.get());
 	}
 
 }

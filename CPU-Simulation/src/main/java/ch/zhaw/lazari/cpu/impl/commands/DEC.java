@@ -10,14 +10,14 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 
 /**
  * Decrements the accumulator
  */
 public class DEC extends AbstractAccumulatorCommand {
 	
-	public DEC(final Accumulator accu) {
+	public DEC(final ArithmeticLogicalAccumulator accu) {
 		super(accu);
 	}
 	
@@ -27,7 +27,7 @@ public class DEC extends AbstractAccumulatorCommand {
 	@Override
 	public void execute() {
 		log.trace("Decrementing accumulator");
-		accu.decrement();
+		getAccu().decrement();
 	}
 
 }

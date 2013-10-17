@@ -10,24 +10,24 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.ProgramCounter;
-import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
 
 /**
- * Responsibility:
+ * Provide template <code>execute</code> method for conditional jump commands
  */
 public abstract class AbstractConditionalProgramCounterCommand extends AbstractProgramCounterCommand{
 
-	protected final Accumulator accu;
+	private final ArithmeticLogicalAccumulator accu;
 	
-	/**
-	 * @param programCounter
-	 */
 	public AbstractConditionalProgramCounterCommand(
-			final ProgramCounter programCounter, final Accumulator accu) {
+			final ProgramCounter programCounter, final ArithmeticLogicalAccumulator accu) {
 		super(programCounter);
 		this.accu = accu;
+	}
+	
+	protected ArithmeticLogicalAccumulator getAccu() {
+		return accu;
 	}
 	
 	@Override
@@ -35,17 +35,15 @@ public abstract class AbstractConditionalProgramCounterCommand extends AbstractP
 		log.trace("Executing conditional jump");
 		if(shouldJump()) {
 			jump(getAddress());
-		} else {
-			programCounter.next();
 		}
 	}
 	
-	private void jump(byte[] address) {
-		programCounter.set(ByteArrayUtils.toInt(address));
+	private void jump(int address) {
+		getProgramCounter().set(address);
 	}
 	
 	protected abstract boolean shouldJump();
 	
-	protected abstract byte[] getAddress();
+	protected abstract int getAddress();
 
 }

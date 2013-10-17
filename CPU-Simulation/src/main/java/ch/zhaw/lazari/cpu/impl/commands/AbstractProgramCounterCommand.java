@@ -17,10 +17,14 @@ import ch.zhaw.lazari.cpu.api.ProgramCounter;
  */
 public abstract class AbstractProgramCounterCommand extends AbstractCommand{
 
-	protected final ProgramCounter programCounter;
+	private final ProgramCounter programCounter;
 	
 	public AbstractProgramCounterCommand(final ProgramCounter programCounter) {
 		this.programCounter = programCounter;
+	}
+	
+	protected ProgramCounter getProgramCounter() {
+		return programCounter;
 	}
 
 }

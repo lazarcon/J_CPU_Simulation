@@ -11,27 +11,32 @@
 package ch.zhaw.lazari.cpu.impl.commands;
 
 import ch.zhaw.lazari.cpu.api.*;
+import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
 
 /**
  * Responsibility:
  */
 public abstract class AbstractConditionalProgramCounterCommandRegister extends AbstractConditionalProgramCounterCommand {
 
-	protected final Register register;
+	private final Register register;
 	
 	/**
 	 * @param programCounter
 	 * @param accu
 	 */
 	public AbstractConditionalProgramCounterCommandRegister(
-			final ProgramCounter programCounter, final Accumulator accu, final Register register) {
+			final ProgramCounter programCounter, final ArithmeticLogicalAccumulator accu, final Register register) {
 		super(programCounter, accu);
 		this.register = register;
 	}
 
+	protected Register getRegister() {
+		return register;
+	}
+	
 	@Override
-	protected final byte[] getAddress() {
-		return register.get();
+	protected final int getAddress() {
+		return ByteArrayUtils.toInt(register.get());
 	}
 	
 }

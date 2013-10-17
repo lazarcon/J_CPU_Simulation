@@ -10,16 +10,24 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 
 /**
  * Provides the accumulator
  */
 public abstract class AbstractAccumulatorCommand extends AbstractCommand {
 
-	protected final Accumulator accu;
+	private final ArithmeticLogicalAccumulator accu;
 	
-	public AbstractAccumulatorCommand(final Accumulator accu) {
+	/**
+	 * Creates a template command, knowning the accu
+	 * @param accu Accumulator to use
+	 */
+	public AbstractAccumulatorCommand(final ArithmeticLogicalAccumulator accu) {
 		this.accu = accu;
+	}
+	
+	protected ArithmeticLogicalAccumulator getAccu() {
+		return accu;
 	}
 }
