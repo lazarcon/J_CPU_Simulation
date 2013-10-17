@@ -145,10 +145,33 @@ public class SimpleCPUImpl implements CPU {
 
 	private Command interpret(final String word) {
 		// FIXME Reduce complexity
-		final InstructionSet2ByteWord instruction = InstructionSet2ByteWord.create(word);
-		switch (instruction) {
-		case CLR:
-			return new CLR(registers[instruction.getRegisterId(word)]);
+		final InstructionSet2ByteWord instruction = InstructionSet2ByteWord.createFromBits(word);
+		switch (instruction.getGroup()) {
+		case REGISTER:
+			return createRegisterCommand(instruction, word);
+		case ACCU:
+			return createAccumulatorCommand(instruction, word);
+		case MEMORY:
+			return createMemoryCommand(instruction, word);
+		case ARITHMETIC:
+			return createArithmeticCommand(instruction, word);
+		case LOGICAL:
+			return createLogicCommand(instruction, word);
+		case PROGRAM_COUNTER:
+			return createProgramCounterCommand(instruction, word);
+		case CPU:
+			return createCPUCommand();
+		default:
+			throw new UnknownCommandException(word);				
+		}
+	}
+
+	private Command createRegisterCommand(final InstructionSet2ByteWord instruction, final String word) {
+		return new CLR(registers[instruction.getRegisterId(word)]);
+	}
+
+	private Command createAccumulatorCommand(final InstructionSet2ByteWord instruction, final String word) {
+		switch(instruction) {
 		case ADD:
 			return new ADD(accu, registers[instruction.getRegisterId(word)]);
 		case ADDD:
@@ -158,10 +181,24 @@ public class SimpleCPUImpl implements CPU {
 			return new INC(accu);
 		case DEC:
 			return new DEC(accu);
+		default:
+			throw new UnknownCommandException(word);				
+		}
+	}
+
+	private Command createMemoryCommand(final InstructionSet2ByteWord instruction, final String word) {
+		switch(instruction) {
 		case LWDD:
 			return new LWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));
 		case SWDD:
 			return new SWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));			
+		default:
+			throw new UnknownCommandException(word);				
+		}
+	}
+
+	private Command createArithmeticCommand(final InstructionSet2ByteWord instruction, final String word) {
+		switch(instruction) {
 		case SRA:
 			return new SRA(accu);
 		case SLA:
@@ -170,6 +207,26 @@ public class SimpleCPUImpl implements CPU {
 			return new SRL(accu);
 		case SLL:
 			return new SLL(accu);
+		default:
+			throw new UnknownCommandException(word);				
+		}
+	}
+	
+	private Command createLogicCommand(final InstructionSet2ByteWord instruction, final String word) {
+		switch(instruction) {
+		case AND:
+			return new AND(accu, registers[instruction.getRegisterId(word)]);
+		case OR:
+			return new OR(accu, registers[instruction.getRegisterId(word)]);
+		case NOT:
+			return new NOT(accu);
+		default:
+			throw new UnknownCommandException(word);				
+		}
+	}
+
+	private Command createProgramCounterCommand(final InstructionSet2ByteWord instruction, final String word) {
+		switch(instruction) {
 		case BZ:
 			return new BZ(programCounter, accu, registers[instruction.getRegisterId(word)]);
 		case BNZ:
@@ -186,12 +243,12 @@ public class SimpleCPUImpl implements CPU {
 			return new BCD(programCounter, accu, instruction.getAddress(word));
 		case BD:
 			return new BD(programCounter, instruction.getAddress(word));
-		case END:
-			return new END(this);
 		default:
 			throw new UnknownCommandException(word);				
 		}
 	}
 
-
+	private Command createCPUCommand() {
+		return new END(this);
+	}
 }
