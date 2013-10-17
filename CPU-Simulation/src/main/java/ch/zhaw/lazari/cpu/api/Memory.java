@@ -16,7 +16,7 @@ package ch.zhaw.lazari.cpu.api;
 public interface Memory {
 
 	/** The default size for memory elements in bytes */
-	static int DEFAULT_SIZE = 1024;
+	int DEFAULT_SIZE = 1024;
 	
 	/**
 	 * Stores the given byte

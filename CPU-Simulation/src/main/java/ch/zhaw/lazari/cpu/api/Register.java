@@ -18,7 +18,7 @@ package ch.zhaw.lazari.cpu.api;
 public interface Register {
 
 	/** Default Word length of the register */
-	static int DEFAULT_WORD_LENGTH = 2;
+	int DEFAULT_WORD_LENGTH = 2;
 	
 	/**
 	 * Sets the content of the register to the given word

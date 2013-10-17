@@ -16,10 +16,10 @@ package ch.zhaw.lazari.cpu.api;
 public interface ProgramCounter {
 
 	/** Default memory offset */
-	static int DEFAULT_OFFSET = 0;
+	int DEFAULT_OFFSET = 0;
 
 	/** The default step size when incrementing */
-	static int STEP_SIZE = Register.DEFAULT_WORD_LENGTH;
+	int STEP_SIZE = Register.DEFAULT_WORD_LENGTH;
 	
 	/**
 	 * Sets the address of the next command 
