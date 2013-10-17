@@ -14,8 +14,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
-
 /**
  * Responsibility:
  */
@@ -34,19 +32,38 @@ public class ByteArrayUtilsTest {
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toInt(byte[])}.
 	 */
 	@Test
-	public void testToInt() {
+	public void testToIntPositive() {
 		final byte[] word = {1, 0};
 		assertEquals(256, ByteArrayUtils.toInt(word));
+	}
+
+	/**
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toInt(byte[])}.
+	 */
+	@Test
+	public void testToIntNegative() {
+		final byte[] word = {-1, 42};
+		assertEquals(-256, ByteArrayUtils.toInt(word));
 	}
 
 	/**
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#fromInt(int, int)}.
 	 */
 	@Test
-	public void testFromInt() {
+	public void testFromIntPositive() {
 		final byte[] word = ByteArrayUtils.fromInt(256, 2);
 		assertEquals(1, word[0]);
 		assertEquals(0, word[1]);
+	}
+
+	/**
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#fromInt(int, int)}.
+	 */
+	@Test
+	public void testFromIntNegative() {
+		final byte[] word = ByteArrayUtils.fromInt(-42, 2);
+		assertEquals(-256, word[0]);
+		assertEquals(42, word[1]);
 	}
 
 	/**
