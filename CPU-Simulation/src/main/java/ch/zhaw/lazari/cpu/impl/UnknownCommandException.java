@@ -10,6 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl;
 
+
 /**
  * Represents an unknown command
  */
@@ -20,6 +21,7 @@ public class UnknownCommandException extends RuntimeException {
 	private final String word;
 	
 	public UnknownCommandException(final String word) {
+		super();
 		this.word = word;
 	}
 	
