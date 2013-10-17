@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.zhaw.lazari.cpu.api.LogicalAccumulator;
-import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Simple Implementation of an Accumulator

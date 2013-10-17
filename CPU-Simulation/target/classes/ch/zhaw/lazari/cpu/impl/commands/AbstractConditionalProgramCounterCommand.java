@@ -32,7 +32,7 @@ public abstract class AbstractConditionalProgramCounterCommand extends AbstractP
 	
 	@Override
 	public final void execute() {
-		log.trace("Executing conditional jump");
+		getLog().trace("Executing conditional jump");
 		if(shouldJump()) {
 			jump(getAddress());
 		}

@@ -14,13 +14,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
+
 /**
  * Responsibility:
  */
 public class ByteArrayUtilsTest {
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.ByteArrayUtils#toString(byte[])}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toString(byte[])}.
 	 */
 	@Test
 	public void testToStringByteArray() {
@@ -29,7 +31,7 @@ public class ByteArrayUtilsTest {
 	}
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.ByteArrayUtils#toInt(byte[])}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toInt(byte[])}.
 	 */
 	@Test
 	public void testToInt() {
@@ -38,7 +40,7 @@ public class ByteArrayUtilsTest {
 	}
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.ByteArrayUtils#fromInt(int, int)}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#fromInt(int, int)}.
 	 */
 	@Test
 	public void testFromInt() {
@@ -48,7 +50,7 @@ public class ByteArrayUtilsTest {
 	}
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.ByteArrayUtils#not(byte[])}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#not(byte[])}.
 	 */
 	@Test
 	public void testNot() {
@@ -60,7 +62,7 @@ public class ByteArrayUtilsTest {
 	}
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.ByteArrayUtils#and(byte[], byte[])}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#and(byte[], byte[])}.
 	 */
 	@Test
 	public void testAnd() {
@@ -72,7 +74,7 @@ public class ByteArrayUtilsTest {
 	}
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.ByteArrayUtils#or(byte[], byte[])}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#or(byte[], byte[])}.
 	 */
 	@Test
 	public void testOr() {

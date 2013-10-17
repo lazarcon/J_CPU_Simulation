@@ -11,7 +11,7 @@
 package ch.zhaw.lazari.cpu.impl.commands;
 
 import ch.zhaw.lazari.cpu.api.*;
-import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
