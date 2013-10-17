@@ -15,7 +15,9 @@ package ch.zhaw.lazari.cpu.impl;
  */
 public final class ByteArrayUtils {
 
-	private static final int BITS_PER_BYTE = 8;
+	public static final int BITS_PER_BYTE = 8;
+	
+	public static final int RADIX_BINARY = 2;
 	
 	private static final int ZEROS = 0xFF;
 	
