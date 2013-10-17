@@ -25,7 +25,7 @@ public class InstructionSet2ByteWordTest {
 	@Test
 	public void testClear00() {
 		final String word = "0000001010000000";
-		final InstructionSet2ByteWord instruction = InstructionSet2ByteWord.create(word);
+		final InstructionSet2ByteWord instruction = InstructionSet2ByteWord.createFromBits(word);
 		assertEquals(InstructionSet2ByteWord.CLR, instruction);
 		assertEquals(0, instruction.getRegisterId(word));
 	}
