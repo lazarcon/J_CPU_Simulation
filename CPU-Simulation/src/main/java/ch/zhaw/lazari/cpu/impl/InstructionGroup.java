@@ -19,7 +19,7 @@ public enum InstructionGroup {
 	ACCU,
 	MEMORY,
 	ARITHMETIC,
-	LOGICAL,
+	LOGIC,
 	PROGRAM_COUNTER,
 	CPU
 }
