@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -22,7 +23,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 
 	private static final Logger LOG = LoggerFactory.getLogger(ArithmeticLogicalAccumulator.class);
 	
-	private final int carryFlag = 0;
+	private int carryFlag = 0;
 	
 	public ArithmeticLogicalAccumulatorImpl() {
 		super();
@@ -45,7 +46,15 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void add(byte[] bytes) {
 		LOG.trace("Adding word");
-		// TODO create content
+		final int stored = ByteArrayUtils.toInt(get());
+		final int toAdd = ByteArrayUtils.toInt(bytes);
+		final int result = stored + toAdd;
+		if(isOverflow(result)) {
+			carryFlag = 1;
+		} else {
+			carryFlag = 0;
+		}
+		set(result);
 	}
 
 	/* (non-Javadoc)
@@ -72,7 +81,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void shiftRightArithmetic() {
 		LOG.trace("Executing arithmetic right shift");
-		// TODO Auto-generated method stub
+		set(ByteArrayUtils.toInt(get()) >> 1);
+		carryFlag = 0;
 	}
 
 	/* (non-Javadoc)
@@ -81,7 +91,14 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void shiftLeftArithmetic() {
 		LOG.trace("Executing arithmetic left shift");
-		// TODO Auto-generated method stub
+		final int value = ByteArrayUtils.toInt(get());
+		final int newValue = value << 1;
+		if(isOverflow(newValue)) {
+			carryFlag = 1;
+		} else {
+			carryFlag = 0;
+		}
+		set(newValue);
 	}
 
 	/* (non-Javadoc)
@@ -90,7 +107,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void shiftRightLogical() {
 		LOG.trace("Executing logical right shift");
-		// TODO Auto-generated method stub
+		set(ByteArrayUtils.toInt(get()) >>> 1); 
+		carryFlag = 0;
 	}
 
 	/* (non-Javadoc)
@@ -99,7 +117,14 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void shiftLeftLogical() {
 		LOG.trace("Executing logical left shift");
-		// TODO Auto-generated method stub
+		// TODO Implement ShiftLeftLogical
 	}
 
+	private void set(final int value) {
+		set(ByteArrayUtils.fromInt(value, get().length));
+	}
+	
+	private boolean isOverflow(final int value) {
+		return (value > Math.pow(2, get().length - 1)) || (value < - Math.pow(2, get().length - 1));
+	}
 }
