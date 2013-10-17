@@ -34,7 +34,12 @@ public final class ByteArrayUtils {
 	public static String toString(final byte[] word) {
 		final StringBuilder builder = new StringBuilder();
 		for(final byte aByte : word) {
-			builder.append(String.format("%08d", Integer.parseInt(Integer.toBinaryString(aByte))));
+			final String binary = Integer.toBinaryString(aByte);
+			if(binary.length() < 8) {
+				builder.append(String.format("%08d", Integer.parseInt(binary)));
+			} else {
+				builder.append(binary.substring(binary.length() - BITS_PER_BYTE));
+			}
 		}
 		return builder.toString();
 	}
