@@ -29,7 +29,7 @@ public class SRL extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Executing logical right shift of accumulator");
+		log("Telling accumulator to logical right shift its content.");
 		getAccu().shiftRightLogical();
 	}
 

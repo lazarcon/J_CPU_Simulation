@@ -29,7 +29,7 @@ public class SLA extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Executing arithmetic left shift of accumulator");
+		log("Telling accumulator to arithmetical left shift its content.");
 		getAccu().shiftLeftArithmetic();
 	}
 

@@ -30,7 +30,7 @@ public class SRA extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Executing arithmetic right shift of accumulator");
+		log("Telling accumulator to arithmetical right shift its content.");
 		getAccu().shiftRightArithmetic();
 	}
 
