@@ -35,7 +35,7 @@ public class AND extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log.trace("Executing AND operation on accu");
+		getLog().trace("Executing AND operation on accu");
 		getAccu().and(register.get());
 	}
 

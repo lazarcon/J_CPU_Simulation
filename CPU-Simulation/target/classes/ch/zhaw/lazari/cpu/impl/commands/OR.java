@@ -33,7 +33,7 @@ public class OR extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log.trace("Exeuting OR Operation");
+		getLog().trace("Exeuting OR Operation");
 		getAccu().or(register.get());
 	}
 

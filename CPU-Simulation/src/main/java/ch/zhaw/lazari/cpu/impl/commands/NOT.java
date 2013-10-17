@@ -29,7 +29,7 @@ public class NOT extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log.trace("Executing not operation on accumulator");
+		getLog().trace("Executing not operation on accumulator");
 		getAccu().not();
 	}
 

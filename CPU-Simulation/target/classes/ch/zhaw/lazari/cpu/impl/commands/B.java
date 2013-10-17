@@ -34,7 +34,7 @@ public class B extends AbstractProgramCounterCommand {
 	 */
 	@Override
 	public void execute() {
-		log.trace("Executing unconditional jumb by register");
+		getLog().trace("Executing unconditional jumb by register");
 		getProgramCounter().set(ByteArrayUtils.toInt(register.get()));
 	}
 

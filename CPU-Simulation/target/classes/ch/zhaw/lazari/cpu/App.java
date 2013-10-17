@@ -13,7 +13,7 @@ package ch.zhaw.lazari.cpu;
 /**
  * Simulates a CPU
  */
-public class App {
+public final class App {
 	
 	private App() {
 		// Avoid instantiation
