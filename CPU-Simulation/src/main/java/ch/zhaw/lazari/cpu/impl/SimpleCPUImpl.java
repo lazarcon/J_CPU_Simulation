@@ -143,6 +143,7 @@ public class SimpleCPUImpl implements CPU {
 	}
 
 	private Command interpret(final String word) {
+		// FIXME Reduce complexity
 		final InstructionSet2ByteWord instruction = InstructionSet2ByteWord.create(word);
 		switch (instruction) {
 		case CLR:
