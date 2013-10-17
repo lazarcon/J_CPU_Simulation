@@ -77,11 +77,11 @@ public class SimpleCPUImpl implements CPU {
 	 */
 	@Override
 	public void tick() {
-		LOG.trace("Recieved tick executing instructions ...");
+		LOG.trace("Recieved tick executing instructions:");
 		final Command command = getCommand();
-		LOG.trace("\t%d Incrementing program counter.", counter++);
+		LOG.trace(String.format("\t%d. Incrementing program counter.", counter++));
 		programCounter.next();
-		LOG.trace("\t%d Executing command", counter);
+		LOG.trace(String.format("\t%d. Executing command:", counter));
 		command.execute();
 		counter = 1;
 	}
@@ -127,9 +127,9 @@ public class SimpleCPUImpl implements CPU {
 	}
 	
 	private Command getCommand() {
-		LOG.trace(String.format("\t%d. Fetching command from memory", counter++));
+		LOG.trace(String.format("\t%d. Fetching command from memory:", counter++));
 		final String word = getCommandWord();
-		LOG.trace(String.format("\t%d. Interpreting command word: %s", counter++, word));
+		LOG.trace(String.format("\t%d. Interpreting command word '%s':", counter++, word));
 		return interpret(word);
 	}
 
@@ -138,7 +138,7 @@ public class SimpleCPUImpl implements CPU {
 		int address = programCounter.get();
 		for(int index = 0; index < DEFAULT_WORD_LENGTH; ++index) {
 			LOG.trace(String.format("\t\t - Reading byte at relative address %d", address));
-			word[index] = memory.load(address++);	
+			word[index] = memory.load(address++);
 		}
 		return ByteArrayUtils.toString(word);
 	}
@@ -146,6 +146,7 @@ public class SimpleCPUImpl implements CPU {
 	private Command interpret(final String word) {
 		// FIXME Reduce complexity
 		final InstructionSet2ByteWord instruction = InstructionSet2ByteWord.createFromBits(word);
+		LOG.trace(String.format("\t\tas %s command of type %s", instruction.getGroup(), instruction));
 		switch (instruction.getGroup()) {
 		case REGISTER:
 			return createRegisterCommand(instruction, word);
@@ -155,13 +156,14 @@ public class SimpleCPUImpl implements CPU {
 			return createMemoryCommand(instruction, word);
 		case ARITHMETIC:
 			return createArithmeticCommand(instruction, word);
-		case LOGICAL:
+		case LOGIC:
 			return createLogicCommand(instruction, word);
 		case PROGRAM_COUNTER:
 			return createProgramCounterCommand(instruction, word);
 		case CPU:
 			return createCPUCommand();
 		default:
+			LOG.error(String.format("\t\tas Unknown InstructionGroup '%s'", instruction.getGroup()));
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -182,6 +184,7 @@ public class SimpleCPUImpl implements CPU {
 		case DEC:
 			return new DEC(accu);
 		default:
+			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -193,6 +196,7 @@ public class SimpleCPUImpl implements CPU {
 		case SWDD:
 			return new SWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));			
 		default:
+			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -208,6 +212,7 @@ public class SimpleCPUImpl implements CPU {
 		case SLL:
 			return new SLL(accu);
 		default:
+			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -221,6 +226,7 @@ public class SimpleCPUImpl implements CPU {
 		case NOT:
 			return new NOT(accu);
 		default:
+			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -244,6 +250,7 @@ public class SimpleCPUImpl implements CPU {
 		case BD:
 			return new BD(programCounter, instruction.getAddress(word));
 		default:
+			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
 			throw new UnknownCommandException(word);				
 		}
 	}
