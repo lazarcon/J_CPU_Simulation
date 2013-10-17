@@ -30,7 +30,7 @@ public class SimpleCPUImpl implements CPU {
 	
 	private static final int REGISTERS = 3;
 	
-	private static int counter = 1;
+	private int counter = 1;
 	
 	private final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(DEFAULT_WORD_LENGTH);
 	
