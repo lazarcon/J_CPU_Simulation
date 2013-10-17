@@ -10,9 +10,6 @@
  */
 package ch.zhaw.lazari.cpu.impl.register;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.zhaw.lazari.cpu.api.LogicalAccumulator;
 import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
@@ -20,8 +17,6 @@ import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
  * Simple Implementation of an Accumulator
  */
 public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements LogicalAccumulator{
-
-	private static final Logger LOG = LoggerFactory.getLogger(LogicalAccumulator.class);
 	
 	/**
 	 * Creates a new accumulator with a default word length
@@ -44,8 +39,10 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 */
 	@Override
 	public void and(byte[] bytes) {
-		LOG.trace("Executing AND");
+		final String current = ByteArrayUtils.toString(get());
 		set(ByteArrayUtils.and(get(), bytes));
+		log(String.format("Executed (content, passed argument): '%s' AND '%s' = '%s'", 
+				current, ByteArrayUtils.toString(bytes), ByteArrayUtils.toString(get())));
 	}
 
 	/* (non-Javadoc)
@@ -53,8 +50,11 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 */
 	@Override
 	public void or(byte[] bytes) {
-		LOG.trace("Executing OR");
+		final String current = ByteArrayUtils.toString(get());
 		set(ByteArrayUtils.or(get(), bytes));
+		log(String.format("Executed (content, passed argument): '%s' OR '%s' = '%s'", 
+				current, ByteArrayUtils.toString(bytes), ByteArrayUtils.toString(get())));
+
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +62,9 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 */
 	@Override
 	public void not() {
-		LOG.trace("Executing NOT");
+		final String current = ByteArrayUtils.toString(get());
 		set(ByteArrayUtils.not(get()));
+		log(String.format("Executed NOT '%s' = '%s'", 
+				current, ByteArrayUtils.toString(get())));
 	}
 }
