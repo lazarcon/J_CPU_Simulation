@@ -30,7 +30,6 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testAddPositiveNoOverflow() {
-		System.out.println("add + no overflow");
 		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
 		accu.set(ByteArrayUtils.fromInt(300, LENGTH));
 		accu.add(ByteArrayUtils.fromInt(200, LENGTH));
@@ -44,7 +43,6 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testAddPositiveOverflow() {
-		System.out.println("add + overflow");
 		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
 		accu.set(ByteArrayUtils.fromInt(65_535, LENGTH));
 		accu.add(ByteArrayUtils.fromInt(1, LENGTH));
@@ -58,7 +56,6 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testAddNegativNoOverflow() {
-		System.out.println("add - no overflow");
 		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
 		accu.set(ByteArrayUtils.fromInt(300, LENGTH));
 		accu.add(ByteArrayUtils.fromInt(-200, LENGTH));
