@@ -10,21 +10,21 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 
 /**
  * Increments the accumulator by 1
  */
 public class INC extends AbstractAccumulatorCommand {
 	
-	public INC(final Accumulator accu) {
+	public INC(final ArithmeticLogicalAccumulator accu) {
 		super(accu);
 	}
 	
 	@Override
 	public void execute() {
 		log.trace("Incrementing accumlator");
-		accu.increment();
+		getAccu().increment();
 	}
 
 }

@@ -16,6 +16,12 @@ package ch.zhaw.lazari.cpu.api;
  */
 public interface CPU {
 	
+	/** Tells the cpu that it should start processing */
+	void start();
+	
+	/** Tells the cpu that it should stop finishing */
+	void stop();
+	
 	/** Tells the CPU to execute the current instruction */
 	void tick();
 	
@@ -32,5 +38,6 @@ public interface CPU {
 	ProgramCounter getProgramCounter();
 	
 	/** Returns the accumulator used by the cpu */
-	Accumulator getAccumulator();
+	LogicalAccumulator getAccumulator();
+	
 }

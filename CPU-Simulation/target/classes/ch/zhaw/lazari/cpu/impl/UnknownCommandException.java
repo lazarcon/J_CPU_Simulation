@@ -17,14 +17,14 @@ public class UnknownCommandException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	private final byte[] word;
+	private final String word;
 	
-	public UnknownCommandException(final byte[] word) {
-		this.word = word.clone();
+	public UnknownCommandException(final String word) {
+		this.word = word;
 	}
 	
 	@Override
 	public String getMessage() {
-		return String.format("The command '%s' could not be interpreted.", ByteArrayUtils.toString(word));
+		return String.format("The command '%s' could not be interpreted.", word);
 	}
 }

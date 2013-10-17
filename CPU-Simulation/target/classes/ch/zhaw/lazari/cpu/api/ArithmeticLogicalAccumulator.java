@@ -1,6 +1,6 @@
 /*
- * File: 		Accumulator.java
- * Date: 		Oct 15, 2013
+ * File: 		ArithmeticAccumulator.java
+ * Date: 		Oct 17, 2013
  *
  * Copyright 2013 Constantin Lazari. All rights reserved.
  *
@@ -11,9 +11,9 @@
 package ch.zhaw.lazari.cpu.api;
 
 /**
- * Represents the Accumulator of a processor
+ * Responsibility:
  */
-public interface Accumulator extends Register {
+public interface ArithmeticLogicalAccumulator extends LogicalAccumulator{
 
 	/**
 	 * @return status of the carry flag
@@ -56,21 +56,5 @@ public interface Accumulator extends Register {
 	 * Multiplies the content with 2
 	 */
 	void shiftLeftLogical();
-	
-	/**
-	 * Performs a logical and operation between the content and the given word
-	 * @param bytes word to perform the operation with
-	 */
-	void and(final byte[] bytes);
 
-	/**
-	 * Performs a logical or operation between the content and the given word
-	 * @param bytes word to perform the operation with
-	 */
-	void or(final byte[] bytes);
-
-	/**
-	 * Inverts the stored content
-	 */
-	void not();
 }

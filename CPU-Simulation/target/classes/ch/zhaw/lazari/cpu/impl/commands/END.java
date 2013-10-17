@@ -10,12 +10,20 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import ch.zhaw.lazari.cpu.api.CPU;
+
 
 
 /**
- * 2 Byte End Instruction
+ * End Instruction
  */
 public class END extends AbstractCommand {
+	
+	private final CPU cpu;
+	
+	public END(final CPU cpu) {
+		this.cpu = cpu;
+	}
 	
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Command#execute()
@@ -23,8 +31,6 @@ public class END extends AbstractCommand {
 	@Override
 	public void execute() {
 		log.trace("Programm ends");
-		// does nothing, since its an end command		
+		cpu.stop();
 	}
-
-	
 }

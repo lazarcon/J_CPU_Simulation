@@ -10,7 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.ProgramCounter;
 import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
 
@@ -24,7 +24,7 @@ public class BZD extends AbstractConditionalProgramCounterCommandAddress {
 	 * @param accu
 	 * @param address
 	 */
-	public BZD(final ProgramCounter programCounter, final Accumulator accu, final byte[] address) {
+	public BZD(final ProgramCounter programCounter, final ArithmeticLogicalAccumulator accu, final int address) {
 		super(programCounter, accu, address);
 	}
 
@@ -33,7 +33,7 @@ public class BZD extends AbstractConditionalProgramCounterCommandAddress {
 	 */
 	@Override
 	protected boolean shouldJump() {
-		return ByteArrayUtils.toInt(accu.get()) == 0;
+		return ByteArrayUtils.toInt(getAccu().get()) == 0;
 	}
 
 }

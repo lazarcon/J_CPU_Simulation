@@ -11,21 +11,20 @@
 package ch.zhaw.lazari.cpu.impl.commands;
 
 import ch.zhaw.lazari.cpu.api.ProgramCounter;
-import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
 
 /**
  * Responsibility:
  */
 public class BD extends AbstractProgramCounterCommand {
 
-	private final byte[] address;
+	private final int address;
 	
 	/**
 	 * @param programCounter
 	 */
-	public BD(final ProgramCounter programCounter, final byte[] address) {
+	public BD(final ProgramCounter programCounter, final int address) {
 		super(programCounter);
-		this.address = address.clone();
+		this.address = address;
 	}
 
 	/* (non-Javadoc)
@@ -34,7 +33,7 @@ public class BD extends AbstractProgramCounterCommand {
 	@Override
 	public void execute() {
 		log.trace("Executing unconditional direct jump");
-		programCounter.set(ByteArrayUtils.toInt(address));
+		getProgramCounter().set(address);
 	}
 
 }

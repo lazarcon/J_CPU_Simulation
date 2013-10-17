@@ -39,7 +39,7 @@ public class LWDD extends AbstractMemoryCommand {
 		log.trace("Loading from memory into register");
 		final byte[] word = new byte[register.getSize()];
 		for(int index = 0; index < register.getSize(); ++index) {
-			word[index] = memory.load(address + index);
+			word[index] = getMemory().load(address + index);
 		}
 		register.set(word);
 	}

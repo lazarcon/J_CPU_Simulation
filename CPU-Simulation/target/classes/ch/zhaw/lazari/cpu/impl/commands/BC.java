@@ -21,7 +21,7 @@ public class BC extends AbstractConditionalProgramCounterCommandRegister {
 	 * @param programCounter
 	 * @param accu
 	 */
-	public BC(final ProgramCounter programCounter, final Accumulator accu, final Register register) {
+	public BC(final ProgramCounter programCounter, final ArithmeticLogicalAccumulator accu, final Register register) {
 		super(programCounter, accu, register);
 	}
 
@@ -30,9 +30,7 @@ public class BC extends AbstractConditionalProgramCounterCommandRegister {
 	 */
 	@Override
 	protected boolean shouldJump() {
-		return (accu.getCarryFlag() == 1);
+		return (getAccu().getCarryFlag() == 1);
 	}
-
-
 
 }

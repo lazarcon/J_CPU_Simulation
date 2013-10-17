@@ -14,10 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.zhaw.lazari.cpu.api.*;
-import ch.zhaw.lazari.cpu.impl.commands.END;
-import ch.zhaw.lazari.cpu.impl.commands.INC;
+import ch.zhaw.lazari.cpu.impl.commands.*;
 import ch.zhaw.lazari.cpu.impl.program_counter.SimpleProgramCounterImpl;
-import ch.zhaw.lazari.cpu.impl.register.SimpleAccumulatorImpl;
+import ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl;
 import ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl;
 
 /**
@@ -31,15 +30,17 @@ public class SimpleCPUImpl implements CPU {
 	
 	private static final int REGISTERS = 3;
 	
-	private final Accumulator accu = new SimpleAccumulatorImpl(DEFAULT_WORD_LENGTH);
+	private static int counter = 1;
+	
+	private final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(DEFAULT_WORD_LENGTH);
 	
 	private final Register[] registers = new Register[REGISTERS + 1];
 	
 	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(0, DEFAULT_WORD_LENGTH);;
 	
 	private final Memory memory;
-
-	private Command instruction;
+	
+	private boolean isFinished = true;
 	
 	/**
 	 * Creates a new CPU using the passed components
@@ -55,14 +56,33 @@ public class SimpleCPUImpl implements CPU {
 	}
 
 	/* (non-Javadoc)
+	 * @see ch.zhaw.lazari.cpu.api.CPU#start()
+	 */
+	@Override
+	public void start() {
+		isFinished = false;
+	}
+
+	/* (non-Javadoc)
+	 * @see ch.zhaw.lazari.cpu.api.CPU#stop()
+	 */
+	@Override
+	public void stop() {
+		isFinished = true;
+	}
+	
+	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.CPU#tick()
 	 */
 	@Override
 	public void tick() {
-		LOG.trace("recieved tick ... executing instructions");
-		final byte[] command = getCommandWord();
-		instruction = interpret(command);
-		instruction.execute();
+		LOG.trace("Recieved tick executing instructions ...");
+		final Command command = getCommand();
+		LOG.trace("\t%d Incrementing program counter.", counter++);
+		programCounter.next();
+		LOG.trace("\t%d Executing command", counter);
+		command.execute();
+		counter = 1;
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +90,7 @@ public class SimpleCPUImpl implements CPU {
 	 */
 	@Override
 	public boolean isFinished() {
-		return (instruction == null || instruction instanceof END);
+		return isFinished;
 	}
 
 	/* (non-Javadoc)
@@ -101,26 +121,75 @@ public class SimpleCPUImpl implements CPU {
 	 * @see ch.zhaw.lazari.cpu.api.CPU#getAccumulator()
 	 */
 	@Override
-	public Accumulator getAccumulator() {
+	public LogicalAccumulator getAccumulator() {
 		return accu;
 	}
 	
-	private byte[] getCommandWord() {
+	private Command getCommand() {
+		LOG.trace(String.format("\t%d. Fetching command from memory", counter++));
+		final String word = getCommandWord();
+		LOG.trace(String.format("\t%d. Interpreting command word: %s", counter++, word));
+		return interpret(word);
+	}
+
+	private String getCommandWord() {
 		final byte[] word = new byte[DEFAULT_WORD_LENGTH];
 		int address = programCounter.get();
 		for(int index = 0; index < DEFAULT_WORD_LENGTH; ++index) {
+			LOG.trace(String.format("\t\t - Reading byte at relative address %d", address));
 			word[index] = memory.load(address++);	
 		}
-		return word;
+		return ByteArrayUtils.toString(word);
 	}
-		
-	private Command interpret(final byte[] word) {
-		if(word[0] == 1) {
+
+	private Command interpret(final String word) {
+		final InstructionSet2ByteWord instruction = InstructionSet2ByteWord.create(word);
+		switch (instruction) {
+		case CLR:
+			return new CLR(registers[instruction.getRegisterId(word)]);
+		case ADD:
+			return new ADD(accu, registers[instruction.getRegisterId(word)]);
+		case ADDD:
+			final int value = Integer.parseInt(instruction.getSecondWord(word), ByteArrayUtils.RADIX_BINARY);
+			return new ADDD(accu, ByteArrayUtils.fromInt(value, DEFAULT_WORD_LENGTH));
+		case INC:
 			return new INC(accu);
-		} else if(word[0] == 0 && word[1] == 0) {
-			return new END();
-		} else {
-			throw new UnknownCommandException(word);
+		case DEC:
+			return new DEC(accu);
+		case LWDD:
+			return new LWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));
+		case SWDD:
+			return new SWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));			
+		case SRA:
+			return new SRA(accu);
+		case SLA:
+			return new SLA(accu);
+		case SRL:
+			return new SRL(accu);
+		case SLL:
+			return new SLL(accu);
+		case BZ:
+			return new BZ(programCounter, accu, registers[instruction.getRegisterId(word)]);
+		case BNZ:
+			return new BNZ(programCounter, accu, registers[instruction.getRegisterId(word)]);
+		case BC:
+			return new BZ(programCounter, accu, registers[instruction.getRegisterId(word)]);
+		case B:
+			return new B(programCounter, registers[instruction.getRegisterId(word)]);
+		case BZD:
+			return new BZD(programCounter, accu, instruction.getAddress(word));
+		case BNZD:
+			return new BNZD(programCounter, accu, instruction.getAddress(word));
+		case BCD:
+			return new BCD(programCounter, accu, instruction.getAddress(word));
+		case BD:
+			return new BD(programCounter, instruction.getAddress(word));
+		case END:
+			return new END(this);
+		default:
+			throw new UnknownCommandException(word);				
 		}
 	}
+
+
 }

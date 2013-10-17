@@ -1,6 +1,6 @@
 /*
- * File: 		SimpleAccumulatorImpl.java
- * Date: 		Oct 15, 2013
+ * File: 		ArithmeticLogicalAccumulator.java
+ * Date: 		Oct 17, 2013
  *
  * Copyright 2013 Constantin Lazari. All rights reserved.
  *
@@ -13,33 +13,24 @@ package ch.zhaw.lazari.cpu.impl.register;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
-import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 
 /**
- * Simple Implementation of an Accumulator
+ * Responsibility:
  */
-public class SimpleAccumulatorImpl extends SimpleRegisterImpl implements Accumulator{
+public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl implements ArithmeticLogicalAccumulator {
 
-	private final static Logger LOG = LoggerFactory.getLogger(Accumulator.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ArithmeticLogicalAccumulator.class);
 	
 	private final int carryFlag = 0;
 	
-	/**
-	 * Creates a new accumulator with a default word length
-	 */
-	public SimpleAccumulatorImpl() {
+	public ArithmeticLogicalAccumulatorImpl() {
 		super();
 	}
-
-	/**
-	 * Creates a new accumulator with the given wordSize
-	 * @param wordSize number of bytes per word
-	 */
-	public SimpleAccumulatorImpl(final int wordSize) {
-		super(wordSize);
-	}
 	
+	public ArithmeticLogicalAccumulatorImpl(final int wordLength) {
+		super(wordLength);
+	}
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#getCarryFlag()
 	 */
@@ -111,27 +102,4 @@ public class SimpleAccumulatorImpl extends SimpleRegisterImpl implements Accumul
 		// TODO Auto-generated method stub
 	}
 
-	/* (non-Javadoc)
-	 * @see ch.zhaw.lazari.cpu.api.Accumulator#and(byte[])
-	 */
-	@Override
-	public void and(byte[] bytes) {
-		set(ByteArrayUtils.and(get(), bytes));
-	}
-
-	/* (non-Javadoc)
-	 * @see ch.zhaw.lazari.cpu.api.Accumulator#or(byte[])
-	 */
-	@Override
-	public void or(byte[] bytes) {
-		set(ByteArrayUtils.or(get(), bytes));
-	}
-
-	/* (non-Javadoc)
-	 * @see ch.zhaw.lazari.cpu.api.Accumulator#not()
-	 */
-	@Override
-	public void not() {
-		set(ByteArrayUtils.not(get()));
-	}
 }

@@ -10,7 +10,7 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 
 /**
  * Responsibility:
@@ -20,7 +20,7 @@ public class SLA extends AbstractAccumulatorCommand {
 	/**
 	 * @param accu
 	 */
-	public SLA(final Accumulator accu) {
+	public SLA(final ArithmeticLogicalAccumulator accu) {
 		super(accu);
 	}
 
@@ -30,7 +30,7 @@ public class SLA extends AbstractAccumulatorCommand {
 	@Override
 	public void execute() {
 		log.trace("Executing arithmetic left shift of accumulator");
-		accu.shiftLeftArithmetic();
+		getAccu().shiftLeftArithmetic();
 	}
 
 	

@@ -14,7 +14,16 @@ package ch.zhaw.lazari.cpu;
  * Simulates a CPU
  */
 public class App {
+	
+	private App() {
+		// Avoid instantiation
+	}
+	
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
+    	// TODO start the app
+    	
+    	// load file from arguments
+    	// create array of bytes from file
+    	// execute file
     }
 }

@@ -38,7 +38,7 @@ public class SWDD extends AbstractMemoryCommand {
 	public void execute() {
 		log.trace("Storing from register to memory");
 		for(byte toStore : register.get()) {
-			memory.store(address++, toStore);
+			getMemory().store(address++, toStore);
 		}
 	}
 

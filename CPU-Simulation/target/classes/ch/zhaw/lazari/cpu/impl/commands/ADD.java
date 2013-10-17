@@ -10,17 +10,23 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
-import ch.zhaw.lazari.cpu.api.Accumulator;
+import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.Register;
+import ch.zhaw.lazari.cpu.impl.ByteArrayUtils;
 
 /**
- * Responsibility:
+ * Adds Register Content to Accumulator
  */
-public class ADD extends AbstractAccumulatorCommand {
+public final class ADD extends AbstractAccumulatorCommand {
 
 	private final Register register;
 	
-	public ADD(final Accumulator accu, final Register register) {
+	/**
+	 * Creates a new Add Command for Accumulator, using the register
+	 * @param accu Accumulator to use
+	 * @param register Register to use
+	 */
+	public ADD(final ArithmeticLogicalAccumulator accu, final Register register) {
 		super(accu);
 		this.register = register;
 	}
@@ -30,8 +36,8 @@ public class ADD extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log.trace("Adding value from register to accumulator");
-		accu.add(register.get());
+		log.trace(String.format("\t\tAdding value '%s' (from register) to accumulator.", ByteArrayUtils.toString(register.get())));
+		getAccu().add(register.get());
 	}
 
 }
