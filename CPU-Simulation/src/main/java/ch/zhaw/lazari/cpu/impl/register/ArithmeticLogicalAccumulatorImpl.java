@@ -52,11 +52,11 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void add(byte[] bytes) {
-		LOG.info("Adding word");
+		LOG.trace("Adding word");
 		final int stored = ByteArrayUtils.toInt(get());
 		final int toAdd = ByteArrayUtils.toInt(bytes);
 		final int result = stored + toAdd;
-		LOG.info(String.format("%d + %d = %d", stored, toAdd, result));
+		LOG.trace(String.format("%d + %d = %d", stored, toAdd, result));
 		if(isOverflow(result)) {
 			carryFlag = 1;
 		} else {
@@ -70,7 +70,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void increment() {
-		LOG.info("Incrementing");
+		LOG.trace("Incrementing");
 		add(new byte[]{0, 1});
 	}
 
@@ -79,7 +79,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void decrement() {
-		LOG.info("Decrementing");
+		LOG.trace("Decrementing");
 		add(new byte[]{0, -1});
 	}
 
@@ -88,7 +88,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightArithmetic() {
-		LOG.info("Executing arithmetic right shift");
+		LOG.trace("Executing arithmetic right shift");
 		set(ByteArrayUtils.toInt(get()) >> 1);
 		carryFlag = 0;
 	}
@@ -98,7 +98,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftArithmetic() {
-		LOG.info("Executing arithmetic left shift");
+		LOG.trace("Executing arithmetic left shift");
 		final int value = ByteArrayUtils.toInt(get());
 		final int newValue = value << 1;
 		if(isOverflow(newValue)) {
@@ -114,7 +114,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightLogical() {
-		LOG.info("Executing logical right shift");
+		LOG.trace("Executing logical right shift");
 		set(ByteArrayUtils.toInt(get()) >>> 1); 
 		carryFlag = 0;
 	}
@@ -124,8 +124,11 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftLogical() {
-		LOG.info("Executing logical left shift");
-		// TODO Implement ShiftLeftLogical
+		LOG.trace("Executing logical left shift");
+		final String word = ByteArrayUtils.toString(get());
+		carryFlag = Integer.parseInt(word.substring(0, 1));
+		final int value = ByteArrayUtils.toInt(get());
+		set(value * 2);
 	}
 
 	private void set(final int value) {
@@ -137,11 +140,14 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	}
 	
 	private int pow(final int base, final int exponent) {
-		if(exponent == 0) return 0;
-		int result = base;
-		for(int index = 0; index < exponent; ++index) {
+		if(exponent == 0) {
+			return 0;
+		} else {
+			int result = base;
+			for(int index = 0; index < exponent; ++index) {
 			result *= base;
 		}
 		return result;
+		}
 	}
 }
