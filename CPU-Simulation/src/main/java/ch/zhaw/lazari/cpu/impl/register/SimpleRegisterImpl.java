@@ -56,7 +56,7 @@ public class SimpleRegisterImpl implements Register {
 			this.word = word.clone();
 		} else {
 			log.error("Was told to store word of invalid length.");
-			throw new InvalidRegisterAccessException(word.length, this.word.length);
+			throw new InvalidRegisterAccessException(word.length, getWordLength());
 		}		
 	}
 
@@ -88,6 +88,10 @@ public class SimpleRegisterImpl implements Register {
 	
 	private boolean isValid(final byte[] word) {
 		return (this.word.length == word.length);
+	}
+	
+	protected int getWordLength() {
+		return word.length;
 	}
 	
 	protected void log(final String message) {
