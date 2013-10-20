@@ -34,7 +34,7 @@ public class OR extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log(String.format("Telling accumulator to perform OR operation with value '%s'", ByteArrayUtils.toString(register.get())));
+		log(String.format("Telling accumulator to perform OR operation with value '%s'", ByteArrayUtils.toBinaryString(register.get())));
 		getAccu().or(register.get());
 	}
 

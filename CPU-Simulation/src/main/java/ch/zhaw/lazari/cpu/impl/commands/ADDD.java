@@ -35,7 +35,7 @@ public class ADDD extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		final String shortend = ByteArrayUtils.toString(word).substring(1);
+		final String shortend = ByteArrayUtils.toBinaryString(word).substring(1);
 		final String processed = getProcessed(shortend);
 		log(String.format("Telling Accu to add value '%s' (direct).", processed));
 		getAccu().add(ByteArrayUtils.fromInt(Integer.parseInt(processed, ByteArrayUtils.RADIX_BINARY), word.length));

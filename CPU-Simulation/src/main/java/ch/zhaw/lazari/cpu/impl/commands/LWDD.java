@@ -41,7 +41,7 @@ public class LWDD extends AbstractMemoryCommand {
 		for(int index = 0; index < register.getSize(); ++index) {
 			word[index] = getMemory().load(address + index);
 		}
-		log(String.format("Telling register to set its value to '%s' (from memory)", ByteArrayUtils.toString(word)));
+		log(String.format("Telling register to set its value to '%s' (from memory)", ByteArrayUtils.toBinaryString(word)));
 		register.set(word);
 	}
 

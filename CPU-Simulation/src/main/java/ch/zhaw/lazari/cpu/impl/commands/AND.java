@@ -36,7 +36,7 @@ public class AND extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log(String.format("Telling accu to perform AND operation with value '%s'", ByteArrayUtils.toString(register.get())));
+		log(String.format("Telling accu to perform AND operation with value '%s'", ByteArrayUtils.toBinaryString(register.get())));
 		getAccu().and(register.get());
 	}
 

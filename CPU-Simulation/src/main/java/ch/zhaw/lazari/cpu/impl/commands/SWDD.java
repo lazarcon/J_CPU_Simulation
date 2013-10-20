@@ -37,7 +37,7 @@ public class SWDD extends AbstractMemoryCommand {
 	 */
 	@Override
 	public void execute() {
-		log(String.format("Telling memory to store '%s' at address %d", ByteArrayUtils.toString(register.get()), address));
+		log(String.format("Telling memory to store '%s' at address %d", ByteArrayUtils.toBinaryString(register.get()), address));
 		for(byte toStore : register.get()) {
 			getMemory().store(address++, toStore);
 		}
