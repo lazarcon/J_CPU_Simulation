@@ -45,9 +45,9 @@ public class LogicalAccumulatorImplTest {
 		final LogicalAccumulator accu = new LogicalAccumulatorImpl();
 		final byte[] in = {0, 1};
 		final byte[] and = {~0, ~1};
-		final byte[] expected = {0, 0};
+		final byte[] expected = {0 & ~0, 1 & ~1};
 		accu.set(in);
-		accu.or(and);
+		accu.and(and);
 		byte[] out = accu.get();
 		for(int index = 0; index < out.length; ++index) {
 			assertEquals(expected[index], out[index]);
@@ -62,7 +62,7 @@ public class LogicalAccumulatorImplTest {
 		final LogicalAccumulator accu = new LogicalAccumulatorImpl();
 		final byte[] in = {0, 1};
 		final byte[] or = {~0, ~1};
-		final byte[] expected = {1, 1};
+		final byte[] expected = {0 | ~0, 1 | ~1};
 		accu.set(in);
 		accu.or(or);
 		byte[] out = accu.get();
