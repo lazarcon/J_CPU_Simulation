@@ -20,19 +20,19 @@ import org.junit.Test;
 public class ByteArrayUtilsTest {
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toString(byte[])}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toBinaryString(byte[])}.
 	 */
 	@Test
-	public void testToStringByteArray() {
+	public void testToBinaryStringFromByteArray() {
 		final byte[] word = {1, 0};
-		assertEquals("0000000100000000", ByteArrayUtils.toString(word));
+		assertEquals("0000000100000000", ByteArrayUtils.toBinaryString(word));
 	}
 
 	/**
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toInt(byte[])}.
 	 */
 	@Test
-	public void testToIntPositive() {
+	public void testToIntFromByteArrayPositive() {
 		final byte[] word = {1, 0};
 		assertEquals(256, ByteArrayUtils.toInt(word));
 	}
@@ -41,9 +41,10 @@ public class ByteArrayUtilsTest {
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils#toInt(byte[])}.
 	 */
 	@Test
-	public void testToIntNegative() {
-		final byte[] word = {-1, 42};
-		assertEquals(-256, ByteArrayUtils.toInt(word));
+	public void testToIntFromByteArrayNegative() {
+		final byte[] word = {-1, 0};
+		assertEquals(-511, ByteArrayUtils.toInt(word));
+		assertEquals(254, ByteArrayUtils.toInt(new byte[] {0, -1}));
 	}
 
 	/**
@@ -61,9 +62,9 @@ public class ByteArrayUtilsTest {
 	 */
 	@Test
 	public void testFromIntNegative() {
-		final byte[] word = ByteArrayUtils.fromInt(-42, 2);
-		assertEquals(-256, word[0]);
-		assertEquals(42, word[1]);
+		final byte[] word = ByteArrayUtils.fromInt(-256, 2);
+		assertEquals(-1, word[0]);
+		assertEquals(0, word[1]);
 	}
 
 	/**
@@ -101,5 +102,56 @@ public class ByteArrayUtilsTest {
 		assertEquals(-1, result[0]);
 		assertEquals(-1, result[1]);
 	}
+	
+	@Test 
+	public void testGetRange() {
+		final int[] range = ByteArrayUtils.getRange(Short.SIZE / ByteArrayUtils.BITS_PER_BYTE);
+		assertEquals(Short.MIN_VALUE, range[0]);
+		assertEquals(Short.MAX_VALUE, range[1]);
+	}
 
+	@Test
+	public void testToBinaryStringFromPositive() {
+		final String converted = ByteArrayUtils.toBinaryString(42, 16);
+		assertEquals("0000000000101010", converted);
+	}
+
+	@Test
+	public void testToBinaryStringFromNegative() {
+		final String converted = ByteArrayUtils.toBinaryString(-42, 16);
+		assertEquals("1111111111010101", converted);
+	}
+	
+	@Test
+	public void testConvert() {
+		final String noConvert = "00101010";
+		assertEquals(noConvert, ByteArrayUtils.convert(noConvert));
+		final String convert = "11010101";
+		assertEquals("-0101010", ByteArrayUtils.convert(convert));
+	}
+
+	@Test
+	public void testParseByteInRange() {
+		final String valuePositive = "00101010";
+		assertEquals(42, ByteArrayUtils.parseByte(valuePositive));
+		final String valueNegative = "11010101";
+		assertEquals(-42, ByteArrayUtils.parseByte(valueNegative));
+	}
+	
+	@Test(expected = InvalidArgumentException.class)
+	public void testParseByteNotInRange() {
+		ByteArrayUtils.parseByte("111111111");
+	}
+	
+	@Test(expected = InvalidArgumentException.class)
+	public void testParseIntInvalid() {
+		ByteArrayUtils.parseInt("111111111111111111111111111111111");
+	}
+	
+	@Test
+	public void testParseIntValid() {
+		assertEquals(0, ByteArrayUtils.parseInt("00000000"));
+		assertEquals(1, ByteArrayUtils.parseInt("00000001"));
+		assertEquals(2, ByteArrayUtils.parseInt("00000010"));
+	}
 }
