@@ -44,7 +44,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	@Test
 	public void testAddPositiveOverflow() {
 		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
-		accu.set(ByteArrayUtils.fromInt(65_535, LENGTH));
+		accu.set(ByteArrayUtils.fromInt(Short.MAX_VALUE, LENGTH));
 		accu.add(ByteArrayUtils.fromInt(1, LENGTH));
 		assertEquals(1, accu.getCarryFlag());
 		final byte[] result = accu.get();
