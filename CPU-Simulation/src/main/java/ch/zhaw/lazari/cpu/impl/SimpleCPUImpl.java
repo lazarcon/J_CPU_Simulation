@@ -142,7 +142,7 @@ public class SimpleCPUImpl implements CPU {
 			LOG.trace(String.format("\t\t - Reading byte at relative address %d", address));
 			word[index] = memory.load(address++);
 		}
-		return ByteArrayUtils.toString(word);
+		return ByteArrayUtils.toBinaryString(word);
 	}
 
 	private Command interpret(final String word) {
