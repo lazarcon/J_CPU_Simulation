@@ -52,7 +52,7 @@ public class SimpleRegisterImpl implements Register {
 	@Override
 	public void set(byte[] word) {
 		if(isValid(word)) {
-			log(String.format("Storing '%s'.", ByteArrayUtils.toString(word.clone())));
+			log(String.format("Storing '%s'.", ByteArrayUtils.toBinaryString(word.clone())));
 			this.word = word.clone();
 		} else {
 			log.error("Was told to store word of invalid length.");
@@ -65,7 +65,7 @@ public class SimpleRegisterImpl implements Register {
 	 */
 	@Override
 	public byte[] get() {
-		log(String.format("Returning '%s'.", ByteArrayUtils.toString(word.clone())));
+		log(String.format("Returning '%s'.", ByteArrayUtils.toBinaryString(word.clone())));
 		return this.word.clone();
 	}
 	

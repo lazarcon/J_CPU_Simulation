@@ -39,10 +39,10 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 */
 	@Override
 	public void and(byte[] bytes) {
-		final String current = ByteArrayUtils.toString(get());
+		final String current = ByteArrayUtils.toBinaryString(get());
 		set(ByteArrayUtils.and(get(), bytes));
 		log(String.format("Executed (content, passed argument): '%s' AND '%s' = '%s'", 
-				current, ByteArrayUtils.toString(bytes), ByteArrayUtils.toString(get())));
+				current, ByteArrayUtils.toBinaryString(bytes), ByteArrayUtils.toBinaryString(get())));
 	}
 
 	/* (non-Javadoc)
@@ -50,10 +50,10 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 */
 	@Override
 	public void or(byte[] bytes) {
-		final String current = ByteArrayUtils.toString(get());
+		final String current = ByteArrayUtils.toBinaryString(get());
 		set(ByteArrayUtils.or(get(), bytes));
 		log(String.format("Executed (content, passed argument): '%s' OR '%s' = '%s'", 
-				current, ByteArrayUtils.toString(bytes), ByteArrayUtils.toString(get())));
+				current, ByteArrayUtils.toBinaryString(bytes), ByteArrayUtils.toBinaryString(get())));
 
 	}
 
@@ -62,9 +62,9 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 */
 	@Override
 	public void not() {
-		final String current = ByteArrayUtils.toString(get());
+		final String current = ByteArrayUtils.toBinaryString(get());
 		set(ByteArrayUtils.not(get()));
 		log(String.format("Executed NOT '%s' = '%s'", 
-				current, ByteArrayUtils.toString(get())));
+				current, ByteArrayUtils.toBinaryString(get())));
 	}
 }

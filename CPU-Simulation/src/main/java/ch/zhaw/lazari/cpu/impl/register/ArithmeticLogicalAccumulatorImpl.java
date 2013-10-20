@@ -64,7 +64,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void increment() {
 		add(new byte[]{0, 1});
-		log(String.format("After incremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toString(get()), carryFlag));
+		log(String.format("After incremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toBinaryString(get()), carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -73,7 +73,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void decrement() {
 		add(new byte[]{0, -1});
-		log(String.format("After decremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toString(get()), carryFlag));
+		log(String.format("After decremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toBinaryString(get()), carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -124,7 +124,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void shiftLeftLogical() {
 		final int before = toInt(get());
-		final String word = ByteArrayUtils.toString(get());
+		final String word = ByteArrayUtils.toBinaryString(get());
 		carryFlag = Integer.parseInt(word.substring(0, 1));
 		final int value = toInt(get());
 		set(value * 2);
