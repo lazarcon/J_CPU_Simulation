@@ -20,8 +20,6 @@ public final class ByteArrayUtils {
 	
 	public static final int RADIX_BINARY = 2;
 	
-	private static final int ZEROS = 0xFF;
-	
 	private ByteArrayUtils() {
 		// Avoid instantiation
 	}
@@ -31,11 +29,11 @@ public final class ByteArrayUtils {
 	 * @param word word that should be "stringed"
 	 * @return String representation of the word
 	 */
-	public static String toString(final byte[] word) {
+	public static String toBinaryString(final byte[] word) {
 		final StringBuilder builder = new StringBuilder();
 		for(final byte aByte : word) {
 			final String binary = Integer.toBinaryString(aByte);
-			if(binary.length() < 8) {
+			if(binary.length() < BITS_PER_BYTE) {
 				builder.append(String.format("%08d", Integer.parseInt(binary)));
 			} else {
 				builder.append(binary.substring(binary.length() - BITS_PER_BYTE));
@@ -50,17 +48,36 @@ public final class ByteArrayUtils {
 	 * @return value represented by the word
 	 */
 	public static int toInt(final byte[] word) {
-		int result = 0;
-		int offset = 0;
-		for(int index = word.length - 1; index >= 0; --index) {
-			result |= (word[index] & ZEROS) << offset;
-			offset += BITS_PER_BYTE;
+		final StringBuilder bits = new StringBuilder(word.length * BITS_PER_BYTE);
+		for(int index = 0; index < word.length; ++index) {
+			bits.append(toBinaryString(word[index], BITS_PER_BYTE));
 		}
-		return result;
+		return parseInt(bits.toString());
+	}
+	
+	public static int parseInt(final String bits) {
+		if(bits.length() > Integer.SIZE) {
+			throw new InvalidArgumentException(String.format("Passed argument '%s' can not be represented by an integer.", bits.toString()));
+		} 
+		int result = 0;
+		final boolean isNegative = bits.charAt(0) == '1';
+		for(int index = 1; index < bits.length(); ++index) {
+			int bit;
+			if(isNegative) {
+				bit = (bits.charAt(index) == '0') ? 1 : 0;
+			} else {
+				bit = (bits.charAt(index) == '0') ? 0 : 1;
+			}
+			// Minus 1 because last power must be 0
+			final int power = bits.length() - index - 1;
+			final int part = bit * pow(2, power);
+			result += part;
+		}
+		return (isNegative) ? -result : result;
 	}
 	
 	/**
-	 * Converts the given int to a byte array. Strips off anything,
+	 * Converts the given integer to a byte array. Strips off anything,
 	 * that does not fit in the given length
 	 * @param value The integer value to convert
 	 * @param length of the returned byte array
@@ -68,14 +85,83 @@ public final class ByteArrayUtils {
 	 */
 	public static byte[] fromInt(final int value, final int length) {
 		final byte[] result = new byte[length];
-		int offset = (length - 1) * BITS_PER_BYTE;
+		final String bits = toBinaryString(value, length * BITS_PER_BYTE);
+		int offset = 0;
 		for(int index = 0; index < length; ++index) {
-			result[index] = (byte) ((value >> offset) & ZEROS);
-			offset -= BITS_PER_BYTE;
-		}
+			final String sub = bits.substring(offset, offset + BITS_PER_BYTE);
+			result[index] = parseByte(sub);
+			offset += BITS_PER_BYTE;
+		}		
 		return result;
 	}
-		
+	
+	/**
+	 * Replacement for <code>Byte.parseByte(String, int)</code>, because it does not work on 2s complement
+	 * @param bits String containing the bits to parse in 2s complement
+	 * @return byte represented by bits
+	 */
+	public static byte parseByte(final String bits) {
+		if(bits.length() != BITS_PER_BYTE) {
+			throw new InvalidArgumentException(String.format("'%s' is not a valid bit-string", bits));
+		}
+		return Byte.parseByte(convert(bits), RADIX_BINARY);
+	}
+
+	/** 
+	 * Converts a bit-string, so that it can be used by <code>Byte.parseByte(String, int)</code>
+	 * @param bits String to convert
+	 * @return converted String (if conversion is required
+	 */
+	public static String convert (final String bits) {
+		if(bits.startsWith("1")) {
+			final StringBuilder builder = new StringBuilder(BITS_PER_BYTE);
+			builder.append("-");
+			for(int index = 1; index < BITS_PER_BYTE; ++index) {
+				builder.append((bits.charAt(index) == '1') ? '0' : '1');
+			}
+			return builder.toString();
+		} else {
+			return bits;
+		}
+	}
+	
+	/**
+	 * Converts an integer to a String of bits.
+	 * @param value The value to convert
+	 * @param length The length of the result
+	 * @return String of the given length containting 0 and 1 representing the value in 2s complement
+	 */
+	public static String toBinaryString(final int value, final int length) {
+		final StringBuilder builder = new StringBuilder();
+		int divResult = (value < 0) ? -value : value;
+		// Calc value
+		while(divResult > 0) {
+			final int remains = divResult % 2;
+			if(value < 0) {
+				builder.append(remains == 0 ? 1 : 0);
+			} else {
+				builder.append(remains == 0 ? 0 : 1);
+			}
+			divResult /= 2;			
+		}
+		// Check size
+		if(builder.length() > length - 1) {
+			throw new InvalidArgumentException(String.format("The passed value '%d' does not fit in the range '%d'.", value, length));
+		}
+		// Fill
+		while(builder.length() < length - 1) {
+			if(value < 0) {
+				builder.append(1);
+			} else {
+				builder.append(0);
+			}
+		}
+		// Append sign
+		builder.append((value < 0) ? "1" : "0");
+		builder.reverse();
+		return builder.toString();
+	}
+	
 	/**
 	 * Creates the complement of word
 	 * @param word byte array which is to be inverted
@@ -121,6 +207,22 @@ public final class ByteArrayUtils {
 			or[index] = (byte) (first[index] | second[index]);
 		}
 		return or;
+	}
+	
+	public static int[] getRange(final int wordLength) {
+		final int possibilities = pow(RADIX_BINARY, (BITS_PER_BYTE * wordLength) - 1);
+		return new int[]{-possibilities, possibilities - 1};
+	}
+	
+	private static int pow(final int base, final int exponent) {
+		if(exponent < 0) {
+			throw new InvalidArgumentException(String.format("pow is not defined for negative values like %d", exponent));
+		} 
+		int result = 1;
+		for(int index = 0; index < exponent; ++index) {
+			result *= base;
+		}
+		return result;
 	}
 
 }
