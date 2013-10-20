@@ -15,8 +15,6 @@ package ch.zhaw.lazari.cpu.impl.utils;
  * Provides all necessary byte operations
  */
 public final class ByteArrayUtils {
-
-	public static final int BITS_PER_BYTE = 8;
 	
 	public static final int RADIX_BINARY = 2;
 	
@@ -33,10 +31,10 @@ public final class ByteArrayUtils {
 		final StringBuilder builder = new StringBuilder();
 		for(final byte aByte : word) {
 			final String binary = Integer.toBinaryString(aByte);
-			if(binary.length() < BITS_PER_BYTE) {
+			if(binary.length() < Byte.SIZE) {
 				builder.append(String.format("%08d", Integer.parseInt(binary)));
 			} else {
-				builder.append(binary.substring(binary.length() - BITS_PER_BYTE));
+				builder.append(binary.substring(binary.length() - Byte.SIZE));
 			}
 		}
 		return builder.toString();
@@ -48,13 +46,19 @@ public final class ByteArrayUtils {
 	 * @return value represented by the word
 	 */
 	public static int toInt(final byte[] word) {
-		final StringBuilder bits = new StringBuilder(word.length * BITS_PER_BYTE);
+		final StringBuilder bits = new StringBuilder(word.length * Byte.SIZE);
 		for(int index = 0; index < word.length; ++index) {
-			bits.append(toBinaryString(word[index], BITS_PER_BYTE));
+			bits.append(toBinaryString(word[index], Byte.SIZE));
 		}
 		return parseInt(bits.toString());
 	}
 	
+	/**
+	 * Replacement for <code>Integer.parseInt(String, int)</code> because
+	 * it doesn't yield the expected result
+	 * @param bits
+	 * @return
+	 */
 	public static int parseInt(final String bits) {
 		if(bits.length() > Integer.SIZE) {
 			throw new InvalidArgumentException(String.format("Passed argument '%s' can not be represented by an integer.", bits.toString()));
@@ -73,7 +77,7 @@ public final class ByteArrayUtils {
 			final int part = bit * pow(2, power);
 			result += part;
 		}
-		return (isNegative) ? -result : result;
+		return (isNegative) ? -(result + 1) : result;
 	}
 	
 	/**
@@ -85,12 +89,12 @@ public final class ByteArrayUtils {
 	 */
 	public static byte[] fromInt(final int value, final int length) {
 		final byte[] result = new byte[length];
-		final String bits = toBinaryString(value, length * BITS_PER_BYTE);
+		final String bits = toBinaryString(value, length * Byte.SIZE);
 		int offset = 0;
 		for(int index = 0; index < length; ++index) {
-			final String sub = bits.substring(offset, offset + BITS_PER_BYTE);
+			final String sub = bits.substring(offset, offset + Byte.SIZE);
 			result[index] = parseByte(sub);
-			offset += BITS_PER_BYTE;
+			offset += Byte.SIZE;
 		}		
 		return result;
 	}
@@ -101,7 +105,7 @@ public final class ByteArrayUtils {
 	 * @return byte represented by bits
 	 */
 	public static byte parseByte(final String bits) {
-		if(bits.length() != BITS_PER_BYTE) {
+		if(bits.length() != Byte.SIZE) {
 			throw new InvalidArgumentException(String.format("'%s' is not a valid bit-string", bits));
 		}
 		return Byte.parseByte(convert(bits), RADIX_BINARY);
@@ -114,9 +118,9 @@ public final class ByteArrayUtils {
 	 */
 	public static String convert (final String bits) {
 		if(bits.startsWith("1")) {
-			final StringBuilder builder = new StringBuilder(BITS_PER_BYTE);
+			final StringBuilder builder = new StringBuilder(Byte.SIZE);
 			builder.append("-");
-			for(int index = 1; index < BITS_PER_BYTE; ++index) {
+			for(int index = 1; index < Byte.SIZE; ++index) {
 				builder.append((bits.charAt(index) == '1') ? '0' : '1');
 			}
 			return builder.toString();
@@ -145,7 +149,7 @@ public final class ByteArrayUtils {
 			divResult /= 2;			
 		}
 		// Check size
-		if(builder.length() > length - 1) {
+		if((value > 0 && builder.length() > length - 1) || builder.length() > length) {
 			throw new InvalidArgumentException(String.format("The passed value '%d' does not fit in the range '%d'.", value, length));
 		}
 		// Fill
@@ -156,8 +160,12 @@ public final class ByteArrayUtils {
 				builder.append(0);
 			}
 		}
-		// Append sign
-		builder.append((value < 0) ? "1" : "0");
+		// Append sign if not already in
+		if(builder.length() < length) {
+			builder.append((value < 0) ? "1" : "0");
+		} else {
+			builder.replace(builder.length() - 1, builder.length(), "1");
+		}
 		builder.reverse();
 		return builder.toString();
 	}
@@ -210,7 +218,7 @@ public final class ByteArrayUtils {
 	}
 	
 	public static int[] getRange(final int wordLength) {
-		final int possibilities = pow(RADIX_BINARY, (BITS_PER_BYTE * wordLength) - 1);
+		final int possibilities = pow(RADIX_BINARY, (Byte.SIZE * wordLength) - 1);
 		return new int[]{-possibilities, possibilities - 1};
 	}
 	
