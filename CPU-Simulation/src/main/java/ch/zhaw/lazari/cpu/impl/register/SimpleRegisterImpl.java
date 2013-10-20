@@ -23,7 +23,7 @@ import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
  */
 public class SimpleRegisterImpl implements Register {
 
-	private final static String FORMAT = "\t\t\t%s";
+	private static final String FORMAT = "\t\t\t%s";
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
