@@ -26,6 +26,8 @@ import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 public class SimpleCPUImpl implements CPU {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CPU.class);
+
+	private static final String LOG_UNKNOWN_INSTRUCTION_FORMAT = "\t\tUnknown instruction '%s'";
 	
 	private static final int DEFAULT_WORD_LENGTH = 2;
 	
@@ -163,7 +165,7 @@ public class SimpleCPUImpl implements CPU {
 		case CPU:
 			return createCPUCommand();
 		default:
-			LOG.error(String.format("\t\tas Unknown InstructionGroup '%s'", instruction.getGroup()));
+			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -184,7 +186,7 @@ public class SimpleCPUImpl implements CPU {
 		case DEC:
 			return new DEC(accu);
 		default:
-			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
+			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -196,7 +198,7 @@ public class SimpleCPUImpl implements CPU {
 		case SWDD:
 			return new SWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));			
 		default:
-			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
+			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -212,7 +214,7 @@ public class SimpleCPUImpl implements CPU {
 		case SLL:
 			return new SLL(accu);
 		default:
-			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
+			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -226,7 +228,7 @@ public class SimpleCPUImpl implements CPU {
 		case NOT:
 			return new NOT(accu);
 		default:
-			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
+			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
 		}
 	}
@@ -250,12 +252,16 @@ public class SimpleCPUImpl implements CPU {
 		case BD:
 			return new BD(programCounter, instruction.getAddress(word));
 		default:
-			LOG.error(String.format("\t\tas Unknown Instruction '%s'", instruction));
+			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
 		}
 	}
 
 	private Command createCPUCommand() {
 		return new END(this);
+	}
+	
+	private void logUnknown(final InstructionSet2ByteWord instruction) {
+		LOG.error(LOG_UNKNOWN_INSTRUCTION_FORMAT, instruction);
 	}
 }
