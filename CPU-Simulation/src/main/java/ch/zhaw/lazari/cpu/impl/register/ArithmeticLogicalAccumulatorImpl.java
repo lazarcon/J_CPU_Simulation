@@ -10,6 +10,9 @@
  */
 package ch.zhaw.lazari.cpu.impl.register;
 
+import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.fromInt;
+import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.getRange;
+import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.toInt;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
@@ -17,12 +20,10 @@ import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
  * Responsibility:
  */
 public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl implements ArithmeticLogicalAccumulator {
-	
-	private final int min;
-	
-	private final int max;
-	
+		
 	private int carryFlag = 0;
+	
+	private final int[] range;
 	
 	public ArithmeticLogicalAccumulatorImpl() {
 		this(DEFAULT_WORD_LENGTH);
@@ -30,9 +31,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	
 	public ArithmeticLogicalAccumulatorImpl(final int wordLength) {
 		super(wordLength);
-		final int value = pow(ByteArrayUtils.RADIX_BINARY, (ByteArrayUtils.BITS_PER_BYTE * get().length) - 1);
-		min = -value;
-		max = value - 1;
+		range = getRange(wordLength);
 	}
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#getCarryFlag()
@@ -47,8 +46,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void add(byte[] bytes) {
-		final int stored = ByteArrayUtils.toInt(get());
-		final int toAdd = ByteArrayUtils.toInt(bytes);
+		final int stored = toInt(get());
+		final int toAdd = toInt(bytes);
 		final int result = stored + toAdd;
 		if(isOverflow(result)) {
 			carryFlag = 1;
@@ -82,9 +81,9 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightArithmetic() {
-		final int before = ByteArrayUtils.toInt(get());
-		set(ByteArrayUtils.toInt(get()) >> 1);
-		final int after = ByteArrayUtils.toInt(get());
+		final int before = toInt(get());
+		set(toInt(get()) >> 1);
+		final int after = toInt(get());
 		log(String.format("Executed arithmetical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 		carryFlag = 0;
 	}
@@ -94,8 +93,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftArithmetic() {
-		final int before = ByteArrayUtils.toInt(get());
-		final int value = ByteArrayUtils.toInt(get());
+		final int before = toInt(get());
+		final int value = toInt(get());
 		final int newValue = value << 1;
 		if(isOverflow(newValue)) {
 			carryFlag = 1;
@@ -103,7 +102,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 			carryFlag = 0;
 		}
 		set(newValue);
-		final int after = ByteArrayUtils.toInt(get());
+		final int after = toInt(get());
 		log(String.format("Executed arithmetical left shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 	}
 
@@ -112,9 +111,9 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightLogical() {
-		final int before = ByteArrayUtils.toInt(get());
-		set(ByteArrayUtils.toInt(get()) >>> 1); 
-		final int after = ByteArrayUtils.toInt(get());
+		final int before = toInt(get());
+		set(toInt(get()) >>> 1); 
+		final int after = toInt(get());
 		carryFlag = 0;
 		log(String.format("Executed logical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 	}
@@ -124,32 +123,20 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftLogical() {
-		final int before = ByteArrayUtils.toInt(get());
+		final int before = toInt(get());
 		final String word = ByteArrayUtils.toString(get());
 		carryFlag = Integer.parseInt(word.substring(0, 1));
-		final int value = ByteArrayUtils.toInt(get());
+		final int value = toInt(get());
 		set(value * 2);
-		final int after = ByteArrayUtils.toInt(get());
+		final int after = toInt(get());
 		log(String.format("Executed logical left shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 	}
 
 	private void set(final int value) {
-		set(ByteArrayUtils.fromInt(value, get().length));
+		set(fromInt(value, get().length));
 	}
 	
 	private boolean isOverflow(final int value) {
-		return (value > max) || (value < min);
-	}
-	
-	private int pow(final int base, final int exponent) {
-		if(exponent == 0) {
-			return 0;
-		} else {
-			int result = base;
-			for(int index = 0; index < exponent; ++index) {
-			result *= base;
-		}
-		return result;
-		}
+		return (value < range[0]) || (value > range[1]);
 	}
 }
