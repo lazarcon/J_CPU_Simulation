@@ -50,6 +50,7 @@ public class SimpleCPUImplTest {
 		final Memory memory = mock(Memory.class);
 		when(memory.load(anyInt())).thenReturn((byte) 1);
 		final CPU cpu = new SimpleCPUImpl(memory);
+		cpu.start();
 		cpu.tick();
 		assertFalse(cpu.isFinished());
 		when(memory.load(anyInt())).thenReturn((byte) 0);
