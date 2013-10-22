@@ -18,6 +18,7 @@ import ch.zhaw.lazari.cpu.impl.commands.*;
 import ch.zhaw.lazari.cpu.impl.program_counter.SimpleProgramCounterImpl;
 import ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl;
 import ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl;
+import ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils;
 import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
@@ -29,7 +30,7 @@ public class SimpleCPUImpl implements CPU {
 
 	private static final String LOG_UNKNOWN_INSTRUCTION_FORMAT = "\t\tUnknown instruction '%s'";
 	
-	private static final int DEFAULT_WORD_LENGTH = 2;
+	private static final int DEFAULT_WORD_LENGTH = 16;
 	
 	private static final int REGISTERS = 3;
 	
@@ -136,13 +137,14 @@ public class SimpleCPUImpl implements CPU {
 	}
 
 	private String getCommandWord() {
-		final byte[] word = new byte[DEFAULT_WORD_LENGTH];
+		final boolean[] word = new boolean[DEFAULT_WORD_LENGTH];
 		int address = programCounter.get();
 		for(int index = 0; index < DEFAULT_WORD_LENGTH; ++index) {
 			LOG.trace(String.format("\t\t - Reading byte at relative address %d", address));
-			word[index] = memory.load(address++);
+			// FIXME load word from memory
+			word[index] = false;
 		}
-		return ByteArrayUtils.toBinaryString(word);
+		return BooleanArrayUtils.toBinaryString(word);
 	}
 
 	private Command interpret(final String word) {
@@ -180,7 +182,7 @@ public class SimpleCPUImpl implements CPU {
 			return new ADD(accu, registers[instruction.getRegisterId(word)]);
 		case ADDD:
 			final int value = Integer.parseInt(instruction.getSecondWord(word), ByteArrayUtils.RADIX_BINARY);
-			return new ADDD(accu, ByteArrayUtils.fromInt(value, DEFAULT_WORD_LENGTH));
+			return new ADDD(accu, BooleanArrayUtils.fromInt(value, DEFAULT_WORD_LENGTH));
 		case INC:
 			return new INC(accu);
 		case DEC:
