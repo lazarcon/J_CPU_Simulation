@@ -23,7 +23,7 @@ public class INC extends AbstractAccumulatorCommand {
 	
 	@Override
 	public void execute() {
-		getLog().trace("Incrementing accumlator");
+		log("Telling accumulator to increment itself");
 		getAccu().increment();
 	}
 

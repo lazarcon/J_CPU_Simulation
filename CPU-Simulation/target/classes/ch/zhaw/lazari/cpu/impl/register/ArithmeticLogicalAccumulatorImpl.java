@@ -10,26 +10,28 @@
  */
 package ch.zhaw.lazari.cpu.impl.register;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.fromInt;
+import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.getRange;
+import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.toInt;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
  */
 public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl implements ArithmeticLogicalAccumulator {
-
-	private static final Logger LOG = LoggerFactory.getLogger(ArithmeticLogicalAccumulator.class);
+		
+	private int carryFlag = 0;
 	
-	private final int carryFlag = 0;
+	private final int[] range;
 	
 	public ArithmeticLogicalAccumulatorImpl() {
-		super();
+		this(DEFAULT_WORD_LENGTH);
 	}
 	
 	public ArithmeticLogicalAccumulatorImpl(final int wordLength) {
 		super(wordLength);
+		range = getRange(wordLength);
 	}
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#getCarryFlag()
@@ -44,8 +46,16 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void add(byte[] bytes) {
-		LOG.trace("Adding word");
-		// TODO create content
+		final int stored = toInt(get());
+		final int toAdd = toInt(bytes);
+		final int result = stored + toAdd;
+		if(isOverflow(result)) {
+			carryFlag = 1;
+		} else {
+			carryFlag = 0;
+		}
+		log(String.format("Executing add (in decimals): %d + %d = %d, carryFlag = %d", stored, toAdd, result, carryFlag));
+		set(result);
 	}
 
 	/* (non-Javadoc)
@@ -53,8 +63,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void increment() {
-		LOG.trace("Incrementing");
 		add(new byte[]{0, 1});
+		log(String.format("After incremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toBinaryString(get()), carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -62,8 +72,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void decrement() {
-		LOG.trace("Decrementing");
 		add(new byte[]{0, -1});
+		log(String.format("After decremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toBinaryString(get()), carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -71,8 +81,11 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightArithmetic() {
-		LOG.trace("Executing arithmetic right shift");
-		// TODO Auto-generated method stub
+		final int before = toInt(get());
+		set(toInt(get()) >> 1);
+		final int after = toInt(get());
+		log(String.format("Executed arithmetical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
+		carryFlag = 0;
 	}
 
 	/* (non-Javadoc)
@@ -80,8 +93,17 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftArithmetic() {
-		LOG.trace("Executing arithmetic left shift");
-		// TODO Auto-generated method stub
+		final int before = toInt(get());
+		final int value = toInt(get());
+		final int newValue = value << 1;
+		if(isOverflow(newValue)) {
+			carryFlag = 1;
+		} else {
+			carryFlag = 0;
+		}
+		set(newValue);
+		final int after = toInt(get());
+		log(String.format("Executed arithmetical left shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -89,8 +111,11 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightLogical() {
-		LOG.trace("Executing logical right shift");
-		// TODO Auto-generated method stub
+		final int before = toInt(get());
+		set(toInt(get()) >>> 1); 
+		final int after = toInt(get());
+		carryFlag = 0;
+		log(String.format("Executed logical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -98,8 +123,20 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftLogical() {
-		LOG.trace("Executing logical left shift");
-		// TODO Auto-generated method stub
+		final int before = toInt(get());
+		final String word = ByteArrayUtils.toBinaryString(get());
+		carryFlag = Integer.parseInt(word.substring(0, 1));
+		final int value = toInt(get());
+		set(value * 2);
+		final int after = toInt(get());
+		log(String.format("Executed logical left shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 	}
 
+	private void set(final int value) {
+		set(fromInt(value, get().length));
+	}
+	
+	private boolean isOverflow(final int value) {
+		return (value < range[0]) || (value > range[1]);
+	}
 }

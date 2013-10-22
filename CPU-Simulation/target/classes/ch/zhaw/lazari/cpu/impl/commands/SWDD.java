@@ -12,6 +12,7 @@ package ch.zhaw.lazari.cpu.impl.commands;
 
 import ch.zhaw.lazari.cpu.api.Memory;
 import ch.zhaw.lazari.cpu.api.Register;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -36,7 +37,7 @@ public class SWDD extends AbstractMemoryCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Storing from register to memory");
+		log(String.format("Telling memory to store '%s' at address %d", ByteArrayUtils.toBinaryString(register.get()), address));
 		for(byte toStore : register.get()) {
 			getMemory().store(address++, toStore);
 		}

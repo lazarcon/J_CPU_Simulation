@@ -30,7 +30,7 @@ public class SLL extends AbstractAccumulatorCommand{
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Executing logical left shift of accumulator");
+		log("Telling accumulator to logical left shift its content.");
 		getAccu().shiftLeftLogical();
 	}
 

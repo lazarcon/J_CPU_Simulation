@@ -12,6 +12,7 @@ package ch.zhaw.lazari.cpu.impl.commands;
 
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.Register;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -33,7 +34,7 @@ public class OR extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Exeuting OR Operation");
+		log(String.format("Telling accumulator to perform OR operation with value '%s'", ByteArrayUtils.toBinaryString(register.get())));
 		getAccu().or(register.get());
 	}
 

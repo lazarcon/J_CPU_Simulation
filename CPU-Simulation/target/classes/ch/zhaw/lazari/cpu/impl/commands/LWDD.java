@@ -12,6 +12,7 @@ package ch.zhaw.lazari.cpu.impl.commands;
 
 import ch.zhaw.lazari.cpu.api.Memory;
 import ch.zhaw.lazari.cpu.api.Register;
+import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -36,11 +37,11 @@ public class LWDD extends AbstractMemoryCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Loading from memory into register");
 		final byte[] word = new byte[register.getSize()];
 		for(int index = 0; index < register.getSize(); ++index) {
 			word[index] = getMemory().load(address + index);
 		}
+		log(String.format("Telling register to set its value to '%s' (from memory)", ByteArrayUtils.toBinaryString(word)));
 		register.set(word);
 	}
 

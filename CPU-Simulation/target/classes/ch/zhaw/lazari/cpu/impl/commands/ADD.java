@@ -36,7 +36,7 @@ public final class ADD extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace(String.format("\t\tAdding value '%s' (from register) to accumulator.", ByteArrayUtils.toString(register.get())));
+		log(String.format("Telling accu to add value '%s' (from register).", ByteArrayUtils.toBinaryString(register.get())));
 		getAccu().add(register.get());
 	}
 

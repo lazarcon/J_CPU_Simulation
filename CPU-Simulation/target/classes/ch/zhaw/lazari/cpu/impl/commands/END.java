@@ -30,7 +30,7 @@ public class END extends AbstractCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Programm ends");
+		log("Telling CPU to stop.");
 		cpu.stop();
 	}
 }

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="2.0.1" sequence="0" timestamp="1382278186000" analysisTimestamp="1382278214835" release="">
+  <Project>
+    <Jar>/home/cola/Workspaces/Java/J_CPU_Simulation/CPU-Simulation/target/classes</Jar>
+    <AuxClasspathEntry>/home/cola/.m2/repository/org/slf4j/slf4j-log4j12/1.6.4/slf4j-log4j12-1.6.4.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/home/cola/.m2/repository/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/home/cola/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/tmp/findbugs431718558274320613.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>/tmp/findbugs5285683700896455901.jar</AuxClasspathEntry>
+    <SrcDir>/home/cola/Workspaces/Java/J_CPU_Simulation/CPU-Simulation/src/main/java</SrcDir>
+    <WrkDir>/home/cola/Workspaces/Java/J_CPU_Simulation/CPU-Simulation/target</WrkDir>
+  </Project>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Sun, 20 Oct 2013 16:09:46 +0200" total_classes="52" referenced_classes="96" total_bugs="0" total_size="862" num_packages="8" vm_version="23.7-b01" cpu_seconds="11.75" clock_seconds="4.02" peak_mbytes="361.73" alloc_mbytes="3562.69" gc_seconds="0.02">
+    <FileStats path="ch/zhaw/lazari/cpu/App.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/api/ArithmeticLogicalAccumulator.java" bugCount="0" size="9"/>
+    <FileStats path="ch/zhaw/lazari/cpu/api/CPU.java" bugCount="0" size="9"/>
+    <FileStats path="ch/zhaw/lazari/cpu/api/Command.java" bugCount="0" size="2"/>
+    <FileStats path="ch/zhaw/lazari/cpu/api/LogicalAccumulator.java" bugCount="0" size="4"/>
+    <FileStats path="ch/zhaw/lazari/cpu/api/Memory.java" bugCount="0" size="4"/>
+    <FileStats path="ch/zhaw/lazari/cpu/api/ProgramCounter.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/api/Register.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/InstructionGroup.java" bugCount="0" size="21"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/InstructionSet2ByteWord.java" bugCount="0" size="83"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/SimpleCPUImpl.java" bugCount="0" size="130"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/UnknownCommandException.java" bugCount="0" size="9"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/ADD.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/ADDD.java" bugCount="0" size="15"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AND.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AbstractAccumulatorCommand.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AbstractCommand.java" bugCount="0" size="9"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AbstractConditionalProgramCounterCommand.java" bugCount="0" size="18"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AbstractConditionalProgramCounterCommandAddress.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AbstractConditionalProgramCounterCommandRegister.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AbstractMemoryCommand.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/AbstractProgramCounterCommand.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/B.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/BC.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/BCD.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/BD.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/BNZ.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/BNZD.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/BZ.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/BZD.java" bugCount="0" size="6"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/CLR.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/DEC.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/END.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/INC.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/LWDD.java" bugCount="0" size="15"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/NOT.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/OR.java" bugCount="0" size="10"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/SLA.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/SLL.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/SRA.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/SRL.java" bugCount="0" size="8"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/commands/SWDD.java" bugCount="0" size="13"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/memory/InvalidMemoryAddressException.java" bugCount="0" size="11"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/memory/SimpleMemoryImpl.java" bugCount="0" size="21"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/program_counter/SimpleProgramCounterImpl.java" bugCount="0" size="21"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/register/ArithmeticLogicalAccumulatorImpl.java" bugCount="0" size="70"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/register/InvalidRegisterAccessException.java" bugCount="0" size="11"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/register/LogicalAccumulatorImpl.java" bugCount="0" size="22"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/register/SimpleRegisterImpl.java" bugCount="0" size="36"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/utils/ByteArrayUtils.java" bugCount="0" size="102"/>
+    <FileStats path="ch/zhaw/lazari/cpu/impl/utils/InvalidArgumentException.java" bugCount="0" size="5"/>
+    <PackageStats package="ch.zhaw.lazari.cpu" total_bugs="0" total_types="1" total_size="6">
+      <ClassStats class="ch.zhaw.lazari.cpu.App" sourceFile="App.java" interface="false" size="6" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="ch.zhaw.lazari.cpu.api" total_bugs="0" total_types="7" total_size="40">
+      <ClassStats class="ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator" sourceFile="ArithmeticLogicalAccumulator.java" interface="true" size="9" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.api.CPU" sourceFile="CPU.java" interface="true" size="9" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.api.Command" sourceFile="Command.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.api.LogicalAccumulator" sourceFile="LogicalAccumulator.java" interface="true" size="4" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.api.Memory" sourceFile="Memory.java" interface="true" size="4" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.api.ProgramCounter" sourceFile="ProgramCounter.java" interface="true" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.api.Register" sourceFile="Register.java" interface="true" size="6" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="ch.zhaw.lazari.cpu.impl" total_bugs="0" total_types="5" total_size="243">
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.InstructionGroup" sourceFile="InstructionGroup.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.InstructionSet2ByteWord" sourceFile="InstructionSet2ByteWord.java" interface="false" size="83" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.SimpleCPUImpl" sourceFile="SimpleCPUImpl.java" interface="false" size="124" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.SimpleCPUImpl$1" sourceFile="SimpleCPUImpl.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.UnknownCommandException" sourceFile="UnknownCommandException.java" interface="false" size="9" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="ch.zhaw.lazari.cpu.impl.commands" total_bugs="0" total_types="30" total_size="274">
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.ADD" sourceFile="ADD.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.ADDD" sourceFile="ADDD.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AND" sourceFile="AND.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AbstractAccumulatorCommand" sourceFile="AbstractAccumulatorCommand.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AbstractCommand" sourceFile="AbstractCommand.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AbstractConditionalProgramCounterCommand" sourceFile="AbstractConditionalProgramCounterCommand.java" interface="false" size="18" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AbstractConditionalProgramCounterCommandAddress" sourceFile="AbstractConditionalProgramCounterCommandAddress.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AbstractConditionalProgramCounterCommandRegister" sourceFile="AbstractConditionalProgramCounterCommandRegister.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AbstractMemoryCommand" sourceFile="AbstractMemoryCommand.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.AbstractProgramCounterCommand" sourceFile="AbstractProgramCounterCommand.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.B" sourceFile="B.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.BC" sourceFile="BC.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.BCD" sourceFile="BCD.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.BD" sourceFile="BD.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.BNZ" sourceFile="BNZ.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.BNZD" sourceFile="BNZD.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.BZ" sourceFile="BZ.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.BZD" sourceFile="BZD.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.CLR" sourceFile="CLR.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.DEC" sourceFile="DEC.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.END" sourceFile="END.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.INC" sourceFile="INC.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.LWDD" sourceFile="LWDD.java" interface="false" size="15" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.NOT" sourceFile="NOT.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.OR" sourceFile="OR.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.SLA" sourceFile="SLA.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.SLL" sourceFile="SLL.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.SRA" sourceFile="SRA.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.SRL" sourceFile="SRL.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.commands.SWDD" sourceFile="SWDD.java" interface="false" size="13" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="ch.zhaw.lazari.cpu.impl.memory" total_bugs="0" total_types="2" total_size="32">
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.memory.InvalidMemoryAddressException" sourceFile="InvalidMemoryAddressException.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.memory.SimpleMemoryImpl" sourceFile="SimpleMemoryImpl.java" interface="false" size="21" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="ch.zhaw.lazari.cpu.impl.program_counter" total_bugs="0" total_types="1" total_size="21">
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.program_counter.SimpleProgramCounterImpl" sourceFile="SimpleProgramCounterImpl.java" interface="false" size="21" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="ch.zhaw.lazari.cpu.impl.register" total_bugs="0" total_types="4" total_size="139">
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl" sourceFile="ArithmeticLogicalAccumulatorImpl.java" interface="false" size="70" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.register.InvalidRegisterAccessException" sourceFile="InvalidRegisterAccessException.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.register.LogicalAccumulatorImpl" sourceFile="LogicalAccumulatorImpl.java" interface="false" size="22" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl" sourceFile="SimpleRegisterImpl.java" interface="false" size="36" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="ch.zhaw.lazari.cpu.impl.utils" total_bugs="0" total_types="2" total_size="107">
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils" sourceFile="ByteArrayUtils.java" interface="false" size="102" bugs="0"/>
+      <ClassStats class="ch.zhaw.lazari.cpu.impl.utils.InvalidArgumentException" sourceFile="InvalidArgumentException.java" interface="false" size="5" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="323" invocations="490" avgMicrosecondsPerInvocation="660" maxMicrosecondsPerInvocation="11702" standardDeviationMircosecondsPerInvocation="1238"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="242" invocations="160" avgMicrosecondsPerInvocation="1512" maxMicrosecondsPerInvocation="53529" standardDeviationMircosecondsPerInvocation="4426"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="205" invocations="160" avgMicrosecondsPerInvocation="1284" maxMicrosecondsPerInvocation="30828" standardDeviationMircosecondsPerInvocation="2814"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="192" invocations="96" avgMicrosecondsPerInvocation="2006" maxMicrosecondsPerInvocation="28344" standardDeviationMircosecondsPerInvocation="4831"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="192" invocations="160" avgMicrosecondsPerInvocation="1201" maxMicrosecondsPerInvocation="12693" standardDeviationMircosecondsPerInvocation="1817"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="182" invocations="160" avgMicrosecondsPerInvocation="1138" maxMicrosecondsPerInvocation="17090" standardDeviationMircosecondsPerInvocation="2244"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ExplicitSerialization" totalMilliseconds="163" invocations="96" avgMicrosecondsPerInvocation="1707" maxMicrosecondsPerInvocation="24379" standardDeviationMircosecondsPerInvocation="3956"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="145" invocations="160" avgMicrosecondsPerInvocation="910" maxMicrosecondsPerInvocation="9769" standardDeviationMircosecondsPerInvocation="1498"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="118" invocations="96" avgMicrosecondsPerInvocation="1230" maxMicrosecondsPerInvocation="20474" standardDeviationMircosecondsPerInvocation="2953"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="111" invocations="133" avgMicrosecondsPerInvocation="841" maxMicrosecondsPerInvocation="9747" standardDeviationMircosecondsPerInvocation="1342"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="109" invocations="160" avgMicrosecondsPerInvocation="686" maxMicrosecondsPerInvocation="8591" standardDeviationMircosecondsPerInvocation="1076"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ConstantDataflowFactory" totalMilliseconds="79" invocations="160" avgMicrosecondsPerInvocation="497" maxMicrosecondsPerInvocation="6717" standardDeviationMircosecondsPerInvocation="915"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="79" invocations="298" avgMicrosecondsPerInvocation="266" maxMicrosecondsPerInvocation="3145" standardDeviationMircosecondsPerInvocation="378"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="55" invocations="473" avgMicrosecondsPerInvocation="117" maxMicrosecondsPerInvocation="2954" standardDeviationMircosecondsPerInvocation="247"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="54" invocations="96" avgMicrosecondsPerInvocation="572" maxMicrosecondsPerInvocation="5382" standardDeviationMircosecondsPerInvocation="1053"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="53" invocations="493" avgMicrosecondsPerInvocation="109" maxMicrosecondsPerInvocation="454" standardDeviationMircosecondsPerInvocation="59"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FunctionsThatMightBeMistakenForProcedures" totalMilliseconds="49" invocations="96" avgMicrosecondsPerInvocation="512" maxMicrosecondsPerInvocation="8771" standardDeviationMircosecondsPerInvocation="1266"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.LiveLocalStoreDataflowFactory" totalMilliseconds="48" invocations="160" avgMicrosecondsPerInvocation="305" maxMicrosecondsPerInvocation="4274" standardDeviationMircosecondsPerInvocation="565"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="44" invocations="191" avgMicrosecondsPerInvocation="230" maxMicrosecondsPerInvocation="27082" standardDeviationMircosecondsPerInvocation="1950"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CalledMethods" totalMilliseconds="43" invocations="96" avgMicrosecondsPerInvocation="454" maxMicrosecondsPerInvocation="8867" standardDeviationMircosecondsPerInvocation="1112"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="42" invocations="96" avgMicrosecondsPerInvocation="440" maxMicrosecondsPerInvocation="5812" standardDeviationMircosecondsPerInvocation="957"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="42" invocations="113" avgMicrosecondsPerInvocation="372" maxMicrosecondsPerInvocation="11207" standardDeviationMircosecondsPerInvocation="1155"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.EqualsOperandShouldHaveClassCompatibleWithThis" totalMilliseconds="31" invocations="96" avgMicrosecondsPerInvocation="324" maxMicrosecondsPerInvocation="3326" standardDeviationMircosecondsPerInvocation="668"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.ReflectiveClasses" totalMilliseconds="26" invocations="96" avgMicrosecondsPerInvocation="278" maxMicrosecondsPerInvocation="6699" standardDeviationMircosecondsPerInvocation="777"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

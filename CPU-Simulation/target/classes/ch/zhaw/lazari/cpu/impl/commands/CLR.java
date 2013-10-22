@@ -28,7 +28,7 @@ public class CLR extends AbstractCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Clearing register");
+		log("Telling register to clear itself");
 		register.clear();
 	}
 

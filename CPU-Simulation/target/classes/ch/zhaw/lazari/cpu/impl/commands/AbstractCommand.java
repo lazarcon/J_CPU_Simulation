@@ -20,10 +20,12 @@ import ch.zhaw.lazari.cpu.api.Command;
  */
 public abstract class AbstractCommand implements Command {
 
+	private static final String FORMAT = "\t\t%s";
+	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	protected Logger getLog() {
-		return log;
+	protected void log(final String message) {
+		log.trace(String.format(FORMAT, message));
 	}
 	
 }

@@ -32,7 +32,7 @@ public class BD extends AbstractProgramCounterCommand {
 	 */
 	@Override
 	public void execute() {
-		getLog().trace("Executing unconditional direct jump");
+		log(String.format("Telling program counter to set its value to '%d'", address));
 		getProgramCounter().set(address);
 	}
 
