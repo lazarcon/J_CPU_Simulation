@@ -14,6 +14,7 @@ package ch.zhaw.lazari.cpu.impl.utils;
 /**
  * Provides all necessary byte operations
  */
+@Deprecated
 public final class ByteArrayUtils {
 	
 	public static final int RADIX_BINARY = 2;
