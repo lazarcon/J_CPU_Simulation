@@ -47,7 +47,7 @@ public class SimpleRegisterImpl implements Register {
 	 */
 	@Override
 	public void set(boolean[] bits) {
-		checkSize(bits.clone());
+		checkSize(bits.clone(), "set");
 		log(String.format("Storing '%s'.", toBinaryString(bits.clone())));
 		this.bits = bits.clone();
 	}
@@ -78,9 +78,9 @@ public class SimpleRegisterImpl implements Register {
 		return bits.length;
 	}
 	
-	protected void checkSize(final boolean[] bits) {
+	protected void checkSize(final boolean[] bits, final String method) {
 		if(!isValid(bits.clone())) {
-			log.error("Was told to operate on word of invalid length.");
+			log.error(String.format("Was told to %s word of invalid length.", method));
 			throw new InvalidRegisterAccessException(bits.length, getSize());
 		}
 	}
