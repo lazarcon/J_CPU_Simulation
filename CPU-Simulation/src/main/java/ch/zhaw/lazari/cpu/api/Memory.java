@@ -23,7 +23,7 @@ public interface Memory {
 	 * @param address where to store the byte
 	 * @param value the byte to store
 	 */
-	void store(int address, byte value);
+	void store(int address, boolean[] bits);
 	
 	/**
 	 * Returns the byte stored at address
