@@ -10,9 +10,9 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.ProgramCounter;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -30,7 +30,7 @@ public class BNZD extends AbstractConditionalProgramCounterCommandAddress {
 
 	@Override
 	protected boolean shouldJump() {
-		return ByteArrayUtils.toInt(getAccu().get()) != 0;
+		return toInt(getAccu().get()) != 0;
 	}
 
 }

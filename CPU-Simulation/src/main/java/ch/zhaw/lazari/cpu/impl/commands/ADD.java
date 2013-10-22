@@ -10,9 +10,9 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.Register;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Adds Register Content to Accumulator
@@ -36,7 +36,7 @@ public final class ADD extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log(String.format("Telling accu to add value '%s' (from register).", ByteArrayUtils.toBinaryString(register.get())));
+		log(String.format("Telling accu to add value '%s' (from register).", toBinaryString(register.get())));
 		getAccu().add(register.get());
 	}
 

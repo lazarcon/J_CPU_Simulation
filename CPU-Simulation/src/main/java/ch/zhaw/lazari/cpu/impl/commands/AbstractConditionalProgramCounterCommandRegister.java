@@ -10,8 +10,8 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
 import ch.zhaw.lazari.cpu.api.*;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -36,7 +36,7 @@ public abstract class AbstractConditionalProgramCounterCommandRegister extends A
 	
 	@Override
 	protected final int getAddress() {
-		return ByteArrayUtils.toInt(register.get());
+		return toInt(register.get());
 	}
 	
 }

@@ -10,22 +10,23 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.fromInt;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Adds a Word to the Accumulator
  */
 public class ADDD extends AbstractAccumulatorCommand {
 	
-	private final byte[] word;
+	private final boolean[] word;
 	
 	/**
 	 * Creates a new ADDD Command using the accumulator and word
 	 * @param accu The Accumulator to use
 	 * @param word the word to add
 	 */
-	public ADDD(final ArithmeticLogicalAccumulator accu, final byte[] word) {
+	public ADDD(final ArithmeticLogicalAccumulator accu, final boolean[] word) {
 		super(accu);
 		this.word = word.clone();
 	}
@@ -35,14 +36,14 @@ public class ADDD extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		final String shortend = ByteArrayUtils.toBinaryString(word).substring(1);
+		final String shortend = toBinaryString(word).substring(1);
 		final String processed = getProcessed(shortend);
 		log(String.format("Telling Accu to add value '%s' (direct).", processed));
-		getAccu().add(ByteArrayUtils.fromInt(Integer.parseInt(processed, ByteArrayUtils.RADIX_BINARY), word.length));
+		getAccu().add(fromInt(Integer.parseInt(processed, 2), word.length));
 	}
 
 	private String getProcessed(final String toProcess) {
-		final int value = Integer.parseInt(toProcess, ByteArrayUtils.RADIX_BINARY);
+		final int value = Integer.parseInt(toProcess, 2);
 		return (value < 0) ? "1" + toProcess : "0" + toProcess;
 	}
 }
