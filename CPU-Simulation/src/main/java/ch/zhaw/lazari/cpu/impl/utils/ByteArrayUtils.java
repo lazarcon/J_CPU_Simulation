@@ -93,7 +93,8 @@ public final class ByteArrayUtils {
 		int offset = 0;
 		for(int index = 0; index < length; ++index) {
 			final String sub = bits.substring(offset, offset + Byte.SIZE);
-			result[index] = parseByte(sub);
+			System.out.println(String.format("%d. %s", index, sub));
+			result[index] = parseFirstByte(sub);
 			offset += Byte.SIZE;
 		}		
 		return result;
@@ -104,7 +105,7 @@ public final class ByteArrayUtils {
 	 * @param bits String containing the bits to parse in 2s complement
 	 * @return byte represented by bits
 	 */
-	public static byte parseByte(final String bits) {
+	public static byte parseFirstByte(final String bits) {
 		if(bits.length() != Byte.SIZE) {
 			throw new InvalidArgumentException(String.format("'%s' is not a valid bit-string", bits));
 		}

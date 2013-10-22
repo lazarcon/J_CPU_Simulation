@@ -130,14 +130,14 @@ public class ByteArrayUtilsTest {
 
 	@Test
 	public void testParseByteInRange() {
-		assertEquals(42, ByteArrayUtils.parseByte("00101010"));
-		assertEquals(-43, ByteArrayUtils.parseByte("11010101"));
-		assertEquals(Byte.MIN_VALUE, ByteArrayUtils.parseByte("11111111"));
+		assertEquals(42, ByteArrayUtils.parseFirstByte("00101010"));
+		assertEquals(-42, ByteArrayUtils.parseFirstByte("11010101"));
+		assertEquals(Byte.MIN_VALUE, ByteArrayUtils.parseFirstByte("11111111"));
 	}
 	
 	@Test(expected = InvalidArgumentException.class)
 	public void testParseByteNotInRange() {
-		ByteArrayUtils.parseByte("111111111");
+		ByteArrayUtils.parseFirstByte("111111111");
 	}
 	
 	@Test(expected = InvalidArgumentException.class)
