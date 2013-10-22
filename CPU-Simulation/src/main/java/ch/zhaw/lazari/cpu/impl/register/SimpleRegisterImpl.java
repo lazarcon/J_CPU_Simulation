@@ -82,7 +82,7 @@ public class SimpleRegisterImpl implements Register {
 		return bits.length;
 	}
 	
-	private boolean isValid(final boolean[] bits) {
+	protected boolean isValid(final boolean[] bits) {
 		return (this.bits.length == bits.length);
 	}
 		
