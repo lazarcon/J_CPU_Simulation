@@ -24,13 +24,6 @@ public class SimpleProgramCounterImpl implements ProgramCounter{
 	private int address;
 	
 	/**
-	 * Creates a new ProgrammCounter with default offset and step size
-	 */
-	public SimpleProgramCounterImpl() {
-		this(DEFAULT_OFFSET, STEP_SIZE);
-	}
-	
-	/**
 	 * Creates a new ProgrammCounter with the given offset and stepsize
 	 * @param offset Memory offset, where the programm is stored
 	 * @param stepSize increment for the next address
