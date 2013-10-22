@@ -39,9 +39,9 @@ public class SimpleMemoryImpl implements Memory {
 	 * @see ch.zhaw.lazari.cpu.api.Memory#store(int, byte)
 	 */
 	@Override
-	public void store(int address, byte value) {
+	public void store(int address, boolean[] value) {
 		if(isValid(address)) {
-			storage[address] = value;
+			// FIXME store value at address
 		} else {
 			throw new InvalidMemoryAddressException(address, storage.length);
 		}
