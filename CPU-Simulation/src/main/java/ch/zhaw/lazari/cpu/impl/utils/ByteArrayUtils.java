@@ -75,7 +75,7 @@ public final class ByteArrayUtils {
 			}
 			// Minus 1 because last power must be 0
 			final int power = bits.length() - index - 1;
-			final int part = bit * pow(2, power);
+			final int part = bit * IntegerUtils.pow(2, power);
 			result += part;
 		}
 		return (isNegative) ? -(result + 1) : result;
@@ -220,19 +220,10 @@ public final class ByteArrayUtils {
 	}
 	
 	public static int[] getRange(final int wordLength) {
-		final int possibilities = pow(RADIX_BINARY, (Byte.SIZE * wordLength) - 1);
+		final int possibilities = IntegerUtils.pow(RADIX_BINARY, (Byte.SIZE * wordLength) - 1);
 		return new int[]{-possibilities, possibilities - 1};
 	}
 	
-	private static int pow(final int base, final int exponent) {
-		if(exponent < 0) {
-			throw new InvalidArgumentException(String.format("pow is not defined for negative values like %d", exponent));
-		} 
-		int result = 1;
-		for(int index = 0; index < exponent; ++index) {
-			result *= base;
-		}
-		return result;
-	}
+
 
 }
