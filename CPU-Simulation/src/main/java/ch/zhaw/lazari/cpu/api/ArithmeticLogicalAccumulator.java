@@ -24,7 +24,7 @@ public interface ArithmeticLogicalAccumulator extends LogicalAccumulator{
 	 * Adds the bytes passed
 	 * @param bytes
 	 */
-	void add(byte[] bytes);
+	void add(boolean[] bits);
 		
 	/**
 	 * Adds one to the content of the accumulator.
