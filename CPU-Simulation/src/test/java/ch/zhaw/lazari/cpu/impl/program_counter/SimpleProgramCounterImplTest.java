@@ -22,15 +22,6 @@ import ch.zhaw.lazari.cpu.api.ProgramCounter;
  */
 public class SimpleProgramCounterImplTest {
 
-	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.program_counter.SimpleProgramCounterImpl#SimpleProgramCounterImpl()}.
-	 */
-	@Test
-	public void testSimpleProgramCounterImpl() {
-		final ProgramCounter counter = new SimpleProgramCounterImpl();
-		assertEquals(0, counter.get());
-	}
-
 	@Test
 	public void testSet() {
 		final ProgramCounter counter = new SimpleProgramCounterImpl(20, 3);
@@ -41,7 +32,7 @@ public class SimpleProgramCounterImplTest {
 	
 	@Test
 	public void testGetNext() {
-		final ProgramCounter counter = new SimpleProgramCounterImpl();
+		final ProgramCounter counter = new SimpleProgramCounterImpl(16, 3);
 		final int last = counter.get();
 		counter.next();
 		assertTrue(last < counter.get());

@@ -22,7 +22,7 @@ import ch.zhaw.lazari.cpu.api.Memory;
  */
 public class SimpleMemoryImplTest {
 	
-	private final static byte STORE = (byte) 42;
+	private final static boolean STORE = true;
 	
 	private final static int ADDRESS = Memory.DEFAULT_SIZE - 1;
 	
@@ -43,7 +43,7 @@ public class SimpleMemoryImplTest {
 	@Test
 	public void testStoreLoadValid() {
 		final Memory memory = new SimpleMemoryImpl();
-		memory.store(ADDRESS, STORE);
+		// FIXME store the value
 		assertEquals(STORE, memory.load(ADDRESS));
 	}
 
@@ -53,13 +53,13 @@ public class SimpleMemoryImplTest {
 	@Test(expected = InvalidMemoryAddressException.class)
 	public void testStoreInvalidNegative() {
 		final Memory memory = new SimpleMemoryImpl();
-		memory.store(-1, STORE);
+		// FIXME store invalid address negative
 	}
 
 	@Test(expected = InvalidMemoryAddressException.class)
 	public void testStoreInvalidMax() {
 		final Memory memory = new SimpleMemoryImpl();
-		memory.store(Memory.DEFAULT_SIZE, STORE);
+		// FIXME store invalid address positive
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class SimpleMemoryImplTest {
 	@Test(expected = InvalidMemoryAddressException.class)
 	public void testLoadInvalidNegative() {
 		final Memory memory = new SimpleMemoryImpl();
-		memory.store(ADDRESS, STORE);
+		// FIXME load invalid memory
 		memory.load(-1);
 	}
 
@@ -78,7 +78,7 @@ public class SimpleMemoryImplTest {
 	@Test(expected = InvalidMemoryAddressException.class)
 	public void testLoadInvalidMax() {
 		final Memory memory = new SimpleMemoryImpl();
-		memory.store(ADDRESS, STORE);
+		// FIXME load invalid memory
 		memory.load(Memory.DEFAULT_SIZE);
 	}
 
