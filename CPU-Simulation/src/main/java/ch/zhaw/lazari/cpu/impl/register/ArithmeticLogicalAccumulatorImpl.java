@@ -10,11 +10,11 @@
  */
 package ch.zhaw.lazari.cpu.impl.register;
 
-import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.fromInt;
-import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.getRange;
-import static ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils.toInt;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.fromInt;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
+import ch.zhaw.lazari.cpu.impl.utils.IntegerUtils;
 
 /**
  * Responsibility:
@@ -23,16 +23,13 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 		
 	private int carryFlag = 0;
 	
-	private final int[] range;
-	
-	public ArithmeticLogicalAccumulatorImpl() {
-		this(DEFAULT_WORD_LENGTH);
-	}
+	private final Range range;
 	
 	public ArithmeticLogicalAccumulatorImpl(final int wordLength) {
 		super(wordLength);
-		range = getRange(wordLength);
+		range = new Range(wordLength);
 	}
+	
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#getCarryFlag()
 	 */
@@ -45,9 +42,9 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#add(byte[])
 	 */
 	@Override
-	public void add(byte[] bytes) {
+	public void add(boolean[] bits) {
 		final int stored = toInt(get());
-		final int toAdd = toInt(bytes);
+		final int toAdd = toInt(bits);
 		final int result = stored + toAdd;
 		if(isOverflow(result)) {
 			carryFlag = 1;
@@ -63,8 +60,9 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void increment() {
-		add(new byte[]{0, 1});
-		log(String.format("After incremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toBinaryString(get()), carryFlag));
+		set(toInt(get()) + 1);
+		log(String.format("After incremention new content ist '%s' and carryFlag is %d.", 
+				toBinaryString(get()), carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -72,8 +70,9 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void decrement() {
-		add(new byte[]{0, -1});
-		log(String.format("After decremention new content ist '%s' and carryFlag is %d.", ByteArrayUtils.toBinaryString(get()), carryFlag));
+		set(toInt(get()) - 1);
+		log(String.format("After decremention new content ist '%s' and carryFlag is %d.", 
+				toBinaryString(get()), carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -124,7 +123,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void shiftLeftLogical() {
 		final int before = toInt(get());
-		final String word = ByteArrayUtils.toBinaryString(get());
+		final String word = toBinaryString(get());
 		carryFlag = Integer.parseInt(word.substring(0, 1));
 		final int value = toInt(get());
 		set(value * 2);
@@ -133,10 +132,20 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	}
 
 	private void set(final int value) {
-		set(fromInt(value, get().length));
+		set(fromInt(value, getSize()));
 	}
 	
 	private boolean isOverflow(final int value) {
-		return (value < range[0]) || (value > range[1]);
+		return (value < range.min) || (value > range.max);
+	}
+	
+	private static class Range {
+		private final int min;
+		private final int max;
+		private Range(final int wordLength) {
+			final int pow = IntegerUtils.pow(2, wordLength - 1);
+			min = -pow ;
+			max = pow - 1;
+		}
 	}
 }
