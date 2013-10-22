@@ -10,9 +10,9 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import ch.zhaw.lazari.cpu.api.Memory;
 import ch.zhaw.lazari.cpu.api.Register;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -21,7 +21,7 @@ public class SWDD extends AbstractMemoryCommand {
 
 	private final Register register;
 	
-	private int address;
+	private final int address;
 	
 	/**
 	 * @param memory
@@ -37,10 +37,8 @@ public class SWDD extends AbstractMemoryCommand {
 	 */
 	@Override
 	public void execute() {
-		log(String.format("Telling memory to store '%s' at address %d", ByteArrayUtils.toBinaryString(register.get()), address));
-		for(byte toStore : register.get()) {
-			getMemory().store(address++, toStore);
-		}
+		log(String.format("Telling memory to store '%s' at address %d", toBinaryString(register.get()), address));
+		// FIXME Change to use boolean[]
 	}
 
 }
