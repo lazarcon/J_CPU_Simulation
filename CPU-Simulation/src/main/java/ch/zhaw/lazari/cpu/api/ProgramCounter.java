@@ -17,9 +17,6 @@ public interface ProgramCounter {
 
 	/** Default memory offset */
 	int DEFAULT_OFFSET = 0;
-
-	/** The default step size when incrementing */
-	int STEP_SIZE = Register.DEFAULT_WORD_LENGTH;
 	
 	/**
 	 * Sets the address of the next command 
