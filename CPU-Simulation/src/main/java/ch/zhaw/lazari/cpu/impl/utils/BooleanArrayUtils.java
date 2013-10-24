@@ -87,12 +87,21 @@ public final class BooleanArrayUtils {
 		while(divResult > 0) {
 			final int remains = divResult % 2;
 			if(isNegative) {
-				result[index++] = (remains == 0);
+				result[index--] = (remains == 0);
 			} else {
-				result[index++] = (remains != 0);
+				result[index--] = (remains != 0);
 			}
 			divResult /= 2;
 		}
 		return result;
+	}
+	
+	public static int toInt(final String word) {
+		final boolean[] bits = new boolean[word.length()];
+		int index = 0;
+		for(char aChar : word.toCharArray()) {
+			bits[index++] = fromDigit(Integer.parseInt("" + aChar));
+		}
+		return toInt(bits);
 	}
 }

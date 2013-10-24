@@ -28,5 +28,5 @@ public final class IntegerUtils {
 			result *= base;
 		}
 		return result;
-	}
+	}	
 }
