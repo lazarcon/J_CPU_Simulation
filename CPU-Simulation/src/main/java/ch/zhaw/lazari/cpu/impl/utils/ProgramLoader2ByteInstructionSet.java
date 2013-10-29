@@ -31,6 +31,8 @@ public class ProgramLoader2ByteInstructionSet implements ProgramLoader {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ProgramLoader2ByteInstructionSet.class);
 	
+	private static final int MAX_DIRECT_BITS = 15;
+	
 	@Override
 	public void load(final List<String> lines, final Memory memory) {
 		for(final String line : lines) {
@@ -80,7 +82,7 @@ public class ProgramLoader2ByteInstructionSet implements ProgramLoader {
 			return String.format(word.getFormat(), toRegisterBinary(registerId));
 		case ADDD:
 			final int value = word.getMnemonicFirst(line);
-			return String.format(word.getFormat(), toBinaryString(fromInt(value, 15)));
+			return String.format(word.getFormat(), toBinaryString(fromInt(value, MAX_DIRECT_BITS)));
 		case INC:
 		case DEC:
 			return word.getFormat();
@@ -114,7 +116,7 @@ public class ProgramLoader2ByteInstructionSet implements ProgramLoader {
 		final int registerId = word.getMnemonicFirst(line);
 		final int address = word.getMnemonicSecond(line);
 		final String binaryRegister = toRegisterBinary(registerId);
-		final String binaryAddress = toBinaryString(fromInt(address, 10));
+		final String binaryAddress = toBinaryString(fromInt(address, Memory.ADDRESS_BITS));
 		return String.format(word.getFormat(), binaryRegister, binaryAddress);
 	}
 
@@ -131,7 +133,7 @@ public class ProgramLoader2ByteInstructionSet implements ProgramLoader {
 		case BCD:
 		case BD:
 			final int address = word.getMnemonicFirst(line);
-			return String.format(word.getFormat(), toBinaryString(fromInt(address, 10)));			
+			return String.format(word.getFormat(), toBinaryString(fromInt(address, Memory.ADDRESS_BITS)));			
 		default:
 			throw new UnknownCommandException(getMessage(word, line));
 		}
