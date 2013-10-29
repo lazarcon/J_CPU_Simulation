@@ -35,4 +35,7 @@ public interface Register {
 	
 	/** Returns number of bytes used by the register */
 	int getSize();
+	
+	/** Returns id of this register */
+	int getId();
 }
