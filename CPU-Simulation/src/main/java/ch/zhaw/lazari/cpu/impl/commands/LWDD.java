@@ -21,7 +21,7 @@ public class LWDD extends AbstractMemoryCommand {
 
 	private final Register register;
 	
-	private final int address;
+	private int address;
 	
 	/**
 	 * @param memory
@@ -38,9 +38,12 @@ public class LWDD extends AbstractMemoryCommand {
 	@Override
 	public void execute() {
 		final boolean[] word = new boolean[register.getSize()];
-		for(int index = 0; index < register.getSize(); ++index) {
-			// FIXME should work with memory
-			word[index] = false;
+		int read = 0;
+		while(read < word.length) {
+			final boolean[] stored = getMemory().load(address++);
+			for(final boolean bit : stored) {
+				word[read++] = bit;
+			}
 		}
 		log(String.format("Telling register to set its value to '%s' (from memory)", toBinaryString(word)));
 		register.set(word);
