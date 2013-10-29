@@ -33,4 +33,9 @@ public class BNZD extends AbstractConditionalProgramCounterCommandAddress {
 		return toInt(getAccu().get()) != 0;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("BNZD #%d", getAddress());
+	}
+
 }

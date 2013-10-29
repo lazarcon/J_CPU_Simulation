@@ -37,5 +37,11 @@ public class OR extends AbstractAccumulatorCommand {
 		log(String.format("Telling accumulator to perform OR operation with value '%s'", toBinaryString(register.get())));
 		getAccu().or(register.get());
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("OR R%d", register.getId());
+	}
+
 
 }

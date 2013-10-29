@@ -48,5 +48,11 @@ public class SWDD extends AbstractMemoryCommand {
 			getMemory().store(address++, memoryWord);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("SWDD R%d #%d", register.getId(), address);
+	}
+
 
 }

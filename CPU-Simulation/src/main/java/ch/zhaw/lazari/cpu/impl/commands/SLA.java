@@ -33,5 +33,10 @@ public class SLA extends AbstractAccumulatorCommand {
 		getAccu().shiftLeftArithmetic();
 	}
 
+	@Override
+	public String toString() {
+		return "SLA";
+	}
+
 	
 }

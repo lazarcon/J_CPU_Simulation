@@ -34,4 +34,9 @@ public class BNZ extends AbstractConditionalProgramCounterCommandRegister {
 		return toInt(getAccu().get()) != 0;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("BNZ R%d", getRegister().getId());
+	}
+
 }

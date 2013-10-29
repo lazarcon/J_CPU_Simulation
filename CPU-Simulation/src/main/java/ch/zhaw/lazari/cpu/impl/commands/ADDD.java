@@ -12,6 +12,7 @@ package ch.zhaw.lazari.cpu.impl.commands;
 
 import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.fromInt;
 import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 
 /**
@@ -46,4 +47,10 @@ public class ADDD extends AbstractAccumulatorCommand {
 		final int value = Integer.parseInt(toProcess, 2);
 		return (value < 0) ? "1" + toProcess : "0" + toProcess;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("ADDD %s", toInt(word));
+	}
+
 }

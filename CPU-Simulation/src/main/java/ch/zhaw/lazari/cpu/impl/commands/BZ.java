@@ -33,4 +33,10 @@ public class BZ extends AbstractConditionalProgramCounterCommandRegister{
 	protected boolean shouldJump() {
 		return toInt(getAccu().get()) == 0;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("BZ R%d", getRegister().getId());
+	}
+
 }

@@ -40,4 +40,9 @@ public class AND extends AbstractAccumulatorCommand {
 		getAccu().and(register.get());
 	}
 
+	@Override
+	public String toString() {
+		return String.format("AND R%d", register.getId());
+	}
+
 }

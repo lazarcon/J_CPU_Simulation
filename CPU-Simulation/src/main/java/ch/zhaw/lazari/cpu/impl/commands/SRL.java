@@ -32,5 +32,10 @@ public class SRL extends AbstractAccumulatorCommand {
 		log("Telling accumulator to logical right shift its content.");
 		getAccu().shiftRightLogical();
 	}
+	
+	@Override
+	public String toString() {
+		return "SRL";
+	}
 
 }

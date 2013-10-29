@@ -40,4 +40,9 @@ public final class ADD extends AbstractAccumulatorCommand {
 		getAccu().add(register.get());
 	}
 
+	@Override
+	public String toString() {
+		return String.format("ADD R%d", register.getId());
+	}
+
 }

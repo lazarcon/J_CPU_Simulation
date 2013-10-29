@@ -49,4 +49,9 @@ public class LWDD extends AbstractMemoryCommand {
 		register.set(word);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("LWDD R%d #%d", register.getId(), address);
+	}
+
 }

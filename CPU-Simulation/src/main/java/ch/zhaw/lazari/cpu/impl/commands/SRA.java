@@ -34,4 +34,8 @@ public class SRA extends AbstractAccumulatorCommand {
 		getAccu().shiftRightArithmetic();
 	}
 
+	@Override
+	public String toString() {
+		return "SRA";
+	}
 }

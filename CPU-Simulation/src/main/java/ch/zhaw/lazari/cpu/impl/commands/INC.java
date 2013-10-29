@@ -27,4 +27,9 @@ public class INC extends AbstractAccumulatorCommand {
 		getAccu().increment();
 	}
 
+	@Override
+	public String toString() {
+		return "INC";
+	}
+
 }

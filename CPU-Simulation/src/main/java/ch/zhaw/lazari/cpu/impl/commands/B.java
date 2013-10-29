@@ -39,4 +39,9 @@ public class B extends AbstractProgramCounterCommand {
 		getProgramCounter().set(toInt(register.get()));
 	}
 
+	@Override
+	public String toString() {
+		return String.format("B R%d", register.getId());
+	}
+
 }
