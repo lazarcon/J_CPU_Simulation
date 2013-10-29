@@ -35,10 +35,7 @@ public class SimpleCPUImplTest {
 	@Test
 	public void testSimpleCPUImpl() {
 		final Memory memory = mock(Memory.class);
-		when(memory.load(anyInt())).thenReturn((byte) 0);
 		final CPU cpu = new SimpleCPUImpl(memory);
-		assertTrue(cpu.isFinished());
-		cpu.tick();
 		assertTrue(cpu.isFinished());
 	}
 
@@ -48,12 +45,13 @@ public class SimpleCPUImplTest {
 	@Test
 	public void testTick() {
 		final Memory memory = mock(Memory.class);
-		when(memory.load(anyInt())).thenReturn((byte) 1);
+		when(memory.load(anyInt())).thenReturn(new boolean[]{false, false, false, false, false, false, false, true});
 		final CPU cpu = new SimpleCPUImpl(memory);
 		cpu.start();
+		assertFalse(cpu.isFinished());
 		cpu.tick();
 		assertFalse(cpu.isFinished());
-		when(memory.load(anyInt())).thenReturn((byte) 0);
+		when(memory.load(anyInt())).thenReturn(new boolean[]{false, false, false, false, false, false, false, false});
 		cpu.tick();
 		assertTrue(cpu.isFinished());
 	}
