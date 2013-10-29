@@ -60,7 +60,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void increment() {
-		set(toInt(get()) + 1);
+		add(fromInt(1, getSize()));
 		log(String.format("After incremention new content ist '%s' and carryFlag is %d.", 
 				toBinaryString(get()), carryFlag));
 	}
@@ -70,7 +70,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void decrement() {
-		set(toInt(get()) - 1);
+		add(fromInt(-1, getSize()));
 		log(String.format("After decremention new content ist '%s' and carryFlag is %d.", 
 				toBinaryString(get()), carryFlag));
 	}
