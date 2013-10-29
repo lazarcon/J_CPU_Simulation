@@ -24,6 +24,12 @@ public class FileLoader {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(FileLoader.class);
 	
+	/**
+	 * Loads the contents of <code>filename</code> into a list of strings, where each entry represents a line in the file
+	 * @param filename name of file to load
+	 * @return List of Strings contained in that file
+	 * The list will be empty, if the file could not be read.
+	 */
 	public List<String> load(final String filename) {
 		final List<String> lines = new LinkedList<String>();
 		try{
