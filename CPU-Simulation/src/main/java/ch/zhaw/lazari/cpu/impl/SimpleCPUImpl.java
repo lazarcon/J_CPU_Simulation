@@ -10,6 +10,10 @@
  */
 package ch.zhaw.lazari.cpu.impl;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.fromInt;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +22,6 @@ import ch.zhaw.lazari.cpu.impl.commands.*;
 import ch.zhaw.lazari.cpu.impl.program_counter.SimpleProgramCounterImpl;
 import ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl;
 import ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl;
-import ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils;
 
 /**
  * Simple Implementation of a central processing unit
@@ -37,7 +40,7 @@ public class SimpleCPUImpl implements CPU {
 	
 	private final Register[] registers = new Register[REGISTERS + 1];
 	
-	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(0, DEFAULT_WORD_LENGTH);;
+	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(100, 2);
 	
 	private final Memory memory;
 	
@@ -145,7 +148,7 @@ public class SimpleCPUImpl implements CPU {
 				word[read++] = bit;
 			}
 		}
-		return BooleanArrayUtils.toBinaryString(word);
+		return toBinaryString(word);
 	}
 
 	private Command interpret(final String word) {
@@ -182,8 +185,8 @@ public class SimpleCPUImpl implements CPU {
 		case ADD:
 			return new ADD(accu, registers[instruction.getRegisterId(word)]);
 		case ADDD:
-			final int value = Integer.parseInt(instruction.getSecondWord(word));
-			return new ADDD(accu, BooleanArrayUtils.fromInt(value, DEFAULT_WORD_LENGTH));
+			final int value = toInt(instruction.getSecondWord(word));
+			return new ADDD(accu, fromInt(value, DEFAULT_WORD_LENGTH));
 		case INC:
 			return new INC(accu);
 		case DEC:
@@ -195,11 +198,14 @@ public class SimpleCPUImpl implements CPU {
 	}
 
 	private Command createMemoryCommand(final InstructionSet2ByteWord instruction, final String word) {
+		final int register = instruction.getRegisterId(word);
+		final int address = toInt(instruction.getSecondWord(word));
+		LOG.trace(String.format("Creating command '%s' for register %d and address %d", instruction, register, address));
 		switch(instruction) {
 		case LWDD:
-			return new LWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));
+			return new LWDD(memory, registers[register], address);
 		case SWDD:
-			return new SWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));			
+			return new SWDD(memory, registers[register], address);			
 		default:
 			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
