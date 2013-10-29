@@ -12,6 +12,9 @@ package ch.zhaw.lazari.cpu.impl.memory;
 
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ch.zhaw.lazari.cpu.api.Memory;
 import ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils;
 import ch.zhaw.lazari.cpu.impl.utils.InvalidArgumentException;
@@ -20,6 +23,8 @@ import ch.zhaw.lazari.cpu.impl.utils.InvalidArgumentException;
  * Simple Memory Implementation
  */
 public class SimpleMemoryImpl implements Memory {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleMemoryImpl.class);
 	
 	private final byte[] storage;
 	
@@ -47,7 +52,9 @@ public class SimpleMemoryImpl implements Memory {
 		} else if (bits.length != WORD_SIZE){
 			throw new InvalidArgumentException(String.format("Bits to store (%d) are of invalid length (valid = %d)", bits.length, Byte.SIZE));
 		}
-		storage[address] = (byte) BooleanArrayUtils.toInt(bits);
+		final byte value = (byte) BooleanArrayUtils.toInt(bits);
+		LOG.trace(String.format("Storing value %d at %d", value, address));
+		storage[address] = value;
 
 	}
 
@@ -57,6 +64,7 @@ public class SimpleMemoryImpl implements Memory {
 	@Override
 	public boolean[] load(int address) {
 		if(isValid(address)) {
+			LOG.trace(String.format("Returning value %d at %d", storage[address], address));
 			return BooleanArrayUtils.fromInt(storage[address], WORD_SIZE);
 		} else {
 			throw new InvalidMemoryAddressException(address, storage.length);			
