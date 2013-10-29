@@ -11,12 +11,10 @@
 package ch.zhaw.lazari.cpu.impl.register;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import ch.zhaw.lazari.cpu.api.LogicalAccumulator;
-import ch.zhaw.lazari.cpu.api.Register;
 
 /**
  * Responsibility:
@@ -24,31 +22,17 @@ import ch.zhaw.lazari.cpu.api.Register;
 public class LogicalAccumulatorImplTest {
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.LogicalAccumulatorImpl#SimpleAccumulatorImpl()}.
-	 */
-	@Test
-	public void testSimpleAccumulatorImpl() {
-		final LogicalAccumulator accu = new LogicalAccumulatorImpl();
-		assertEquals(Register.DEFAULT_WORD_LENGTH, accu.get().length);
-		for(byte aByte : accu.get()) {
-			if(aByte == 0) {
-				fail("Accumulator should have random values by default");
-			}
-		}
-	}
-
-	/**
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.LogicalAccumulatorImpl#and(byte[])}.
 	 */
 	@Test
 	public void testAnd() {
-		final LogicalAccumulator accu = new LogicalAccumulatorImpl();
-		final byte[] in = {0, 1};
-		final byte[] and = {~0, ~1};
-		final byte[] expected = {0 & ~0, 1 & ~1};
+		final LogicalAccumulator accu = new LogicalAccumulatorImpl(3);
+		final boolean[] in = {true, true, false};
+		final boolean[] and = {true, false, false};
+		final boolean[] expected = {true, false, false};
 		accu.set(in);
 		accu.and(and);
-		byte[] out = accu.get();
+		boolean[] out = accu.get();
 		for(int index = 0; index < out.length; ++index) {
 			assertEquals(expected[index], out[index]);
 		}
@@ -59,13 +43,13 @@ public class LogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testOr() {
-		final LogicalAccumulator accu = new LogicalAccumulatorImpl();
-		final byte[] in = {0, 1};
-		final byte[] or = {~0, ~1};
-		final byte[] expected = {0 | ~0, 1 | ~1};
+		final LogicalAccumulator accu = new LogicalAccumulatorImpl(3);
+		final boolean[] in = {true, true, false};
+		final boolean[] or = {true, false, false};
+		final boolean[] expected = {true, true, false};
 		accu.set(in);
 		accu.or(or);
-		byte[] out = accu.get();
+		boolean[] out = accu.get();
 		for(int index = 0; index < out.length; ++index) {
 			assertEquals(expected[index], out[index]);
 		}
@@ -76,12 +60,12 @@ public class LogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testNot() {
-		final LogicalAccumulator accu = new LogicalAccumulatorImpl();
-		final byte[] in = {0, 1};
-		final byte[] expected = {~0, ~1};
+		final LogicalAccumulator accu = new LogicalAccumulatorImpl(2);
+		final boolean[] in = {true, false};
+		final boolean[] expected = {false, true};
 		accu.set(in);
 		accu.not();
-		byte[] out = accu.get();
+		boolean[] out = accu.get();
 		for(int index = 0; index < out.length; ++index) {
 			assertEquals(expected[index], out[index]);
 		}
