@@ -69,10 +69,35 @@
 				</includes>
 			</resource>
 			<resource>
+				<targetPath>../</targetPath>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<includes>
+					<include>**/*.mne</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>log4j.properties</include>
+				</includes>
 			</resource>
 		</resources>
+
+		<!-- Build for testing -->
+		<testResources>
+			<testResource>
+				<directory>src/main/resources</directory>
+				<!-- Use persistence as defined in META-INF/persistence.xml -->
+				<filtering>true</filtering>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<!-- Use persistence as defined in META-INF/persistence.xml -->
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
 
 		<pluginManagement>
 			<plugins>
@@ -104,20 +129,6 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-
-		<!-- Build for testing -->
-		<testResources>
-			<testResource>
-				<directory>src/main/resources</directory>
-				<!-- Use persistence as defined in META-INF/persistence.xml -->
-				<filtering>true</filtering>
-			</testResource>
-			<testResource>
-				<directory>src/test/resources</directory>
-				<!-- Use persistence as defined in META-INF/persistence.xml -->
-				<filtering>true</filtering>
-			</testResource>
-		</testResources>
 
 		<plugins>
 			<plugin>
@@ -163,7 +174,7 @@
 					</archive>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
