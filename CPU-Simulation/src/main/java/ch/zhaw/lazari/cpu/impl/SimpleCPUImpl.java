@@ -86,7 +86,7 @@ public class SimpleCPUImpl implements CPU {
 		final Command command = getCommand();
 		LOG.trace(String.format("\t%d. Incrementing program counter.", counter++));
 		programCounter.next();
-		LOG.trace(String.format("\t%d. Executing command:", counter));
+		LOG.trace(String.format("\t%d. Executing command: %s", counter, command));
 		command.execute();
 		counter = 1;
 	}
@@ -199,8 +199,7 @@ public class SimpleCPUImpl implements CPU {
 
 	private Command createMemoryCommand(final InstructionSet2ByteWord instruction, final String word) {
 		final int register = instruction.getRegisterId(word);
-		final int address = toInt(instruction.getSecondWord(word));
-		LOG.trace(String.format("Creating command '%s' for register %d and address %d", instruction, register, address));
+		final int address = toInt(instruction.getAddress(word));
 		switch(instruction) {
 		case LWDD:
 			return new LWDD(memory, registers[register], address);
@@ -253,13 +252,13 @@ public class SimpleCPUImpl implements CPU {
 		case B:
 			return new B(programCounter, registers[instruction.getRegisterId(word)]);
 		case BZD:
-			return new BZD(programCounter, accu, instruction.getAddress(word));
+			return new BZD(programCounter, accu, toInt(instruction.getAddress(word)));
 		case BNZD:
-			return new BNZD(programCounter, accu, instruction.getAddress(word));
+			return new BNZD(programCounter, accu, toInt(instruction.getAddress(word)));
 		case BCD:
-			return new BCD(programCounter, accu, instruction.getAddress(word));
+			return new BCD(programCounter, accu, toInt(instruction.getAddress(word)));
 		case BD:
-			return new BD(programCounter, instruction.getAddress(word));
+			return new BD(programCounter, toInt(instruction.getAddress(word)));
 		default:
 			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
