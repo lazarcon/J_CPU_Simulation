@@ -32,10 +32,12 @@ public class FileLoader {
 	 */
 	public List<String> load(final String filename) {
 		final List<String> lines = new LinkedList<String>();
+		DataInputStream in = null;
+		BufferedReader br = null;
 		try{
-			final FileInputStream fstream = new FileInputStream(filename);
-			final DataInputStream in = new DataInputStream(fstream);
-			final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			FileInputStream fstream = new FileInputStream(filename);
+			in = new DataInputStream(fstream);
+			br = new BufferedReader(new InputStreamReader(in));
 			String line;
 			while ((line = br.readLine()) != null)   {
 				lines.add(line);
@@ -43,6 +45,14 @@ public class FileLoader {
 			in.close();
 		} catch (final Exception exception){
 			LOG.error(String.format("Could not load file %s. Reason", filename), exception);
+		} finally {
+			if(br != null) {
+				try {
+				br.close();
+				} catch (final Exception exception) {
+					LOG.error("Could not close buffered reader", exception);
+				}
+			}
 		}
 		return lines;
 	}
