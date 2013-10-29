@@ -104,8 +104,8 @@ public enum InstructionSet2ByteWord {
 		return Integer.parseInt(line.replaceAll(getMnemonicPattern(), "$6"));		
 	}
 
-	public int getAddress(final String word) {
-		return Integer.parseInt(word.replaceAll(bitPattern, "$3"));
+	public String getAddress(final String word) {
+		return word.replaceAll(bitPattern, "$3");
 	}
 	
 	public String getSecondWord(final String word) {
