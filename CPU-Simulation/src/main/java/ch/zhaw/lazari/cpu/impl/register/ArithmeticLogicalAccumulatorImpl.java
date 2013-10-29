@@ -139,7 +139,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 		return (value < range.min) || (value > range.max);
 	}
 	
-	private static class Range {
+	private static final class Range {
 		private final int min;
 		private final int max;
 		private Range(final int wordLength) {
