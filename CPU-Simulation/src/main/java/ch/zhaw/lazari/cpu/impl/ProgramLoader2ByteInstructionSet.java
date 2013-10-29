@@ -33,19 +33,20 @@ public class ProgramLoader2ByteInstructionSet implements ProgramLoader {
 	
 	@Override
 	public void load(final List<String> lines, final Memory memory) {
+		LOG.info("Loading Programcode ...");
 		for(final String line : lines) {
 			if(line.length() > 0) {
 				InstructionSet2ByteWord word = InstructionSet2ByteWord.createFromMnemonic(line);
 				final String bits = getBits(word, line);
 				final int address = word.getLineNumber(line);
-				LOG.debug(String.format("Line %d: '%s' ...", address, word));
+				LOG.trace(String.format("Line %d: '%s' ...", address, word));
 				store(memory, address, bits);
 			}
 		}
 	}
 
 	private void store(final Memory memory, final int address, final String bits) {
-		LOG.trace(String.format("%d %s", address, bits));
+		LOG.info(String.format("%d %s", address, bits));
 		final String left = bits.substring(0, Byte.SIZE);
 		final String right = bits.substring(Byte.SIZE);
 		memory.store(address, fromInt(toInt(left), Byte.SIZE));
