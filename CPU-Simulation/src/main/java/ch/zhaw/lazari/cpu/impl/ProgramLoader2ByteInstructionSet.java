@@ -38,7 +38,7 @@ public class ProgramLoader2ByteInstructionSet implements ProgramLoader {
 				InstructionSet2ByteWord word = InstructionSet2ByteWord.createFromMnemonic(line);
 				final String bits = getBits(word, line);
 				final int address = word.getLineNumber(line);
-				LOG.trace(String.format("Line %d: '%s' ...", address, word));
+				LOG.debug(String.format("Line %d: '%s' ...", address, word));
 				store(memory, address, bits);
 			}
 		}
