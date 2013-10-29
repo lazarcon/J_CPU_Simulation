@@ -143,7 +143,7 @@ public class ProgramLoader2ByteInstructionSet implements ProgramLoader {
 	}
 
 	private String getMessage(InstructionSet2ByteWord word, String line) {
-		return String.format("Command %s from '%s' is unknown.", word);
+		return String.format("Command %s from '%s' is unknown.", word, line);
 	}
 	
 	private String toRegisterBinary(final int value) {
