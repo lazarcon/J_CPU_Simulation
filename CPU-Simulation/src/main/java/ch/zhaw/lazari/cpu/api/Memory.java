@@ -18,6 +18,8 @@ public interface Memory {
 	/** The default size for memory elements in bytes */
 	int DEFAULT_SIZE = 1024;
 	
+	int WORD_SIZE = Byte.SIZE;
+	
 	/**
 	 * Stores the given byte
 	 * @param address where to store the bits
