@@ -15,9 +15,9 @@ package ch.zhaw.lazari.cpu.impl.utils;
  */
 public final class BooleanArrayUtils {
 
-	private static int TRUE = 1;
+	private static final int TRUE = 1;
 	
-	private static int FALSE = 0;
+	private static final int FALSE = 0;
 	
 	private BooleanArrayUtils() {
 		// Avoid instantiation
