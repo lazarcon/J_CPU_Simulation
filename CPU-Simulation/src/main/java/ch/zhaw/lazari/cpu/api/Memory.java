@@ -30,5 +30,5 @@ public interface Memory {
 	 * @param address the address where the byte is locate
 	 * @return byte stored at that address
 	 */
-	byte load(int address);
+	boolean[] load(int address);
 }
