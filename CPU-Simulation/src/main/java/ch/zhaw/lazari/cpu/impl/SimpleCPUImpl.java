@@ -36,7 +36,7 @@ public class SimpleCPUImpl implements CPU {
 	
 	private static final int REGISTERS = 3;
 	
-	private final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(DEFAULT_WORD_LENGTH);
+	private final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(DEFAULT_WORD_LENGTH, 0);
 	
 	private final Register[] registers = new Register[REGISTERS + 1];
 	
@@ -57,7 +57,7 @@ public class SimpleCPUImpl implements CPU {
 		this.memory = memory;
 		this.registers[0] = accu; 
 		for(int index = 1; index < registers.length; ++index) {
-			registers[index] = new SimpleRegisterImpl(DEFAULT_WORD_LENGTH);
+			registers[index] = new SimpleRegisterImpl(DEFAULT_WORD_LENGTH, index);
 		}
 	}
 
