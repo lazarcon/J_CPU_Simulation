@@ -11,7 +11,8 @@
 package ch.zhaw.lazari.cpu.impl.register;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -22,29 +23,20 @@ import ch.zhaw.lazari.cpu.api.Register;
  */
 public class SimpleRegisterImplTest {
 
-	private final static byte[] WORD = {(byte) 7, (byte) 42};
-
-	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl#SimpleRegisterImpl()}.
-	 */
-	@Test
-	public void testSimpleRegisterImpl() {
-		final Register register = new SimpleRegisterImpl();
-		assertEquals(Register.DEFAULT_WORD_LENGTH, register.get().length);
-	}
+	private final static boolean[] WORD = {true, true, false, false, true, true, false, true};
 
 	/**
 	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl#SimpleRegisterImpl(int)}.
 	 */
 	@Test
 	public void testSimpleRegisterImplInt() {
-		final Register register = new SimpleRegisterImpl(Register.DEFAULT_WORD_LENGTH + 1);
-		assertEquals(Register.DEFAULT_WORD_LENGTH + 1, register.get().length);
-		for(final byte theByte : register.get()) {
-			if(theByte == 0) {
-				fail("The initial word is not a random value.");
-			}
+		final Register register = new SimpleRegisterImpl(8);
+		assertEquals(8, register.getSize());
+		int trueCount = 0;
+		for(final boolean bit : register.get()) {
+			trueCount += (bit) ? 1 : 0;
 		}
+		assertTrue(trueCount > 0);
 	}
 
 	/**
@@ -52,7 +44,7 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test
 	public void testSetGet() {
-		final Register register = new SimpleRegisterImpl();
+		final Register register = new SimpleRegisterImpl(WORD.length);
 		register.set(WORD);
 		for(int index = 0; index < WORD.length; ++index) {
 			assertEquals(WORD[index], register.get()[index]);	
@@ -64,8 +56,8 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test(expected = InvalidRegisterAccessException.class)
 	public void testSetToLong() {
-		final byte[] word = new byte[Register.DEFAULT_WORD_LENGTH + 1];
-		final Register register = new SimpleRegisterImpl();
+		final Register register = new SimpleRegisterImpl(WORD.length);
+		final boolean[] word = new boolean[WORD.length + 1];
 		register.set(word);
 	}
 
@@ -74,8 +66,8 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test(expected = InvalidRegisterAccessException.class)
 	public void testSetToShort() {
-		final byte[] word = new byte[Register.DEFAULT_WORD_LENGTH - 1];
-		final Register register = new SimpleRegisterImpl();
+		final Register register = new SimpleRegisterImpl(WORD.length - 1);
+		final boolean[] word = new boolean[WORD.length];
 		register.set(word);
 	}
 
@@ -84,19 +76,10 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test
 	public void testSetClear() {
-		final Register register = new SimpleRegisterImpl();
+		final Register register = new SimpleRegisterImpl(WORD.length);
 		register.clear();		
-		for(int index = 0; index < Register.DEFAULT_WORD_LENGTH; ++index) {
-			assertEquals(0, register.get()[index]);
+		for(int index = 0; index < WORD.length; ++index) {
+			assertFalse(register.get()[index]);
 		}
-	}
-	
-	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl#getSize()}.
-	 */
-	@Test
-	public void testGetSize() {
-		final Register register = new SimpleRegisterImpl();
-		assertEquals(Register.DEFAULT_WORD_LENGTH, register.getSize());
-	}
+	}	
 }
