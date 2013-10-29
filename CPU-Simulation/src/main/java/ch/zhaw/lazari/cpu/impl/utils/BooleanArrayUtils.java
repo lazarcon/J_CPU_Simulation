@@ -68,7 +68,8 @@ public final class BooleanArrayUtils {
 		}
 		int result = 0;
 		for(int index = 1; index < bits.length; ++index) {
-			if(bits[0]) { // bits[0] = MSB, if true, than the whole is negative
+			if(bits[0]) { 
+				// bits[0] = MSB, if true, than the whole is negative
 				result += toDigit(!bits[index]) * IntegerUtils.pow(2, bits.length - index - 1);
 			} else {
 				result += toDigit(bits[index]) * IntegerUtils.pow(2, bits.length - index - 1);
