@@ -53,7 +53,7 @@ public class SimpleMemoryImpl implements Memory {
 			throw new InvalidArgumentException(String.format("Bits to store (%d) are of invalid length (valid = %d)", bits.length, Byte.SIZE));
 		}
 		final byte value = (byte) BooleanArrayUtils.toInt(bits);
-		LOG.debug(String.format("\t\tStoring %d = %d", address, value));
+		LOG.trace(String.format("\t\tStoring %d = %d", address, value));
 		storage[address] = value;
 
 	}
