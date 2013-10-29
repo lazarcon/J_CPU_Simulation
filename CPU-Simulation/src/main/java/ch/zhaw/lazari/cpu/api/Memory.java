@@ -20,8 +20,8 @@ public interface Memory {
 	
 	/**
 	 * Stores the given byte
-	 * @param address where to store the byte
-	 * @param value the byte to store
+	 * @param address where to store the bits
+	 * @param bits the bits to store
 	 */
 	void store(int address, boolean[] bits);
 	
