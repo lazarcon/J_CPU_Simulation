@@ -19,7 +19,6 @@ import ch.zhaw.lazari.cpu.impl.program_counter.SimpleProgramCounterImpl;
 import ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl;
 import ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl;
 import ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Simple Implementation of a central processing unit
@@ -34,8 +33,6 @@ public class SimpleCPUImpl implements CPU {
 	
 	private static final int REGISTERS = 3;
 	
-	private int counter = 1;
-	
 	private final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(DEFAULT_WORD_LENGTH);
 	
 	private final Register[] registers = new Register[REGISTERS + 1];
@@ -43,6 +40,8 @@ public class SimpleCPUImpl implements CPU {
 	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(0, DEFAULT_WORD_LENGTH);;
 	
 	private final Memory memory;
+	
+	private int counter = 1;
 	
 	private boolean isFinished = true;
 	
@@ -139,10 +138,12 @@ public class SimpleCPUImpl implements CPU {
 	private String getCommandWord() {
 		final boolean[] word = new boolean[DEFAULT_WORD_LENGTH];
 		int address = programCounter.get();
-		for(int index = 0; index < DEFAULT_WORD_LENGTH; ++index) {
-			LOG.trace(String.format("\t\t - Reading byte at relative address %d", address));
-			// FIXME load word from memory
-			word[index] = false;
+		int read = 0;
+		while(read < word.length) {
+			final boolean[] stored = memory.load(address++);
+			for(final boolean bit : stored) {
+				word[read++] = bit;
+			}
 		}
 		return BooleanArrayUtils.toBinaryString(word);
 	}
@@ -181,7 +182,7 @@ public class SimpleCPUImpl implements CPU {
 		case ADD:
 			return new ADD(accu, registers[instruction.getRegisterId(word)]);
 		case ADDD:
-			final int value = Integer.parseInt(instruction.getSecondWord(word), ByteArrayUtils.RADIX_BINARY);
+			final int value = Integer.parseInt(instruction.getSecondWord(word));
 			return new ADDD(accu, BooleanArrayUtils.fromInt(value, DEFAULT_WORD_LENGTH));
 		case INC:
 			return new INC(accu);
