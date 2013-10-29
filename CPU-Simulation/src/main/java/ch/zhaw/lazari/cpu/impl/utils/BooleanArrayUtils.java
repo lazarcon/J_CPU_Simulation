@@ -93,6 +93,9 @@ public final class BooleanArrayUtils {
 			}
 			divResult /= 2;
 		}
+		while(isNegative && index > 0) {
+			result[index--] = true;
+		}
 		return result;
 	}
 	
