@@ -21,7 +21,7 @@ public class SWDD extends AbstractMemoryCommand {
 
 	private final Register register;
 	
-	private final int address;
+	private int address;
 	
 	/**
 	 * @param memory
@@ -38,7 +38,15 @@ public class SWDD extends AbstractMemoryCommand {
 	@Override
 	public void execute() {
 		log(String.format("Telling memory to store '%s' at address %d", toBinaryString(register.get()), address));
-		// FIXME Change to use boolean[]
+		final int memoryWords = register.getSize() / Memory.WORD_SIZE;
+		final boolean[] registerWord = register.get();
+		for(int word = 0; word < memoryWords; ++word) {
+			final boolean[] memoryWord = new boolean[Memory.WORD_SIZE];
+			for(int index = 0; index < memoryWord.length; ++index) {
+				memoryWord[index] = registerWord[word * Memory.WORD_SIZE + index];
+			}
+			getMemory().store(address++, memoryWord);
+		}
 	}
 
 }
