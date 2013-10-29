@@ -29,7 +29,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testAddPositiveNoOverflow() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(300, LENGTH));
 		accu.add(BooleanArrayUtils.fromInt(200, LENGTH));
 		final boolean[] result = accu.get();
@@ -42,7 +42,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testAddPositiveOverflow() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(Short.MAX_VALUE, LENGTH));
 		accu.add(BooleanArrayUtils.fromInt(1, LENGTH));
 		assertEquals(1, accu.getCarryFlag());
@@ -53,7 +53,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testAddNegativNoOverflow() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(300, LENGTH));
 		accu.add(BooleanArrayUtils.fromInt(-200, LENGTH));
 		final boolean[] result = accu.get();
@@ -67,7 +67,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testIncrement() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(300, LENGTH));
 		accu.increment();
 		assertEquals(301, BooleanArrayUtils.toInt(accu.get()));
@@ -79,7 +79,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testDecrement() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(300, LENGTH));
 		accu.decrement();
 		assertEquals(299, BooleanArrayUtils.toInt(accu.get()));
@@ -91,7 +91,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testShiftRightArithmetic() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(100, LENGTH));
 		accu.shiftRightArithmetic();
 		assertEquals(50, BooleanArrayUtils.toInt(accu.get()));
@@ -103,7 +103,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testShiftLeftArithmetic() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(100, LENGTH));
 		accu.shiftLeftArithmetic();
 		assertEquals(200, BooleanArrayUtils.toInt(accu.get()));
@@ -115,7 +115,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testShiftRightLogical() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(100, LENGTH));
 		accu.shiftRightLogical();
 		assertEquals(50, BooleanArrayUtils.toInt(accu.get()));
@@ -127,7 +127,7 @@ public class ArithmeticLogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testShiftLeftLogical() {
-		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH);
+		final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(LENGTH, 0);
 		accu.set(BooleanArrayUtils.fromInt(100, LENGTH));
 		accu.shiftLeftLogical();
 		assertEquals(200, BooleanArrayUtils.toInt(accu.get()));

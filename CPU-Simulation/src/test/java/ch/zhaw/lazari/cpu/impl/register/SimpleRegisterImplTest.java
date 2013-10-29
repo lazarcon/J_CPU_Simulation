@@ -30,7 +30,7 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test
 	public void testSimpleRegisterImplInt() {
-		final Register register = new SimpleRegisterImpl(8);
+		final Register register = new SimpleRegisterImpl(WORD.length, 0);
 		assertEquals(8, register.getSize());
 		int trueCount = 0;
 		for(final boolean bit : register.get()) {
@@ -44,7 +44,7 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test
 	public void testSetGet() {
-		final Register register = new SimpleRegisterImpl(WORD.length);
+		final Register register = new SimpleRegisterImpl(WORD.length, 0);
 		register.set(WORD);
 		for(int index = 0; index < WORD.length; ++index) {
 			assertEquals(WORD[index], register.get()[index]);	
@@ -56,7 +56,7 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test(expected = InvalidRegisterAccessException.class)
 	public void testSetToLong() {
-		final Register register = new SimpleRegisterImpl(WORD.length);
+		final Register register = new SimpleRegisterImpl(WORD.length, 0);
 		final boolean[] word = new boolean[WORD.length + 1];
 		register.set(word);
 	}
@@ -66,7 +66,7 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test(expected = InvalidRegisterAccessException.class)
 	public void testSetToShort() {
-		final Register register = new SimpleRegisterImpl(WORD.length - 1);
+		final Register register = new SimpleRegisterImpl(WORD.length - 1, 0);
 		final boolean[] word = new boolean[WORD.length];
 		register.set(word);
 	}
@@ -76,7 +76,7 @@ public class SimpleRegisterImplTest {
 	 */
 	@Test
 	public void testSetClear() {
-		final Register register = new SimpleRegisterImpl(WORD.length);
+		final Register register = new SimpleRegisterImpl(WORD.length, 0);
 		register.clear();		
 		for(int index = 0; index < WORD.length; ++index) {
 			assertFalse(register.get()[index]);

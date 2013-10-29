@@ -26,7 +26,7 @@ public class LogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testAnd() {
-		final LogicalAccumulator accu = new LogicalAccumulatorImpl(3);
+		final LogicalAccumulator accu = new LogicalAccumulatorImpl(3, 0);
 		final boolean[] in = {true, true, false};
 		final boolean[] and = {true, false, false};
 		final boolean[] expected = {true, false, false};
@@ -43,7 +43,7 @@ public class LogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testOr() {
-		final LogicalAccumulator accu = new LogicalAccumulatorImpl(3);
+		final LogicalAccumulator accu = new LogicalAccumulatorImpl(3, 0);
 		final boolean[] in = {true, true, false};
 		final boolean[] or = {true, false, false};
 		final boolean[] expected = {true, true, false};
@@ -60,7 +60,7 @@ public class LogicalAccumulatorImplTest {
 	 */
 	@Test
 	public void testNot() {
-		final LogicalAccumulator accu = new LogicalAccumulatorImpl(2);
+		final LogicalAccumulator accu = new LogicalAccumulatorImpl(2, 0);
 		final boolean[] in = {true, false};
 		final boolean[] expected = {false, true};
 		accu.set(in);
