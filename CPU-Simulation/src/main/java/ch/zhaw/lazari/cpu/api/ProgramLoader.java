@@ -10,11 +10,13 @@
  */
 package ch.zhaw.lazari.cpu.api;
 
+import java.util.List;
+
 /**
  * Responsibility:
  */
 public interface ProgramLoader {
 
-	/** Loads the menomic program into memory */
-	void load(final String filename, final Memory memory);
+	/** Loads the menomic program-lines into memory */
+	void load(final List<String> lines, final Memory memory);
 }
