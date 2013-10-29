@@ -28,15 +28,18 @@ public class SimpleRegisterImpl implements Register {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	private final int id;
+	
 	private boolean[] bits;
-		
+	
 	/**
 	 * Creates a new SimpleRegister for words of the given length
 	 * Default stored bits are random
 	 * @param wordLength number of bits per word
 	 */
-	public SimpleRegisterImpl(final int wordLength) {
+	public SimpleRegisterImpl(final int wordLength, int id) {
 		bits = new boolean[wordLength];
+		this.id = id;
 		final Random coin = new Random();
 		for(int index = 0; index < wordLength; ++index) {
 			bits[index] = coin.nextBoolean();
@@ -75,8 +78,13 @@ public class SimpleRegisterImpl implements Register {
 	 * @see ch.zhaw.lazari.cpu.api.Register#getSize()
 	 */
 	@Override
-	public int getSize() {
+	public final int getSize() {
 		return bits.length;
+	}
+	
+	@Override
+	public final int getId() {
+		return id;
 	}
 	
 	protected void checkSize(final boolean[] bits, final String method) {
@@ -93,4 +101,6 @@ public class SimpleRegisterImpl implements Register {
 	protected void log(final String message) {
 		log.trace(String.format(FORMAT, message));
 	}
+	
+	
 }

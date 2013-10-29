@@ -22,8 +22,8 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 * Creates a new accumulator with the given wordSize
 	 * @param wordSize number of bytes per word
 	 */
-	public LogicalAccumulatorImpl(final int wordSize) {
-		super(wordSize);
+	public LogicalAccumulatorImpl(final int wordSize, final int id) {
+		super(wordSize, id);
 	}
 	
 

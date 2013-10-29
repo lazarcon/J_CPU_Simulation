@@ -25,8 +25,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	
 	private final Range range;
 	
-	public ArithmeticLogicalAccumulatorImpl(final int wordLength) {
-		super(wordLength);
+	public ArithmeticLogicalAccumulatorImpl(final int wordLength, final int id) {
+		super(wordLength, id);
 		range = new Range(wordLength);
 	}
 	
