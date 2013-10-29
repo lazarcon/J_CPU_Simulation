@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import ch.zhaw.lazari.cpu.api.Memory;
 import ch.zhaw.lazari.cpu.api.ProgramLoader;
-import ch.zhaw.lazari.cpu.impl.utils.ProgramLoader2ByteInstructionSet;
 
 /**
  * Responsibility:
@@ -30,7 +29,7 @@ import ch.zhaw.lazari.cpu.impl.utils.ProgramLoader2ByteInstructionSet;
 public class ProgramLoader2ByteInstructionSetTest {
 
 	/**
-	 * Test method for {@link ch.zhaw.lazari.cpu.impl.utils.ProgramLoader2ByteInstructionSet#load(java.util.List)}.
+	 * Test method for {@link ch.zhaw.lazari.cpu.impl.ProgramLoader2ByteInstructionSet#load(java.util.List)}.
 	 */
 	@Test
 	public void testLoad() {
