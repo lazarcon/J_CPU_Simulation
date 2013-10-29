@@ -11,6 +11,7 @@
 package ch.zhaw.lazari.cpu.impl.utils;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class FileLoader {
 		try{
 			FileInputStream fstream = new FileInputStream(filename);
 			in = new DataInputStream(fstream);
-			br = new BufferedReader(new InputStreamReader(in));
+			br = new BufferedReader(new InputStreamReader(in, Charset.forName("utf8")));
 			String line;
 			while ((line = br.readLine()) != null)   {
 				lines.add(line);
