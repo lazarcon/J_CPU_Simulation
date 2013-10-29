@@ -37,8 +37,9 @@ public class SimpleRegisterImpl implements Register {
 	 */
 	public SimpleRegisterImpl(final int wordLength) {
 		bits = new boolean[wordLength];
+		final Random coin = new Random();
 		for(int index = 0; index < wordLength; ++index) {
-			bits[index] = new Random().nextBoolean();
+			bits[index] = coin.nextBoolean();
 		}
 	}
 
