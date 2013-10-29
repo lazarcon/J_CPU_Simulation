@@ -13,6 +13,8 @@ package ch.zhaw.lazari.cpu.impl.memory;
 import java.util.Random;
 
 import ch.zhaw.lazari.cpu.api.Memory;
+import ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils;
+import ch.zhaw.lazari.cpu.impl.utils.InvalidArgumentException;
 
 /**
  * Simple Memory Implementation
@@ -39,21 +41,23 @@ public class SimpleMemoryImpl implements Memory {
 	 * @see ch.zhaw.lazari.cpu.api.Memory#store(int, byte)
 	 */
 	@Override
-	public void store(int address, boolean[] value) {
-		if(isValid(address)) {
-			// FIXME store value at address
-		} else {
+	public void store(int address, boolean[] bits) {
+		if(!isValid(address)) {
 			throw new InvalidMemoryAddressException(address, storage.length);
+		} else if (bits.length != Byte.SIZE){
+			throw new InvalidArgumentException(String.format("Bits to store (%d) are of invalid length (valid = %d)", bits.length, Byte.SIZE));
 		}
+		storage[address] = (byte) BooleanArrayUtils.toInt(bits);
+
 	}
 
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Memory#load(int)
 	 */
 	@Override
-	public byte load(int address) {
+	public boolean[] load(int address) {
 		if(isValid(address)) {
-			return storage[address];
+			return BooleanArrayUtils.fromInt(storage[address], Byte.SIZE);
 		} else {
 			throw new InvalidMemoryAddressException(address, storage.length);			
 		}
