@@ -20,6 +20,8 @@ public interface Memory {
 	
 	int WORD_SIZE = Byte.SIZE;
 	
+	int ADDRESS_BITS = 10;
+	
 	/**
 	 * Stores the given byte
 	 * @param address where to store the bits
