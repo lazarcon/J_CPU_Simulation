@@ -32,7 +32,7 @@ public class BCD extends AbstractConditionalProgramCounterCommandAddress {
 	 */
 	@Override
 	protected boolean shouldJump() {
-		return getAccu().getCarryFlag() == 1;
+		return getAccu().getCarryFlag();
 	}
 
 	@Override

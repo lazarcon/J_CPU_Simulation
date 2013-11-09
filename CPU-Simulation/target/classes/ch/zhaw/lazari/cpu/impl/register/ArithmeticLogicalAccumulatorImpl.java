@@ -13,7 +13,11 @@ package ch.zhaw.lazari.cpu.impl.register;
 import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.fromInt;
 import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
+
+import java.util.BitSet;
+
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
+import ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils;
 import ch.zhaw.lazari.cpu.impl.utils.IntegerUtils;
 
 /**
@@ -21,7 +25,7 @@ import ch.zhaw.lazari.cpu.impl.utils.IntegerUtils;
  */
 public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl implements ArithmeticLogicalAccumulator {
 		
-	private int carryFlag = 0;
+	private boolean carryFlag = false;
 	
 	private final Range range;
 	
@@ -34,7 +38,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#getCarryFlag()
 	 */
 	@Override
-	public int getCarryFlag() {
+	public boolean getCarryFlag() {
 		return carryFlag;
 	}
 
@@ -47,11 +51,11 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 		final int toAdd = toInt(bits);
 		final int result = stored + toAdd;
 		if(isOverflow(result)) {
-			carryFlag = 1;
+			carryFlag = true;
 		} else {
-			carryFlag = 0;
+			carryFlag = false;
 		}
-		log(String.format("Executing add (in decimals): %d + %d = %d, carryFlag = %d", stored, toAdd, result, carryFlag));
+		log(String.format("Executing add (in decimals): %d + %d = %d, carryFlag = %b", stored, toAdd, result, carryFlag));
 		set(result);
 	}
 
@@ -61,7 +65,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void increment() {
 		add(fromInt(1, getSize()));
-		log(String.format("After incremention new content ist '%s' and carryFlag is %d.", 
+		log(String.format("After incremention new content ist '%s' and carryFlag is %b.", 
 				toBinaryString(get()), carryFlag));
 	}
 
@@ -71,7 +75,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	@Override
 	public void decrement() {
 		add(fromInt(-1, getSize()));
-		log(String.format("After decremention new content ist '%s' and carryFlag is %d.", 
+		log(String.format("After decremention new content ist '%s' and carryFlag is %b.", 
 				toBinaryString(get()), carryFlag));
 	}
 
@@ -80,11 +84,18 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftRightArithmetic() {
-		final int before = toInt(get());
-		set(toInt(get()) >> 1);
-		final int after = toInt(get());
-		log(String.format("Executed arithmetical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
-		carryFlag = before % 2;
+		boolean[] before = get();
+		boolean[] after = new boolean[getSize()];
+		after[0] = before[0];
+		after[1] = before[1];
+		after[2] = false;
+		for(int i=2;i<getSize()-1;i++)
+		{
+			after[i+1] = before[i];
+		}
+		set(after);
+		log(String.format("Executed arithmetical right shift. %d --> %d (carryFlag is %B).", BooleanArrayUtils.toInt(before), BooleanArrayUtils.toInt(after), carryFlag));
+		carryFlag = before[getSize()-1];
 	}
 
 	/* (non-Javadoc)
@@ -92,18 +103,19 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	 */
 	@Override
 	public void shiftLeftArithmetic() {
-		final int before = toInt(get());
-		final int value = toInt(get());
-		final int newValue = value << 1;
-		if(isOverflow(newValue)) {
-			carryFlag = 1;
-		} else {
-			carryFlag = 0;
+		boolean[] before = get();
+		boolean[] after = new boolean[getSize()];
+		after[0] = before[0];
+		
+		after[getSize()-1] = false;
+		for(int i=1;i<getSize();i++)
+		{
+			after[i] = before[i+1];
 		}
-		set(newValue);
-		final int after = toInt(get());
-		log(String.format("Executed arithmetical left shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
-	}
+		set(after);
+		log(String.format("Executed arithmetical left shift. %d --> %d (carryFlag is %B).", BooleanArrayUtils.toInt(before), BooleanArrayUtils.toInt(after), carryFlag));
+		carryFlag = before[1];
+		}
 
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#shiftRightLogical()
@@ -113,8 +125,8 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 		final int before = toInt(get());
 		set(toInt(get()) >>> 1); 
 		final int after = toInt(get());
-		carryFlag = before % 2;
-		log(String.format("Executed logical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
+		//carryFlag = before % 2;
+		log(String.format("Executed logical right shift. %d --> %d (carryFlag is %b).", before, after, carryFlag));
 	}
 
 	/* (non-Javadoc)
@@ -124,11 +136,11 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 	public void shiftLeftLogical() {
 		final int before = toInt(get());
 		final String word = toBinaryString(get());
-		carryFlag = Integer.parseInt(word.substring(0, 1));
+		//carryFlag = Integer.parseInt(word.substring(0, 1));
 		final int value = toInt(get());
 		set(value * 2);
 		final int after = toInt(get());
-		log(String.format("Executed logical left shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
+		log(String.format("Executed logical left shift. %d --> %d (carryFlag is %b).", before, after, carryFlag));
 	}
 
 	private void set(final int value) {

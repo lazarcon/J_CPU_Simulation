@@ -75,7 +75,7 @@ public final class BooleanArrayUtils {
 				result += toDigit(bits[index]) * IntegerUtils.pow(2, bits.length - index - 1);
 			}
 		}
-		return bits[0] ? -result : result;
+		return bits[0] ? -result +1: result;
 	}
 	
 	public static boolean[] fromInt(final int value, final int length) {

@@ -67,10 +67,6 @@ public final class App {
 			final ProgramLoader programLoader = new ProgramLoader2ByteInstructionSet();
 			programLoader.load(code, memory);
 			
-			memory.store(500, 0);
-			memory.store(501, -2);
-			memory.store(502, 0);
-			memory.store(503, 1);
 			
 			final CPU cpu = new SimpleCPUImpl(memory);
 			final CPUSimulation simulation = new CPUSimulation(cpu);

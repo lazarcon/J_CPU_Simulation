@@ -30,7 +30,7 @@ public class BC extends AbstractConditionalProgramCounterCommandRegister {
 	 */
 	@Override
 	protected boolean shouldJump() {
-		return (getAccu().getCarryFlag() == 1);
+		return getAccu().getCarryFlag();
 	}
 
 	@Override

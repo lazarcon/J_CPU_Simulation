@@ -18,7 +18,7 @@ public interface ArithmeticLogicalAccumulator extends LogicalAccumulator{
 	/**
 	 * @return status of the carry flag
 	 */
-	int getCarryFlag();
+	boolean getCarryFlag();
 	
 	/**
 	 * Adds the bytes passed
