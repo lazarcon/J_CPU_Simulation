@@ -10,8 +10,8 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
 import ch.zhaw.lazari.cpu.api.*;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -31,8 +31,12 @@ public class BNZ extends AbstractConditionalProgramCounterCommandRegister {
 	 */
 	@Override
 	protected boolean shouldJump() {
-		return ByteArrayUtils.toInt(getAccu().get()) != 0;
+		return toInt(getAccu().get()) != 0;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("BNZ R%d", getRegister().getId());
+	}
 
 }

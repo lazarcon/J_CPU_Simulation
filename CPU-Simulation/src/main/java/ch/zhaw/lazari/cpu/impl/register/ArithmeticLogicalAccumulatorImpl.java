@@ -84,7 +84,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 		set(toInt(get()) >> 1);
 		final int after = toInt(get());
 		log(String.format("Executed arithmetical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
-		carryFlag = 0;
+		carryFlag = before % 2;
 	}
 
 	/* (non-Javadoc)
@@ -113,7 +113,7 @@ public class ArithmeticLogicalAccumulatorImpl extends LogicalAccumulatorImpl imp
 		final int before = toInt(get());
 		set(toInt(get()) >>> 1); 
 		final int after = toInt(get());
-		carryFlag = 0;
+		carryFlag = before % 2;
 		log(String.format("Executed logical right shift. %d --> %d (carryFlag is %d).", before, after, carryFlag));
 	}
 

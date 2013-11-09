@@ -10,9 +10,9 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import ch.zhaw.lazari.cpu.api.Memory;
 import ch.zhaw.lazari.cpu.api.Register;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -37,10 +37,22 @@ public class SWDD extends AbstractMemoryCommand {
 	 */
 	@Override
 	public void execute() {
-		log(String.format("Telling memory to store '%s' at address %d", ByteArrayUtils.toBinaryString(register.get()), address));
-		for(byte toStore : register.get()) {
-			getMemory().store(address++, toStore);
+		log(String.format("Telling memory to store '%s' at address %d", toBinaryString(register.get()), address));
+		final int memoryWords = register.getSize() / Memory.WORD_SIZE;
+		final boolean[] registerWord = register.get();
+		for(int word = 0; word < memoryWords; ++word) {
+			final boolean[] memoryWord = new boolean[Memory.WORD_SIZE];
+			for(int index = 0; index < memoryWord.length; ++index) {
+				memoryWord[index] = registerWord[word * Memory.WORD_SIZE + index];
+			}
+			getMemory().store(address++, memoryWord);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("SWDD R%d #%d", register.getId(), address);
+	}
+
 
 }

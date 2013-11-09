@@ -1,5 +1,5 @@
 /*
- * File: 		ArithmeticAccumulator.java
+  * File: 		ArithmeticAccumulator.java
  * Date: 		Oct 17, 2013
  *
  * Copyright 2013 Constantin Lazari. All rights reserved.
@@ -24,7 +24,7 @@ public interface ArithmeticLogicalAccumulator extends LogicalAccumulator{
 	 * Adds the bytes passed
 	 * @param bytes
 	 */
-	void add(byte[] bytes);
+	void add(boolean[] bits);
 		
 	/**
 	 * Adds one to the content of the accumulator.

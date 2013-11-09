@@ -35,4 +35,9 @@ public class BCD extends AbstractConditionalProgramCounterCommandAddress {
 		return getAccu().getCarryFlag() == 1;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("BCD #", getAddress());
+	}
+
 }

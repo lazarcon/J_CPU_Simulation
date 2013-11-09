@@ -32,4 +32,9 @@ public class CLR extends AbstractCommand {
 		register.clear();
 	}
 
+	@Override
+	public String toString() {
+		return String.format("CLR R%d", register.getId());
+	}
+
 }

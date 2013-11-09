@@ -33,4 +33,9 @@ public class NOT extends AbstractAccumulatorCommand {
 		getAccu().not();
 	}
 
+	@Override
+	public String toString() {
+		return "NOT";
+	}
+
 }

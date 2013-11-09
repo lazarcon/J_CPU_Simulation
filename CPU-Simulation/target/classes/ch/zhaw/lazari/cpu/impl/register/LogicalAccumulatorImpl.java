@@ -10,27 +10,20 @@
  */
 package ch.zhaw.lazari.cpu.impl.register;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import ch.zhaw.lazari.cpu.api.LogicalAccumulator;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Simple Implementation of an Accumulator
  */
 public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements LogicalAccumulator{
-	
-	/**
-	 * Creates a new accumulator with a default word length
-	 */
-	public LogicalAccumulatorImpl() {
-		super();
-	}
 
 	/**
 	 * Creates a new accumulator with the given wordSize
 	 * @param wordSize number of bytes per word
 	 */
-	public LogicalAccumulatorImpl(final int wordSize) {
-		super(wordSize);
+	public LogicalAccumulatorImpl(final int wordSize, final int id) {
+		super(wordSize, id);
 	}
 	
 
@@ -38,23 +31,30 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#and(byte[])
 	 */
 	@Override
-	public void and(byte[] bytes) {
-		final String current = ByteArrayUtils.toBinaryString(get());
-		set(ByteArrayUtils.and(get(), bytes));
+	public void and(boolean[] bits) {
+		checkSize(bits.clone(), "AND"); 
+		final boolean[] result = new boolean[getSize()];
+		for(int index = 0; index < bits.length; ++index) {
+			result[index] = get()[index] & bits[index];
+		}
 		log(String.format("Executed (content, passed argument): '%s' AND '%s' = '%s'", 
-				current, ByteArrayUtils.toBinaryString(bytes), ByteArrayUtils.toBinaryString(get())));
+				toBinaryString(get()), toBinaryString(bits), toBinaryString(result)));
+		set(result);
 	}
 
 	/* (non-Javadoc)
 	 * @see ch.zhaw.lazari.cpu.api.Accumulator#or(byte[])
 	 */
 	@Override
-	public void or(byte[] bytes) {
-		final String current = ByteArrayUtils.toBinaryString(get());
-		set(ByteArrayUtils.or(get(), bytes));
+	public void or(boolean[] bits) {
+		checkSize(bits.clone(), "OR");
+		final boolean[] result = new boolean[getSize()];
+		for(int index = 0; index < bits.length; ++index) {
+			result[index] = get()[index] | bits[index];
+		}
 		log(String.format("Executed (content, passed argument): '%s' OR '%s' = '%s'", 
-				current, ByteArrayUtils.toBinaryString(bytes), ByteArrayUtils.toBinaryString(get())));
-
+				toBinaryString(get()), toBinaryString(bits), toBinaryString(result)));
+		set(result);
 	}
 
 	/* (non-Javadoc)
@@ -62,9 +62,12 @@ public class LogicalAccumulatorImpl extends SimpleRegisterImpl implements Logica
 	 */
 	@Override
 	public void not() {
-		final String current = ByteArrayUtils.toBinaryString(get());
-		set(ByteArrayUtils.not(get()));
-		log(String.format("Executed NOT '%s' = '%s'", 
-				current, ByteArrayUtils.toBinaryString(get())));
+		final boolean[] result = new boolean[getSize()];
+		for(int index = 0; index < getSize(); ++index) {
+			result[index] = !get()[index];
+		}
+		log(String.format("Executed (content, passed argument): NOT '%s' = '%s'", 
+				toBinaryString(get()), toBinaryString(result)));
+		set(result);
 	}
 }

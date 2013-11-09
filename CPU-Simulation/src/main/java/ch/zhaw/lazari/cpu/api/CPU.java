@@ -31,6 +31,8 @@ public interface CPU {
 	/** Returns the register with the given index */
 	Register getRegister(final int index);
 	
+	Register[] getRegisters();
+	
 	/** Returns the memory used by the CPU */
 	Memory getMemory();
 	

@@ -1,5 +1,5 @@
 /*
- * File: 		ArithmeticAccumulator.java
+  * File: 		ArithmeticAccumulator.java
  * Date: 		Oct 17, 2013
  *
  * Copyright 2013 Constantin Lazari. All rights reserved.

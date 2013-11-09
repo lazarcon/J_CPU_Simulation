@@ -10,6 +10,10 @@
  */
 package ch.zhaw.lazari.cpu.impl;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.fromInt;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toInt;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +22,6 @@ import ch.zhaw.lazari.cpu.impl.commands.*;
 import ch.zhaw.lazari.cpu.impl.program_counter.SimpleProgramCounterImpl;
 import ch.zhaw.lazari.cpu.impl.register.ArithmeticLogicalAccumulatorImpl;
 import ch.zhaw.lazari.cpu.impl.register.SimpleRegisterImpl;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Simple Implementation of a central processing unit
@@ -29,21 +32,21 @@ public class SimpleCPUImpl implements CPU {
 
 	private static final String LOG_UNKNOWN_INSTRUCTION_FORMAT = "\t\tUnknown instruction '%s'";
 	
-	private static final int DEFAULT_WORD_LENGTH = 2;
+	private static final int DEFAULT_WORD_LENGTH = 16;
 	
 	private static final int REGISTERS = 3;
 	
-	private int counter = 1;
-	
-	private final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(DEFAULT_WORD_LENGTH);
+	private final ArithmeticLogicalAccumulator accu = new ArithmeticLogicalAccumulatorImpl(DEFAULT_WORD_LENGTH, 0);
 	
 	private final Register[] registers = new Register[REGISTERS + 1];
 	
-	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(0, DEFAULT_WORD_LENGTH);;
+	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(100,2);
 	
 	private final Memory memory;
 	
-	private boolean isFinished = true;
+	private int counter = 1;
+	
+	private boolean isFinished = false;
 	
 	/**
 	 * Creates a new CPU using the passed components
@@ -54,7 +57,7 @@ public class SimpleCPUImpl implements CPU {
 		this.memory = memory;
 		this.registers[0] = accu; 
 		for(int index = 1; index < registers.length; ++index) {
-			registers[index] = new SimpleRegisterImpl(DEFAULT_WORD_LENGTH);
+			registers[index] = new SimpleRegisterImpl(DEFAULT_WORD_LENGTH, index);
 		}
 	}
 
@@ -83,7 +86,7 @@ public class SimpleCPUImpl implements CPU {
 		final Command command = getCommand();
 		LOG.trace(String.format("\t%d. Incrementing program counter.", counter++));
 		programCounter.next();
-		LOG.trace(String.format("\t%d. Executing command:", counter));
+		LOG.trace(String.format("\t%d. Executing command: %s", counter, command));
 		command.execute();
 		counter = 1;
 	}
@@ -136,13 +139,16 @@ public class SimpleCPUImpl implements CPU {
 	}
 
 	private String getCommandWord() {
-		final byte[] word = new byte[DEFAULT_WORD_LENGTH];
+		final boolean[] word = new boolean[DEFAULT_WORD_LENGTH];
 		int address = programCounter.get();
-		for(int index = 0; index < DEFAULT_WORD_LENGTH; ++index) {
-			LOG.trace(String.format("\t\t - Reading byte at relative address %d", address));
-			word[index] = memory.load(address++);
+		int read = 0;
+		while(read < word.length) {
+			final boolean[] stored = memory.load(address++);
+			for(final boolean bit : stored) {
+				word[read++] = bit;
+			}
 		}
-		return ByteArrayUtils.toBinaryString(word);
+		return toBinaryString(word);
 	}
 
 	private Command interpret(final String word) {
@@ -179,8 +185,8 @@ public class SimpleCPUImpl implements CPU {
 		case ADD:
 			return new ADD(accu, registers[instruction.getRegisterId(word)]);
 		case ADDD:
-			final int value = Integer.parseInt(instruction.getSecondWord(word), ByteArrayUtils.RADIX_BINARY);
-			return new ADDD(accu, ByteArrayUtils.fromInt(value, DEFAULT_WORD_LENGTH));
+			final int value = toInt(instruction.getSecondWord(word));
+			return new ADDD(accu, fromInt(value, DEFAULT_WORD_LENGTH));
 		case INC:
 			return new INC(accu);
 		case DEC:
@@ -192,11 +198,13 @@ public class SimpleCPUImpl implements CPU {
 	}
 
 	private Command createMemoryCommand(final InstructionSet2ByteWord instruction, final String word) {
+		final int register = instruction.getRegisterId(word);
+		final int address = toInt(instruction.getAddress(word));
 		switch(instruction) {
 		case LWDD:
-			return new LWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));
+			return new LWDD(memory, registers[register], address);
 		case SWDD:
-			return new SWDD(memory, registers[instruction.getRegisterId(word)], instruction.getAddress(word));			
+			return new SWDD(memory, registers[register], address);			
 		default:
 			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
@@ -244,13 +252,13 @@ public class SimpleCPUImpl implements CPU {
 		case B:
 			return new B(programCounter, registers[instruction.getRegisterId(word)]);
 		case BZD:
-			return new BZD(programCounter, accu, instruction.getAddress(word));
+			return new BZD(programCounter, accu, toInt(instruction.getAddress(word)));
 		case BNZD:
-			return new BNZD(programCounter, accu, instruction.getAddress(word));
+			return new BNZD(programCounter, accu, toInt(instruction.getAddress(word)));
 		case BCD:
-			return new BCD(programCounter, accu, instruction.getAddress(word));
+			return new BCD(programCounter, accu, toInt(instruction.getAddress(word)));
 		case BD:
-			return new BD(programCounter, instruction.getAddress(word));
+			return new BD(programCounter, toInt(instruction.getAddress(word)));
 		default:
 			logUnknown(instruction);
 			throw new UnknownCommandException(word);				
@@ -263,5 +271,10 @@ public class SimpleCPUImpl implements CPU {
 	
 	private void logUnknown(final InstructionSet2ByteWord instruction) {
 		LOG.error(LOG_UNKNOWN_INSTRUCTION_FORMAT, instruction);
+	}
+
+	@Override
+	public Register[] getRegisters() {
+		return registers;
 	}
 }

@@ -17,28 +17,21 @@ import ch.zhaw.lazari.cpu.api.ProgramCounter;
  */
 public class SimpleProgramCounterImpl implements ProgramCounter{
 
-	private final int offset;
+
 	
 	private final int stepSize;
 
 	private int address;
 	
 	/**
-	 * Creates a new ProgrammCounter with default offset and step size
-	 */
-	public SimpleProgramCounterImpl() {
-		this(DEFAULT_OFFSET, STEP_SIZE);
-	}
-	
-	/**
 	 * Creates a new ProgrammCounter with the given offset and stepsize
 	 * @param offset Memory offset, where the programm is stored
 	 * @param stepSize increment for the next address
 	 */
-	public SimpleProgramCounterImpl(final int offset, final int stepSize) {
-		this.offset = offset;
+	public SimpleProgramCounterImpl(int initialAdress, final int stepSize) {
+	
 		this.stepSize = stepSize;
-		this.address = 0;
+		this.address = initialAdress;
 	}
 	
 	/* (non-Javadoc)
@@ -54,7 +47,7 @@ public class SimpleProgramCounterImpl implements ProgramCounter{
 	 */
 	@Override
 	public int get() {
-		return offset + address;
+		return address;
 	}
 
 	/* (non-Javadoc)

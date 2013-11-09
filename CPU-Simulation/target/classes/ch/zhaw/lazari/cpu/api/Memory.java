@@ -18,17 +18,22 @@ public interface Memory {
 	/** The default size for memory elements in bytes */
 	int DEFAULT_SIZE = 1024;
 	
+	int WORD_SIZE = Byte.SIZE;
+	
+	int ADDRESS_BITS = 10;
+	
 	/**
 	 * Stores the given byte
-	 * @param address where to store the byte
-	 * @param value the byte to store
+	 * @param address where to store the bits
+	 * @param bits the bits to store
 	 */
-	void store(int address, byte value);
+	void store(int address, boolean[] bits);
 	
+	void store(int address, int value);
 	/**
 	 * Returns the byte stored at address
 	 * @param address the address where the byte is locate
 	 * @return byte stored at that address
 	 */
-	byte load(int address);
+	boolean[] load(int address);
 }

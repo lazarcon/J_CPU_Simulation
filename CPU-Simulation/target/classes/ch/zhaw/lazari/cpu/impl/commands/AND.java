@@ -10,9 +10,9 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import ch.zhaw.lazari.cpu.api.ArithmeticLogicalAccumulator;
 import ch.zhaw.lazari.cpu.api.Register;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Represents the AND Operation
@@ -36,8 +36,13 @@ public class AND extends AbstractAccumulatorCommand {
 	 */
 	@Override
 	public void execute() {
-		log(String.format("Telling accu to perform AND operation with value '%s'", ByteArrayUtils.toBinaryString(register.get())));
+		log(String.format("Telling accu to perform AND operation with value '%s'", toBinaryString(register.get())));
 		getAccu().and(register.get());
+	}
+
+	@Override
+	public String toString() {
+		return String.format("AND R%d", register.getId());
 	}
 
 }

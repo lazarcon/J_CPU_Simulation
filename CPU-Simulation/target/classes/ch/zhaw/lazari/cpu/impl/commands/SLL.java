@@ -34,4 +34,8 @@ public class SLL extends AbstractAccumulatorCommand{
 		getAccu().shiftLeftLogical();
 	}
 
+	@Override
+	public String toString() {
+		return "SLL";
+	}
 }

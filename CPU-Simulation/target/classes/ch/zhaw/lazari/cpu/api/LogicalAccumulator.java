@@ -19,13 +19,13 @@ public interface LogicalAccumulator extends Register {
 	 * Performs a logical and operation between the content and the given word
 	 * @param bytes word to perform the operation with
 	 */
-	void and(final byte[] bytes);
+	void and(final boolean[] bytes);
 
 	/**
 	 * Performs a logical or operation between the content and the given word
 	 * @param bytes word to perform the operation with
 	 */
-	void or(final byte[] bytes);
+	void or(final boolean[] bytes);
 
 	/**
 	 * Inverts the stored content

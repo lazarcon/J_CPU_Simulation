@@ -24,15 +24,15 @@ public class SimpleProgramCounterImplTest {
 
 	@Test
 	public void testSet() {
-		final ProgramCounter counter = new SimpleProgramCounterImpl(20, 3);
-		assertEquals(20, counter.get());
+		final ProgramCounter counter = new SimpleProgramCounterImpl(0,3);
+		assertEquals(0, counter.get());
 		counter.set(32);
 		assertEquals(52, counter.get());
 	}
 	
 	@Test
 	public void testGetNext() {
-		final ProgramCounter counter = new SimpleProgramCounterImpl(16, 3);
+		final ProgramCounter counter = new SimpleProgramCounterImpl(0,3);
 		final int last = counter.get();
 		counter.next();
 		assertTrue(last < counter.get());

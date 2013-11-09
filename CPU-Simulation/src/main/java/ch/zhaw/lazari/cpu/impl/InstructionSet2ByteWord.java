@@ -10,6 +10,8 @@
  */
 package ch.zhaw.lazari.cpu.impl;
 
+import ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils;
+
 /**
  * Responsibility:
  */
@@ -20,8 +22,8 @@ public enum InstructionSet2ByteWord {
 	ADDD(InstructionGroup.ACCU, "(1)([01]{15})", "(ADDD )(-{0,1}[0-9]{1,5})", "1%s"),
 	INC(InstructionGroup.ACCU, "(00000001)([01]{4})([01]{4})", "(INC)", "0000000100000000"),
 	DEC(InstructionGroup.ACCU, "(00000100)([01]{4})([01]{4})", "(DEC)", "0000010000000000"),
-	LWDD(InstructionGroup.MEMORY, "(010[01]{1})([01]{2})([01]{10})", "(LWDD R)([0-3]{1})( #)({1}[0-9]{3})", "0100%s%s"),
-	SWDD(InstructionGroup.MEMORY, "(011[01]{1})([01]{2})([01]{10})", "(SWDD R)([0-3]{1})( #)({1}[0-9]{3})", "0110%s%s"),
+	LWDD(InstructionGroup.MEMORY, "(010[01]{1})([01]{2})([01]{10})", "(LWDD R)([0-3]{1})( #)([0-9]{3})", "0100%s%s"),
+	SWDD(InstructionGroup.MEMORY, "(011[01]{1})([01]{2})([01]{10})", "(SWDD R)([0-3]{1})( #)([0-9]{3})", "0110%s%s"),
 	SRA(InstructionGroup.ARITHMETIC, "(00000101)([01]{4})([01]{4})", "(SRA)", "0000010100000000"),
 	SLA(InstructionGroup.ARITHMETIC, "(00001000)([01]{4})([01]{4})", "(SLA)", "0000100000000000"),
 	SRL(InstructionGroup.ARITHMETIC, "(00001001)([01]{4})([01]{4})", "(SRL)", "0000100100000000"),
@@ -93,7 +95,7 @@ public enum InstructionSet2ByteWord {
 	}
 	
 	public int getRegisterId(final String word) {
-		return Integer.parseInt(word.replaceAll(bitPattern, "$2"));
+		return BooleanArrayUtils.toInt("0"+word.replaceAll(bitPattern, "$2"));
 	}
 
 	public int getMnemonicFirst(final String word) {
@@ -105,7 +107,7 @@ public enum InstructionSet2ByteWord {
 	}
 
 	public String getAddress(final String word) {
-		return word.replaceAll(bitPattern, "$3");
+		return "0" + word.replaceAll(bitPattern, "$3");
 	}
 	
 	public String getSecondWord(final String word) {

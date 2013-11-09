@@ -33,4 +33,9 @@ public class END extends AbstractCommand {
 		log("Telling CPU to stop.");
 		cpu.stop();
 	}
+	
+	@Override
+	public String toString() {
+		return "END";
+	}
 }

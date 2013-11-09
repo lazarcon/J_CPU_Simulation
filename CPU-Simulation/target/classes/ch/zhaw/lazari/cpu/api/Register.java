@@ -16,20 +16,17 @@ package ch.zhaw.lazari.cpu.api;
  * The register has a word length of 2 bytes
  */
 public interface Register {
-
-	/** Default Word length of the register */
-	int DEFAULT_WORD_LENGTH = 2;
 	
 	/**
 	 * Sets the content of the register to the given word
-	 * @param word the word to store in the register
+	 * @param bits the word to store in the register
 	 */
-	void set(final byte[] word);
+	void set(final boolean[] bits);
 	
 	/**
 	 * @return content of the register
 	 */
-	byte[] get();
+	boolean[] get();
 	
 	/**
 	 * Clears the content of the register
@@ -38,4 +35,7 @@ public interface Register {
 	
 	/** Returns number of bytes used by the register */
 	int getSize();
+	
+	/** Returns id of this register */
+	int getId();
 }

@@ -36,4 +36,9 @@ public class BD extends AbstractProgramCounterCommand {
 		getProgramCounter().set(address);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("BD #%d", address);
+	}
+
 }

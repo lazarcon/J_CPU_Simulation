@@ -10,9 +10,9 @@
  */
 package ch.zhaw.lazari.cpu.impl.commands;
 
+import static ch.zhaw.lazari.cpu.impl.utils.BooleanArrayUtils.toBinaryString;
 import ch.zhaw.lazari.cpu.api.Memory;
 import ch.zhaw.lazari.cpu.api.Register;
-import ch.zhaw.lazari.cpu.impl.utils.ByteArrayUtils;
 
 /**
  * Responsibility:
@@ -21,7 +21,7 @@ public class LWDD extends AbstractMemoryCommand {
 
 	private final Register register;
 	
-	private final int address;
+	private int address;
 	
 	/**
 	 * @param memory
@@ -37,12 +37,21 @@ public class LWDD extends AbstractMemoryCommand {
 	 */
 	@Override
 	public void execute() {
-		final byte[] word = new byte[register.getSize()];
-		for(int index = 0; index < register.getSize(); ++index) {
-			word[index] = getMemory().load(address + index);
+		final boolean[] word = new boolean[register.getSize()];
+		int read = 0;
+		while(read < word.length) {
+			final boolean[] stored = getMemory().load(address++);
+			for(final boolean bit : stored) {
+				word[read++] = bit;
+			}
 		}
-		log(String.format("Telling register to set its value to '%s' (from memory)", ByteArrayUtils.toBinaryString(word)));
+		log(String.format("Telling register to set its value to '%s' (from memory)", toBinaryString(word)));
 		register.set(word);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("LWDD R%d #%d", register.getId(), address);
 	}
 
 }

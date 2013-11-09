@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.zhaw.lazari.cpu.api.*;
+import ch.zhaw.lazari.cpu.gui.CPUSimulation;
 import ch.zhaw.lazari.cpu.impl.ProgramLoader2ByteInstructionSet;
 import ch.zhaw.lazari.cpu.impl.SimpleCPUImpl;
 import ch.zhaw.lazari.cpu.impl.memory.SimpleMemoryImpl;
@@ -66,12 +67,18 @@ public final class App {
 			final ProgramLoader programLoader = new ProgramLoader2ByteInstructionSet();
 			programLoader.load(code, memory);
 			
+			memory.store(500, 0);
+			memory.store(501, -2);
+			memory.store(502, 0);
+			memory.store(503, 1);
+			
 			final CPU cpu = new SimpleCPUImpl(memory);
+			final CPUSimulation simulation = new CPUSimulation(cpu);
 			
 			if(cmd.hasOption('s')) {
-				runStepwise(cpu);
+			//	runStepwise(cpu);
 			} else {
-				runThrough(cpu);
+		//		runThrough(cpu);
 			}
 
 			if(cmd.hasOption('r')) {
@@ -84,7 +91,7 @@ public final class App {
 				}
 				LOG.info(String.format("value in memory %d is: %d", resultAddress, BooleanArrayUtils.toInt(combined)));
 			}
-			System.exit(0);
+			//System.exit(0);
 			
 		} catch (ParseException e) {
 			System.out.println("Exception while parsing arguments:");
@@ -113,6 +120,7 @@ public final class App {
     	while(!cpu.isFinished()) {
     		keyboard.hasNextLine();
     		cpu.tick();
+    		
     	}
     }
     

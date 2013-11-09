@@ -33,4 +33,9 @@ public class BC extends AbstractConditionalProgramCounterCommandRegister {
 		return (getAccu().getCarryFlag() == 1);
 	}
 
+	@Override
+	public String toString() {
+		return String.format("BC R%d", getRegister().getId());
+	}
+
 }

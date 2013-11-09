@@ -29,6 +29,7 @@ public interface Memory {
 	 */
 	void store(int address, boolean[] bits);
 	
+	void store(int address, int value);
 	/**
 	 * Returns the byte stored at address
 	 * @param address the address where the byte is locate

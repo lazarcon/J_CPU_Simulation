@@ -40,13 +40,13 @@ public class SimpleCPUImpl implements CPU {
 	
 	private final Register[] registers = new Register[REGISTERS + 1];
 	
-	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(100, 2);
+	private final ProgramCounter programCounter = new SimpleProgramCounterImpl(100,2);
 	
 	private final Memory memory;
 	
 	private int counter = 1;
 	
-	private boolean isFinished = true;
+	private boolean isFinished = false;
 	
 	/**
 	 * Creates a new CPU using the passed components
@@ -271,5 +271,10 @@ public class SimpleCPUImpl implements CPU {
 	
 	private void logUnknown(final InstructionSet2ByteWord instruction) {
 		LOG.error(LOG_UNKNOWN_INSTRUCTION_FORMAT, instruction);
+	}
+
+	@Override
+	public Register[] getRegisters() {
+		return registers;
 	}
 }

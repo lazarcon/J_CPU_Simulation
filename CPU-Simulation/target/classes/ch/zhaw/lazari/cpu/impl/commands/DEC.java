@@ -30,4 +30,9 @@ public class DEC extends AbstractAccumulatorCommand {
 		getAccu().decrement();
 	}
 
+	@Override
+	public String toString() {
+		return "DEC";
+	}
+
 }
