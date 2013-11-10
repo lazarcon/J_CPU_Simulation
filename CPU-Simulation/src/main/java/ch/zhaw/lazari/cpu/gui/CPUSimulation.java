@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,6 +19,10 @@ public class CPUSimulation extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private CPU cpu;
 	private List<TickablePanel> panels = new ArrayList<TickablePanel>();
+	private long pause = 0l;
+	private boolean running;
+	private static final ScheduledExecutorService worker = Executors
+			.newSingleThreadScheduledExecutor();
 
 	public CPUSimulation(CPU cpu) {
 		this.cpu = cpu;
@@ -23,9 +30,10 @@ public class CPUSimulation extends JFrame {
 		this.setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().add(new CommandWindow(this), BorderLayout.SOUTH);
-		final MemoryWindow code = new MemoryWindow(cpu.getMemory(), 100, 150);
+		final MemoryWindow code = new CommandMemoryWindow(cpu.getMemory(),
+				cpu.getProgramCounter(), 100, 500);
 		panels.add(code);
-		final MemoryWindow result = new MemoryWindow(cpu.getMemory(), 500, 520);
+		final MemoryWindow result = new MemoryWindow(cpu.getMemory(), 500, 530);
 		this.getContentPane().add(code, BorderLayout.WEST);
 		this.getContentPane().add(result, BorderLayout.EAST);
 		panels.add(result);
@@ -57,8 +65,35 @@ public class CPUSimulation extends JFrame {
 	}
 
 	public void runFast() {
-		while(!cpu.isFinished())
-			tick();
+		pause = 0l;
+		run();
 	}
+	
+	public void run()
+	{
+		running = !running;
+		if(running)
+			doOneRun();
+	}
+
+	public void doOneRun() {
+		tick();
+		Runnable task = new Runnable() {
+			public void run() {
+				if (!cpu.isFinished() && running) {
+					doOneRun();
+				}
+			}
+		};
+		worker.schedule(task, pause, TimeUnit.MILLISECONDS);
+
+	}
+
+	public void runSlow() {
+		pause = 600l;
+		run();
+
+	}
+	
 
 }

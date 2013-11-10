@@ -11,14 +11,19 @@ public class ProgramCounterWindow extends JPanel implements TickablePanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private ProgramCounter programCounter;
+	private JTextField textField_1;
+	private int counter = 0;
 
 	public void tick() {
 		textField.setText(Integer.toString(programCounter.get()));
+		textField_1.setText(Integer.toString(counter));
+		counter++;
 	}
 
 	/**
 	 * Create the frame.
-	 * @param programCounter 
+	 * 
+	 * @param programCounter
 	 */
 	public ProgramCounterWindow(ProgramCounter programCounter) {
 		this.programCounter = programCounter;
@@ -26,6 +31,13 @@ public class ProgramCounterWindow extends JPanel implements TickablePanel {
 		textField = new JTextField();
 		add(textField);
 		textField.setColumns(10);
+
+		JLabel label = new JLabel("Count");
+		add(label);
+
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		add(textField_1);
 	}
 
 }

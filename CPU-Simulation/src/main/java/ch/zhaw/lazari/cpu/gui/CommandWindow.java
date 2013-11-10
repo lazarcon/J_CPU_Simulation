@@ -13,7 +13,7 @@ public class CommandWindow extends JPanel {
 
 	private CPUSimulation simulation;
 
-	
+	boolean running = false;
 
 	/**
 	 * Create the frame.
@@ -34,7 +34,14 @@ public class CommandWindow extends JPanel {
 		
 		JButton btnSlow = new JButton("slow");
 		add(btnSlow);
-		
+		btnSlow.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CommandWindow.this.simulation.runSlow();
+				
+			}
+		});
 		JButton btnFast = new JButton("fast");
 		add(btnFast);
 		btnFast.addActionListener(new ActionListener() {
@@ -47,5 +54,7 @@ public class CommandWindow extends JPanel {
 		});
 		add(btnTick, BorderLayout.NORTH);
 	}
+	
+
 
 }
