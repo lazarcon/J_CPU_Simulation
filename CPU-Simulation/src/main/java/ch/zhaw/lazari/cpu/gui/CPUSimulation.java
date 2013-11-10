@@ -56,4 +56,9 @@ public class CPUSimulation extends JFrame {
 		return cpu.isFinished();
 	}
 
+	public void runFast() {
+		while(!cpu.isFinished())
+			tick();
+	}
+
 }

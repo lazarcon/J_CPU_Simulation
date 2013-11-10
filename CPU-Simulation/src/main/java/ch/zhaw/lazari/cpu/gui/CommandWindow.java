@@ -31,6 +31,20 @@ public class CommandWindow extends JPanel {
 				
 			}
 		});
+		
+		JButton btnSlow = new JButton("slow");
+		add(btnSlow);
+		
+		JButton btnFast = new JButton("fast");
+		add(btnFast);
+		btnFast.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CommandWindow.this.simulation.runFast();
+				
+			}
+		});
 		add(btnTick, BorderLayout.NORTH);
 	}
 

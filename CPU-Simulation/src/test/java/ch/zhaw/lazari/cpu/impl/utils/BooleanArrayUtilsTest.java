@@ -60,7 +60,7 @@ public class BooleanArrayUtilsTest {
 		assertEquals(0, toInt(new boolean[]{false}));
 		assertEquals(1, toInt(new boolean[]{false, true}));
 		assertEquals(3, toInt(new boolean[]{false, true, true}));
-		assertEquals(-3, toInt(new boolean[]{true, false, false}));
+		assertEquals(-3, toInt(new boolean[]{true, false, true}));
 	}
 
 	/**
@@ -82,7 +82,9 @@ public class BooleanArrayUtilsTest {
 		assertEquals(0, toInt("0"));
 		assertEquals(1, toInt("01"));
 		assertEquals(3, toInt("011"));
-		assertEquals(-3, toInt("100"));
+		assertEquals(-3, toInt("101"));
+		assertEquals(-1, toInt("111"));
+		assertEquals(-15, toInt("10001"));
 	}
 	
 	private static void assertEqualArray(final boolean[] expected, final boolean[] got) {
@@ -90,5 +92,17 @@ public class BooleanArrayUtilsTest {
 		for(int index = 0; index < expected.length; ++index) {
 			assertTrue(expected[index] == got[index]);
 		}
+	}
+	
+	@Test
+	public void testInc() {
+		boolean[] in = {true, true, false};
+		boolean[] expected = {true, true, true};
+		assertEqualArray(expected, BooleanArrayUtils.inc(in));
+		
+		boolean[] in2 = {false, true, true};
+		boolean[] expected2 = {true, false, false};
+		assertEqualArray(expected2, BooleanArrayUtils.inc(in2));
+
 	}
 }

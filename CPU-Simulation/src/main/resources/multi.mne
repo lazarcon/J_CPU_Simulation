@@ -1,34 +1,124 @@
 100 CLR R0
-102 ADDD -2
+102 ADDD 1234	// first param b
 104 SWDD R0 #500
 
 106 CLR R0
-108 ADDD 1
+108 ADDD -4321 // second param a
 110 SWDD R0 #502
 
-112 CLR R0
+112 CLR R0 // empty result
 114 SWDD R0 #504
-116 LWDD R0 #502
-118 BZD #144
-120 LWDD R0 #500
-122 BZD #144
-124 LWDD R1 #502
-126 BD #214
+116 SWDD R0 #506
+118 LWDD R0 #502
+120 BZD #480
+122 BD #320
 
-214 BZD #244
+124 LWDD R0 #500 // b --> r0
+126 BZD #480
+128 LWDD R1 #502 // a --> r1
+130 CLR R2
+132 BD #214
+
+
+
+
+150 NOT
+152 INC
+
+214 BZD #296
+
 216 SRA
-218 BCD #234
-220 SWDD R1 #510  // a --> memory
-222 LWDD R0 #510 // akku <-- a
-224 SLA
-226 SWDD R0 #510  // a --> memory
-228 LWDD R1 #510 // r1 <-- a
-230 LWDD R0 #508
-232 BD #214
+218 BCD #270
 
-234 SWDD R0 #508  // b --> memory
-236 LWDD R0 #504  // akku <-- c
-238 ADD R1 // a
-240 SWDD R0 #504
-242 BD #220
-244 END
+220 SWDD R0 #508
+222 SWDD R1 #512  // a1 --> memory
+224 SWDD R2 #510  // a2 --> memory
+
+226 LWDD R0 #510 // akku <-- a2
+228 SLL
+230 SWDD R0 #510 // a2 --> memory
+
+232 LWDD R0 #512 // akku <-- a1
+234 SLL
+236 SWDD R0 #512  // a1 --> memory
+238 BCD #248
+
+240 LWDD R1 #512 // r1 <-- a1
+242 LWDD R2 #510 // r2 <-- a2
+244 LWDD R0 #508
+246 BD #214
+
+248 LWDD R0 #510 // akku <-- a2
+250 INC
+252 SWDD R0 #510 // a2 --> memory
+254 BD #240
+
+256 LWDD R0 #504
+258 INC
+260 SWDD R0 #504
+262 BD #280
+
+270 SWDD R0 #508  // b --> memory
+272 LWDD R0 #506  // akku <-- c1
+274 ADD R1 // a
+276 SWDD R0 #506 // c1 --> memory
+278 BCD #256
+280 LWDD R0 #504  // akku <-- c2
+282 ADD R2 // a2
+284 SWDD R0 #504 // c2 --> memory
+
+286 BD #222
+
+288 LWDD R0 #504 
+290 INC
+292 SWDD R0 #504
+294 BD #480
+
+296 SWDD R3 #516
+298 LWDD R0 #516
+300 BZD #480 // we dont have to change the signum
+302 LWDD R0 #504 // change signum of result
+304 NOT
+306 SWDD R0 #504
+308 LWDD R0 #506
+310 NOT
+312 INC
+314 SWDD R0 #506
+316 BCD #290
+318 BD #480
+
+
+
+320 LWDD R0 #502 // a
+322 CLR R3
+324 SLL
+326 BCD #380 // is negative, invert and set flag
+
+328 LWDD R0 #500 // b
+330 SLL
+332 BCD #400 // is negative, invert and set flag
+334 BD #124
+
+380 SWDD R3 #516
+382 LWDD R0 #516
+384 NOT
+386 SWDD R0 #516
+388 LWDD R3 #516
+390 LWDD R0 #502
+392 NOT
+394 INC
+396 SWDD R0 #502
+398 BD #326
+
+400 SWDD R3 #516
+402 LWDD R0 #516
+404 NOT
+406 SWDD R0 #516
+408 LWDD R3 #516 
+410 LWDD R0 #500
+412 NOT
+414 INC
+416 SWDD R0 #500
+418 BD #332
+
+480 END

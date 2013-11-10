@@ -26,7 +26,8 @@ public class MemoryWindow extends JPanel implements TickablePanel{
 		this.min = min;
 		this.max = max;
 		table = getTable();
-		add(new JLabel(String.format("Memory (%d - %d)", min, max)));
+		setLayout(new BorderLayout());
+		add(new JLabel(String.format("Memory (%d - %d)", min, max)),BorderLayout.NORTH);
 		add(table, BorderLayout.CENTER);
 	}
 
