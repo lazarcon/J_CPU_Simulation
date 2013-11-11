@@ -43,4 +43,6 @@ public interface CPU {
 	LogicalAccumulator getAccumulator();
 	
 	Command getCurrentCommand();
+
+	String getCommandWord();
 }

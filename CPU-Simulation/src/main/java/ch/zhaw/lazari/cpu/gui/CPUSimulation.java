@@ -95,7 +95,7 @@ public class CPUSimulation extends JFrame {
 	}
 
 	public void runSlow() {
-		pause = 600l;
+		pause = 1000l;
 		run();
 
 	}

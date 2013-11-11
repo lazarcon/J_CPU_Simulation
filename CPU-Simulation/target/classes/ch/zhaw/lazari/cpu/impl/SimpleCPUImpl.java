@@ -154,7 +154,7 @@ public class SimpleCPUImpl implements CPU {
 		return interpret(word);
 	}
 
-	private String getCommandWord() {
+	public String getCommandWord() {
 		final boolean[] word = new boolean[DEFAULT_WORD_LENGTH];
 		int address = programCounter.get();
 		int read = 0;

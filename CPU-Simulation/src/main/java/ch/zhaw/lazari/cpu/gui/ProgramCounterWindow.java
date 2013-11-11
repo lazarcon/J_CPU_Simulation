@@ -16,8 +16,10 @@ public class ProgramCounterWindow extends JPanel implements TickablePanel {
 	private int counter = 0;
 	private CPU cpu;
 	private JTextField currentCommandTextField;
+	private JTextField currentCommandBitsTextField;
 
 	public void tick() {
+		currentCommandBitsTextField.setText(cpu.getCommandWord());
 		currentCommandTextField.setText(cpu.getCurrentCommand().toString());
 		textField.setText(Integer.toString(cpu.getProgramCounter().get()));
 		textField_1.setText(Integer.toString(counter));
@@ -31,19 +33,26 @@ public class ProgramCounterWindow extends JPanel implements TickablePanel {
 	 */
 	public ProgramCounterWindow(CPU cpu) {
 		this.cpu = cpu;
-		add(new JLabel("ProgrammCounter"));
+		add(new JLabel("ProgrammCounter:"));
 		
 		textField = new JTextField();
 		add(textField);
 		textField.setColumns(3);
 		
-		JLabel label = new JLabel("Current Command");
+		JLabel label = new JLabel("Next Command:");
 		add(label);
 		currentCommandTextField =  new JTextField();
 		currentCommandTextField.setColumns(10);
 		add(currentCommandTextField);
+		
+		label = new JLabel("Command Bits:");
+		add(label);
+		currentCommandBitsTextField =  new JTextField();
+		currentCommandBitsTextField.setColumns(11);
+		add(currentCommandBitsTextField);
 
-		label = new JLabel("Counter");
+
+		label = new JLabel("Counter:");
 		add(label);
 
 		textField_1 = new JTextField();
