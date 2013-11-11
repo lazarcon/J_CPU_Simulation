@@ -47,6 +47,8 @@ public class SimpleCPUImpl implements CPU {
 	private int counter = 1;
 	
 	private boolean isFinished = false;
+
+	private Command currentCommand;
 	
 	/**
 	 * Creates a new CPU using the passed components
@@ -59,6 +61,7 @@ public class SimpleCPUImpl implements CPU {
 		for(int index = 1; index < registers.length; ++index) {
 			registers[index] = new SimpleRegisterImpl(DEFAULT_WORD_LENGTH, index);
 		}
+		loadCurrentProgramm();
 	}
 
 	/* (non-Javadoc)
@@ -82,13 +85,22 @@ public class SimpleCPUImpl implements CPU {
 	 */
 	@Override
 	public void tick() {
-		LOG.trace("Recieved tick executing instructions:");
-		final Command command = getCommand();
+		
+		
+		
 		LOG.trace(String.format("\t%d. Incrementing program counter.", counter++));
 		programCounter.next();
-		LOG.trace(String.format("\t%d. Executing command: %s", counter, command));
-		command.execute();
+		LOG.trace(String.format("\t%d. Executing command: %s", counter, currentCommand));
+		currentCommand.execute();
 		counter = 1;
+		// load next 
+		loadCurrentProgramm();
+	}
+
+	private void loadCurrentProgramm() {
+		LOG.trace("Recieved tick executing instructions:");
+		currentCommand = getCommand();
+		
 	}
 
 	/* (non-Javadoc)
@@ -129,6 +141,10 @@ public class SimpleCPUImpl implements CPU {
 	@Override
 	public LogicalAccumulator getAccumulator() {
 		return accu;
+	}
+	
+	public Command getCurrentCommand() {
+		return currentCommand;
 	}
 	
 	private Command getCommand() {

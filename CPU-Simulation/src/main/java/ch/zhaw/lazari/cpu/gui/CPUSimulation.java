@@ -38,7 +38,7 @@ public class CPUSimulation extends JFrame {
 		this.getContentPane().add(result, BorderLayout.EAST);
 		panels.add(result);
 		final ProgramCounterWindow counter = new ProgramCounterWindow(
-				cpu.getProgramCounter());
+				cpu);
 		panels.add(counter);
 		this.getContentPane().add(counter, BorderLayout.NORTH);
 		final JPanel registers = new JPanel();
@@ -51,13 +51,18 @@ public class CPUSimulation extends JFrame {
 		this.getContentPane().add(registers, BorderLayout.CENTER);
 		pack();
 		setVisible(true);
+		refreshPanels();
 	}
 
 	public void tick() {
 		cpu.tick();
-		for (TickablePanel window : panels)
-			window.tick();
+		refreshPanels();
 
+	}
+
+	private void refreshPanels() {
+		for (TickablePanel panel : panels)
+			panel.tick();
 	}
 
 	public boolean isFinished() {

@@ -4,18 +4,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import ch.zhaw.lazari.cpu.api.CPU;
 import ch.zhaw.lazari.cpu.api.ProgramCounter;
 
 public class ProgramCounterWindow extends JPanel implements TickablePanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	private ProgramCounter programCounter;
+
 	private JTextField textField_1;
 	private int counter = 0;
+	private CPU cpu;
+	private JTextField currentCommandTextField;
 
 	public void tick() {
-		textField.setText(Integer.toString(programCounter.get()));
+		currentCommandTextField.setText(cpu.getCurrentCommand().toString());
+		textField.setText(Integer.toString(cpu.getProgramCounter().get()));
 		textField_1.setText(Integer.toString(counter));
 		counter++;
 	}
@@ -25,18 +29,25 @@ public class ProgramCounterWindow extends JPanel implements TickablePanel {
 	 * 
 	 * @param programCounter
 	 */
-	public ProgramCounterWindow(ProgramCounter programCounter) {
-		this.programCounter = programCounter;
+	public ProgramCounterWindow(CPU cpu) {
+		this.cpu = cpu;
 		add(new JLabel("ProgrammCounter"));
+		
 		textField = new JTextField();
 		add(textField);
-		textField.setColumns(10);
+		textField.setColumns(3);
+		
+		JLabel label = new JLabel("Current Command");
+		add(label);
+		currentCommandTextField =  new JTextField();
+		currentCommandTextField.setColumns(10);
+		add(currentCommandTextField);
 
-		JLabel label = new JLabel("Count");
+		label = new JLabel("Counter");
 		add(label);
 
 		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		textField_1.setColumns(5);
 		add(textField_1);
 	}
 

@@ -31,7 +31,7 @@ public class RegisterWindow extends JPanel implements TickablePanel {
 		this.register = register;
 		add(new JLabel(String.format("Register %d", register.getId())));
 		textField = new JTextField();
-		textField.setColumns(10);
+		textField.setColumns(16);
 		add(textField);
 	}
 

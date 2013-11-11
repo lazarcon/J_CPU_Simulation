@@ -42,4 +42,5 @@ public interface CPU {
 	/** Returns the accumulator used by the cpu */
 	LogicalAccumulator getAccumulator();
 	
+	Command getCurrentCommand();
 }
